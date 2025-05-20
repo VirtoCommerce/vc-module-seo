@@ -1,0 +1,24 @@
+{
+  "BrokenLinks": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "broken-links:access": "Open BrokenLinks menu",
+    "broken-links:create": "Create BrokenLinks related data",
+    "broken-links:read": "View BrokenLinks related data",
+    "broken-links:update": "Update BrokenLinks related data",
+    "broken-links:delete": "Delete BrokenLinks related data"
+  },
+  "settings": {
+    "BrokenLinks": {
+      "Enabled": {
+        "title": "BrokenLinks Enabled",
+        "description": "BrokenLinks Enabled setting"
+      }
+    }
+  }
+}
