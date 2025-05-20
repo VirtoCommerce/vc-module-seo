@@ -34,7 +34,7 @@ public static class SeoExtensions
             return null;
         }
 
-        var priorities = PrioritiesSettings; // .Reverse().ToArray();
+        var priorities = PrioritiesSettings;
 
         return seoInfos
             ?.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language, slug, permalink))
