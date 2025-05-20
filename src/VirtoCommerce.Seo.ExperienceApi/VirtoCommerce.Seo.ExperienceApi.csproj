@@ -11,8 +11,6 @@
     <PackageReference Include="VirtoCommerce.Xapi.Core" Version="3.904.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\vc-module-x-api\src\VirtoCommerce.Xapi.Core\VirtoCommerce.Xapi.Core.csproj" />
-    <ProjectReference Include="..\..\..\vc-module-x-api\src\VirtoCommerce.Xapi.Data\VirtoCommerce.Xapi.Data.csproj" />
     <ProjectReference Include="..\VirtoCommerce.Seo.Core\VirtoCommerce.Seo.Core.csproj" />
   </ItemGroup>
 </Project>
