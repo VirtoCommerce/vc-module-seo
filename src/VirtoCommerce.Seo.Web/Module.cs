@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using GraphQL.MicrosoftDI;
 using Microsoft.AspNetCore.Builder;

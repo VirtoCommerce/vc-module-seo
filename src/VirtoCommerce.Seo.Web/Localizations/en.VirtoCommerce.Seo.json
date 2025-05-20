@@ -1,0 +1,24 @@
+{
+  "Seo": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Open Seo menu",
+    "seo:create": "Create Seo related data",
+    "seo:read": "View Seo related data",
+    "seo:update": "Update Seo related data",
+    "seo:delete": "Delete Seo related data"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "Seo Enabled",
+        "description": "Seo Enabled setting"
+      }
+    }
+  }
+}

@@ -4,19 +4,19 @@
   <version>3.800.0</version>
   <version-tag></version-tag>
 
-  <platformVersion>3.876.0</platformVersion>
+  <platformVersion>3.877.0</platformVersion>
   <dependencies>
     <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
   </dependencies>
 
-  <title>VirtoCommerce Seo</title>
+  <title>VirtoCommerce SEO</title>
   <description>VirtoCommerce SEO</description>
 
   <authors>
     <author>Basil Kotov</author>
   </authors>
   <owners>
-    <owner>VirtoCommerce</owner>
+    <owner>Virto Commerce</owner>
   </owners>
 
   <projectUrl>https://github.com/VirtoCommerce/vc-module-seo</projectUrl>
@@ -27,7 +27,7 @@
   <moduleType>VirtoCommerce.Seo.Web.Module, VirtoCommerce.Seo.Web</moduleType>
 
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2025 VirtoCommerce. All rights reserved</copyright>
+  <copyright>Copyright © 2025 Virto Commerce. All rights reserved</copyright>
   <tags>extension module</tags>
   <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>
