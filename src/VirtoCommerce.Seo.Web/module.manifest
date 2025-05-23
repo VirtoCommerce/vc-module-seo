@@ -6,7 +6,6 @@
 
   <platformVersion>3.887.0</platformVersion>
   <dependencies>
-    <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
   </dependencies>
 
   <title>VirtoCommerce SEO</title>
