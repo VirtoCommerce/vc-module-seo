@@ -60,10 +60,12 @@ public static class SeoExtensions
 
     private static bool SeoCanBeFound(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language, string slug, string permalink)
     {
+        var urlToCompare = permalink ?? slug;
+
         // some conditions should be checked before calculating the score 
-        return (seoInfo.StoreId.IsNullOrEmpty() || seoInfo.StoreId == storeId)
-               && (seoInfo.SemanticUrl.EqualsWithoutSlash(permalink) || seoInfo.SemanticUrl.EqualsWithoutSlash(slug))
-               && (seoInfo.LanguageCode.IsNullOrEmpty() || seoInfo.LanguageCode.EqualsIgnoreCase(language) || seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage));
+        return storeId.IsNullOrEquals(seoInfo.StoreId) &&
+               seoInfo.SemanticUrl.IsNullOrEquals(urlToCompare) &&
+               (language.IsNullOrEquals(seoInfo.LanguageCode) || storeDefaultLanguage.IsNullOrEquals(seoInfo.LanguageCode));
     }
 
     private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language, string slug, string permalink)
@@ -92,6 +94,11 @@ public static class SeoExtensions
         // it transforms into binary: 1101001b = 105d
 
         return score;
+    }
+
+    private static bool IsNullOrEquals(this string a, string b)
+    {
+        return a == null || b == null || a.EqualsIgnoreCase(b) || a.EqualsWithoutSlash(b);
     }
 
     private static bool EqualsWithoutSlash(this string a, string b)
