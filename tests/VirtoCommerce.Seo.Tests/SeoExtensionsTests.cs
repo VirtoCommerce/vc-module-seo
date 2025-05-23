@@ -126,7 +126,7 @@ namespace VirtoCommerce.Seo.Tests
             var storeId = "Store1";
             var defaultLanguage = "en-US";
 
-            SeoExtensions.PrioritiesSettings = ["Categories", "Pages"];
+            SeoExtensions.OrderedObjectTypes = ["Categories", "Pages"];
 
             var seoInfos = new List<SeoInfo>
             {
