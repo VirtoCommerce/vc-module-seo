@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
-using VirtoCommerce.StoreModule.Core.Model;
 using Xunit;
 
 namespace VirtoCommerce.Seo.Tests
@@ -30,7 +29,9 @@ namespace VirtoCommerce.Seo.Tests
         [Fact]
         public void GetBestMatchingSeoInfo_WithNullLanguage_ReturnsPage()
         {
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
+
             // Arrange
             var seoInfos = new List<SeoInfo>
             {
@@ -41,7 +42,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: null, slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: null, slug: "product1");
 
             // Assert
             Assert.NotNull(result);
@@ -54,7 +55,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_WithValidParameters_ReturnsSeoInfo()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -65,7 +67,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product1");
 
             // Assert
             Assert.NotNull(result);
@@ -78,7 +80,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_WithUnknownLanguage_ReturnsSeoInfoWithDefaultStoreLanguage()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -88,18 +91,19 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "de-DE", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "de-DE", slug: "product1");
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(result.LanguageCode, store.DefaultLanguage);
+            Assert.Equal(result.LanguageCode, defaultLanguage);
         }
 
         [Fact]
         public void GetBestMatchingSeoInfo_WithUnknownLanguage_ReturnsSeoInfoWithEmptyLanguage()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -108,7 +112,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "de-DE", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "de-DE", slug: "product1");
 
             // Assert
             Assert.NotNull(result);
@@ -119,7 +123,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_WithObjectType_ReturnsSeoInfoWithHighPriority()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             SeoExtensions.PrioritiesSettings = ["Categories", "Pages"];
 
@@ -130,7 +135,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(store.Id, store.DefaultLanguage, language: "en-US", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, defaultLanguage, language: "en-US", slug: "product1");
 
             // Assert
             Assert.NotNull(result);
@@ -141,7 +146,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_NonEqualPermalink_ReturnsNull()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -150,7 +156,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", permalink: "product2");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", permalink: "product2");
 
             // Assert
             Assert.Null(result);
@@ -160,7 +166,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_NonEqualSlug_ReturnsNull()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -169,7 +176,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product2");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product2");
 
             // Assert
             Assert.Null(result);
@@ -179,7 +186,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_NonEqualStore_ReturnsNull()
         {
             // Arrange
-            var store = new Store { Id = "Store2", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -188,7 +196,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product1");
 
             // Assert
             Assert.Null(result);
@@ -198,7 +206,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_NonEqualLanguage_ReturnsNull()
         {
             // Arrange
-            var store = new Store { Id = "Store1", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -207,7 +216,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product1");
 
             // Assert
             Assert.Null(result);
@@ -217,7 +226,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_WithEmptyStore_ReturnsValue()
         {
             // Arrange
-            var store = new Store { Id = "Store2", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -226,7 +236,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product1");
 
             // Assert
             Assert.NotNull(result);
@@ -236,7 +246,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_WithCorrectParameters_ReturnsActive()
         {
             // Arrange
-            var store = new Store { Id = "Store2", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -245,7 +256,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product1");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product1");
 
             // Assert
             Assert.NotNull(result);
@@ -256,7 +267,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_WithInactiveAndUrl_ReturnsInactive()
         {
             // Arrange
-            var store = new Store { Id = "Store2", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -265,7 +277,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: "en-US", slug: "product2");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: "en-US", slug: "product2");
 
             // Assert
             Assert.NotNull(result);
@@ -276,7 +288,8 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_SemanticUrl_IsHigherStore()
         {
             // Arrange
-            var store = new Store { Id = "Store2", DefaultLanguage = "en-US", };
+            var storeId = "Store1";
+            var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
             {
@@ -285,7 +298,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: store.Id, storeDefaultLanguage: store.DefaultLanguage, language: null, permalink: "category/product2", slug: "product2");
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId: storeId, storeDefaultLanguage: defaultLanguage, language: null, permalink: "category/product2", slug: "product2");
 
             // Assert
             Assert.NotNull(result);

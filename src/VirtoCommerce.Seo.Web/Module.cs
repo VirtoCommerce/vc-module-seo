@@ -1,5 +1,4 @@
 using System.Linq;
-using GraphQL.MicrosoftDI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,9 +6,6 @@ using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Services;
 using VirtoCommerce.Seo.Data.Services;
-using VirtoCommerce.Seo.ExperienceApi;
-using VirtoCommerce.Xapi.Core.Extensions;
-using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.Seo.Web;
 
@@ -30,19 +26,10 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<ISeoDuplicatesDetector, NullSeoDuplicateDetector>();
         serviceCollection.AddTransient<CompositeSeoResolver>();
-
-        // Register GraphQL schema
-        _ = new GraphQLBuilder(serviceCollection, builder =>
-        {
-            builder.AddSchema(serviceCollection, typeof(XapiAssemblyMarker));
-        });
-
-        serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
     {
-        appBuilder.UseScopedSchema<XapiAssemblyMarker>("seo");
     }
 
     public void Uninstall()
