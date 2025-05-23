@@ -186,7 +186,7 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_NonEqualStore_ReturnsNull()
         {
             // Arrange
-            var storeId = "Store1";
+            var storeId = "Store2";
             var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
@@ -288,7 +288,7 @@ namespace VirtoCommerce.Seo.Tests
         public void GetBestMatchingSeoInfo_SemanticUrl_IsHigherStore()
         {
             // Arrange
-            var storeId = "Store1";
+            var storeId = "Store2";
             var defaultLanguage = "en-US";
 
             var seoInfos = new List<SeoInfo>
