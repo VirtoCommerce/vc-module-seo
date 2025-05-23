@@ -21,7 +21,7 @@ public class Module : IModule, IHasConfiguration
         {
             // unknown object types should have the lowest priority
             // so, the array should be reversed to have the lowest priority at the beginning of the array
-            SeoExtensions.PrioritiesSettings = priorities.Reverse().ToArray();
+            SeoExtensions.OrderedObjectTypes = priorities.Reverse().ToArray();
         }
 
         serviceCollection.AddTransient<ISeoDuplicatesDetector, NullSeoDuplicateDetector>();
