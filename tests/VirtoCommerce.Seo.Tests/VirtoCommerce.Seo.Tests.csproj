@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\VirtoCommerce.Seo.Core\VirtoCommerce.Seo.Core.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.Seo.Data\VirtoCommerce.Seo.Data.csproj" />
-    <ProjectReference Include="..\..\src\VirtoCommerce.Seo.ExperienceApi\VirtoCommerce.Seo.ExperienceApi.csproj" />
     <ProjectReference Include="..\..\src\VirtoCommerce.Seo.Web\VirtoCommerce.Seo.Web.csproj" />
   </ItemGroup>
 </Project>
