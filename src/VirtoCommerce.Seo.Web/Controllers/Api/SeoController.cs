@@ -11,10 +11,10 @@ using SeoInfo = VirtoCommerce.Seo.Core.Models.SeoInfo;
 namespace VirtoCommerce.Seo.Web.Controllers.Api;
 
 [Authorize]
-[Route("api")]
+[Route("api/seoinfos")]
 public class SeoController(
-    ISeoDuplicatesDetector seoDuplicateDetector,
-    CompositeSeoResolver seoResolverDecorator
+    ISeoDuplicatesDetector seoDuplicatesDetector,
+    ICompositeSeoResolver compositeSeoResolver
     ) : Controller
 {
     /// <summary>
@@ -23,17 +23,17 @@ public class SeoController(
     /// <param name="seoInfos"></param>
     /// <returns></returns>
     [HttpPut]
-    [Route("seoinfos/batchupdate")]
+    [Route("batchupdate")]
     public Task<ActionResult> BatchUpdateSeoInfos([FromBody] SeoInfo[] seoInfos)
     {
         throw new NotImplementedException();
     }
 
     [HttpGet]
-    [Route("seoinfos/duplicates")]
+    [Route("duplicates")]
     public async Task<ActionResult<SeoInfo[]>> GetSeoDuplicates([FromQuery] string objectId, [FromQuery] string objectType)
     {
-        var result = await seoDuplicateDetector.DetectSeoDuplicatesAsync(new TenantIdentity(objectId, objectType));
+        var result = await seoDuplicatesDetector.DetectSeoDuplicatesAsync(new TenantIdentity(objectId, objectType));
 
         return Ok(result.ToArray());
     }
@@ -43,15 +43,15 @@ public class SeoController(
     /// </summary>
     /// <param name="slug">slug</param>
     [HttpGet]
-    [Route("seoinfos/{slug}")]
+    [Route("{slug}")]
     public async Task<ActionResult<SeoInfo[]>> GetSeoInfoBySlug(string slug)
     {
         var criteria = new SeoSearchCriteria
         {
             Slug = slug,
-            Take = 100
+            Take = 100,
         };
-        var retVal = await seoResolverDecorator.FindSeoAsync(criteria);
+        var retVal = await compositeSeoResolver.FindSeoAsync(criteria);
         return Ok(retVal.ToArray());
     }
 }

@@ -1,9 +1,6 @@
 {
   "Seo": {
     "blades": {
-      "hello-world": {
-        "title": "Hello world blade"
-      }
     }
   },
   "permissions": {

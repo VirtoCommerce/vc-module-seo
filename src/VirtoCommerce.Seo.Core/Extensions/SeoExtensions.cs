@@ -35,7 +35,12 @@ public static class SeoExtensions
     /// <summary>   
     /// Returns SEO record with the highest score
     /// </summary>
-    public static SeoInfo GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language, string slug = null, string permalink = null)
+    public static SeoInfo GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
+        string storeId,
+        string storeDefaultLanguage,
+        string language,
+        string slug = null,
+        string permalink = null)
     {
         // this is impossible situation
         if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty())

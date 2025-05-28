@@ -25,7 +25,7 @@ public class Module : IModule, IHasConfiguration
         }
 
         serviceCollection.AddTransient<ISeoDuplicatesDetector, NullSeoDuplicateDetector>();
-        serviceCollection.AddTransient<CompositeSeoResolver>();
+        serviceCollection.AddTransient<ICompositeSeoResolver, CompositeSeoResolver>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)

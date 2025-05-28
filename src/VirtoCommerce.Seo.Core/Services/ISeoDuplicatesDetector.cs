@@ -6,7 +6,7 @@ using VirtoCommerce.Seo.Core.Models;
 namespace VirtoCommerce.Seo.Core.Services;
 
 /// <summary>
-/// Used to detect seo duplicates within any object based on it inner structure and relationships (store, catalogs, categories etc)
+/// Used to detect SEO duplicates within any object based on its inner structure and relationships (store, catalogs, categories etc.)
 /// </summary>
 public interface ISeoDuplicatesDetector
 {
