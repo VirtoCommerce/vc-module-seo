@@ -10,6 +10,15 @@ public static class SeoExtensions
 {
     public static string[] OrderedObjectTypes { get; set; } = [];
 
+    public static SeoInfo GetFallbackSeoInfo(string id, string name, string cultureName)
+    {
+        var result = AbstractTypeFactory<SeoInfo>.TryCreateInstance();
+        result.SemanticUrl = id;
+        result.LanguageCode = cultureName;
+        result.Name = name;
+        return result;
+    }
+
     /// <summary>
     /// Returns SEO record with the highest score
     /// </summary>
@@ -21,15 +30,6 @@ public static class SeoExtensions
         string permalink = null)
     {
         return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, slug, permalink);
-    }
-
-    public static SeoInfo GetFallbackSeoInfo(string id, string name, string cultureName)
-    {
-        var result = AbstractTypeFactory<SeoInfo>.TryCreateInstance();
-        result.SemanticUrl = id;
-        result.LanguageCode = cultureName;
-        result.Name = name;
-        return result;
     }
 
     /// <summary>   
