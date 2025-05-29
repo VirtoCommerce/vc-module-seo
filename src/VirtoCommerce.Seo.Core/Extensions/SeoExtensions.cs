@@ -65,12 +65,12 @@ public static class SeoExtensions
 
     private static bool SeoCanBeFound(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language, string slug, string permalink)
     {
-        var urlToCompare = permalink ?? slug;
+        var url = permalink.EmptyToNull() ?? slug;
 
-        // some conditions should be checked before calculating the score 
-        return storeId.IsNullOrEquals(seoInfo.StoreId) &&
-               seoInfo.SemanticUrl.IsNullOrEquals(urlToCompare) &&
-               (language.IsNullOrEquals(seoInfo.LanguageCode) || storeDefaultLanguage.IsNullOrEquals(seoInfo.LanguageCode));
+        // some conditions should be checked before calculating the score
+        return seoInfo.StoreId.Matches(storeId) &&
+               seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language) &&
+               seoInfo.SemanticUrl.MatchesWithoutSlash(url);
     }
 
     private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language, string slug, string permalink)
@@ -101,13 +101,23 @@ public static class SeoExtensions
         return score;
     }
 
-    private static bool IsNullOrEquals(this string a, string b)
+    private static bool MatchesWithoutSlash(this string a, string b)
     {
-        return a == null || b == null || a.EqualsIgnoreCase(b) || a.EqualsWithoutSlash(b);
+        return a.Matches(b) || a.EqualsWithoutSlash(b);
     }
 
     private static bool EqualsWithoutSlash(this string a, string b)
     {
         return a.TrimStart('/').EqualsIgnoreCase(b?.TrimStart('/'));
+    }
+
+    private static bool MatchesAny(this string a, string b, string c)
+    {
+        return a.Matches(b) || a.Matches(c);
+    }
+
+    private static bool Matches(this string a, string b)
+    {
+        return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
     }
 }
