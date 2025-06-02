@@ -25,11 +25,9 @@ public static class SeoExtensions
     public static SeoInfo GetBestMatchingSeoInfo(this ISeoSupport seoSupport,
         string storeId,
         string storeDefaultLanguage,
-        string language,
-        string slug = null,
-        string permalink = null)
+        string language)
     {
-        return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, slug, permalink);
+        return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language);
     }
 
     /// <summary>   
@@ -38,9 +36,7 @@ public static class SeoExtensions
     public static SeoInfo GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
         string storeId,
         string storeDefaultLanguage,
-        string language,
-        string slug = null,
-        string permalink = null)
+        string language)
     {
         // this is impossible situation
         if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty())
@@ -48,14 +44,16 @@ public static class SeoExtensions
             return null;
         }
 
-        return seoInfos
-            ?.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language, slug, permalink))
+        var items1 = seoInfos
+            ?.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language))
             .Select(seoInfo => new
             {
                 SeoRecord = seoInfo,
                 ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, seoInfo.ObjectType),
-                Score = seoInfo.CalculateScore(storeId, storeDefaultLanguage, language, slug, permalink),
-            })
+                Score = seoInfo.CalculateScore(storeId, storeDefaultLanguage, language),
+            }).ToList();
+
+        return items1
             .Where(x => x.Score > 0)
             .OrderByDescending(x => x.Score)
             .ThenByDescending(x => x.ObjectTypePriority)
@@ -63,17 +61,14 @@ public static class SeoExtensions
             .FirstOrDefault();
     }
 
-    private static bool SeoCanBeFound(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language, string slug, string permalink)
+    private static bool SeoCanBeFound(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
     {
-        var url = permalink.EmptyToNull() ?? slug;
-
         // some conditions should be checked before calculating the score
         return seoInfo.StoreId.Matches(storeId) &&
-               seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language) &&
-               seoInfo.SemanticUrl.MatchesWithoutSlash(url);
+               seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }
 
-    private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language, string slug, string permalink)
+    private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
     {
         // the order of this array is important
         // the first element has the highest priority
@@ -81,8 +76,6 @@ public static class SeoExtensions
         var score = new[]
             {
                 seoInfo.IsActive,
-                seoInfo.SemanticUrl.EqualsWithoutSlash(permalink),
-                seoInfo.SemanticUrl.EqualsWithoutSlash(slug),
                 seoInfo.StoreId.EqualsIgnoreCase(storeId),
                 seoInfo.LanguageCode.EqualsIgnoreCase(language),
                 seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage),
@@ -99,16 +92,6 @@ public static class SeoExtensions
         // it transforms into binary: 1101001b = 105d
 
         return score;
-    }
-
-    private static bool MatchesWithoutSlash(this string a, string b)
-    {
-        return a.Matches(b) || a.EqualsWithoutSlash(b);
-    }
-
-    private static bool EqualsWithoutSlash(this string a, string b)
-    {
-        return a.TrimStart('/').EqualsIgnoreCase(b?.TrimStart('/'));
     }
 
     private static bool MatchesAny(this string a, string b, string c)
