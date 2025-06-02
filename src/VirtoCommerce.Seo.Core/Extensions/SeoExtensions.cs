@@ -44,16 +44,14 @@ public static class SeoExtensions
             return null;
         }
 
-        var items1 = seoInfos
+        return seoInfos
             ?.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language))
             .Select(seoInfo => new
             {
                 SeoRecord = seoInfo,
                 ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, seoInfo.ObjectType),
                 Score = seoInfo.CalculateScore(storeId, storeDefaultLanguage, language),
-            }).ToList();
-
-        return items1
+            })
             .Where(x => x.Score > 0)
             .OrderByDescending(x => x.Score)
             .ThenByDescending(x => x.ObjectTypePriority)
