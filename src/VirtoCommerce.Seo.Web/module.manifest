@@ -4,9 +4,8 @@
   <version>3.800.0</version>
   <version-tag></version-tag>
 
-  <platformVersion>3.877.0</platformVersion>
+  <platformVersion>3.889.0</platformVersion>
   <dependencies>
-    <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
   </dependencies>
 
   <title>VirtoCommerce SEO</title>
