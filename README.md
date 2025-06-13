@@ -1,46 +1,43 @@
-# SEO
+# SEO Module
 
-## Overview
+The **VirtoCommerce SEO Module** provides a flexible infrastructure for managing SEO-related data across the platform. It supports SEO metadata (e.g., slugs, titles, meta descriptions) for various entities such as catalogs, categories, products, and custom pages.
 
-Short overview of what the new module is.
+## Key Features
 
-- What is the new or updated experience?
+- **SEO Info Lookup**: Efficient retrieval of SEO records matching given criteria such as `permalink`, `storeId`, `language`, and others.
+- **Best Match Resolution**: Logic to determine the most relevant SEO entry when multiple matches are found.
+- **Duplicate Detection**: Extensible interface `ISeoDuplicatesDetector` for identifying and resolving conflicting SEO entries.
+- **Broken Links Detection and management** *(coming soon)*: Identify and report dead or misconfigured SEO links.
 
-- Does this module replace an existing module/experience? If yes, what is the transition plan?
+## Configuration
 
-- Does this module has dependency on other ? If yes, list/explain the dependencies.
+Currently, the only configurable setting is the priority order for resolving SEO entries when multiple matches exist for a given permalink.
 
-- List the key deployment scenarios - why would people use this module?
+Use the following configuration key:
 
-## Functional Requirements
+```
+Seo:SeoInfoResolver:ObjectTypePriority
+```
 
-Short description of the new module functional requirements.
+### Default value:
 
-## Scenarios
+```
+"Pages", "ContentFile", "Catalog", "Category", "CatalogProduct"
+```
 
-List of scenarios that the new module implements
+This setting defines the precedence for resolving SEO entries. For example, if both a `Page` and a `Category` are associated with the same permalink, the system will prioritize and display the `Page` because it has higher priority in the list.
 
-1. [Scenario 1](/doc/scenario-name1.md)
-1. [Scenario 2](/doc/scenario-name2.md)
-1. [Scenario 3](/doc/scenario-name3.md)
-    1. [Scenario 3.1](/doc/scenario-name31.md)
-    1. [Scenario 3.2](/doc/scenario-name32.md)
-1. [Scenario 4](/doc/scenario-name4.md)
+## Future Enhancements
 
-## Web API
+- Support for automatic detection and management of broken or orphaned SEO links
+<!-- 
+- UI for managing SEO priorities
+- Integration with sitemap and robots.txt generation
+-->
 
-Web API documentation for each module is built out automatically and can be accessed by following the link bellow:
-<https://link-to-swager-api>
+## Documentation links
 
-## Database Model
-
-![DB model](./docs/media/diagram-db-model.png)
-
-## Related topics
-
-[Some Article1](some-article1.md)
-
-[Some Article2](some-article2.md)
+## References links
 
 ## License
 
