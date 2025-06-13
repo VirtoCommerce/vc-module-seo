@@ -29,6 +29,12 @@ public class SeoController(
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Find all SEO records for object by objectId and objectType
+    /// </summary>
+    /// <param name="objectId"></param>
+    /// <param name="objectType"></param>
+    /// <returns></returns>
     [HttpGet]
     [Route("duplicates")]
     public async Task<ActionResult<SeoInfo[]>> GetSeoDuplicates([FromQuery] string objectId, [FromQuery] string objectType)
@@ -53,5 +59,18 @@ public class SeoController(
         };
         var retVal = await compositeSeoResolver.FindSeoAsync(criteria);
         return Ok(retVal.ToArray());
+    }
+
+    /// <summary>
+    /// Search SEO records based on criteria
+    /// </summary>
+    /// <param name="criteria"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [Route("search")]
+    public async Task<ActionResult<SeoInfo[]>> SearchSeo([FromBody] SeoSearchCriteria criteria)
+    {
+        var result = await compositeSeoResolver.FindSeoAsync(criteria);
+        return Ok(result);
     }
 }

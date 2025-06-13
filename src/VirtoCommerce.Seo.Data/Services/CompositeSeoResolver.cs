@@ -6,7 +6,10 @@ using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
-public class CompositeSeoResolver(IEnumerable<ISeoResolver> resolvers) : ICompositeSeoResolver
+public class CompositeSeoResolver(
+    IEnumerable<ISeoResolver> resolvers,
+    IEnumerable<ISeoFallbackHandler> seoFallbackHandlers)
+    : ICompositeSeoResolver
 {
     public virtual async Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
     {
@@ -19,6 +22,12 @@ public class CompositeSeoResolver(IEnumerable<ISeoResolver> resolvers) : ICompos
             .Where(x => x.ObjectId != null && x.ObjectType != null)
             .Distinct()
             .ToList();
+
+        if (result.Count == 0)
+        {
+            var handlerTasks = seoFallbackHandlers.Select(x => x.HandleFallback(criteria)).ToArray();
+            await Task.WhenAll(handlerTasks);
+        }
 
         return result;
     }

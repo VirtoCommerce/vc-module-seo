@@ -1,0 +1,61 @@
+<div class="blade-static">
+  <div class="form-group">
+    <div class="form-input __other">
+      <input placeholder="{{ 'platform.placeholders.search-keyword' | translate }}" ng-model="blade.searchKeyword" ng-keyup="$event.which === 13 && blade.refresh()">
+      <button class="btn __other" type="button">
+        <i class="btn-ico fa fa-times-circle" title="Clear" ng-click="blade.searchKeyword=null;blade.refresh()"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="blade-static __bottom" ng-if="pageSettings.itemsPerPageCount < pageSettings.totalItems" ng-include="'pagerTemplate.html'"></div>
+<div class="blade-content __medium-wide">
+  <div class="blade-inner">
+    <div class="inner-block">
+      <div class="table-wrapper" ng-init="setGridOptions({
+                data: 'listEntries',
+                rowTemplate: 'broken-link-list.row.html',
+                rowHeight: 61,
+                columnDefs: [
+                        {
+                            name: 'permalink', displayName: 'seo.blades.broken-link-list.labels.permalink',
+                            cellTooltip: true,
+                            cellTemplate: 'template-broken-link-list.cell.html'
+                        },
+                        {
+                            name: 'status', displayName: 'seo.blades.broken-link-list.labels.status'
+                        },
+                ],
+                enablePaginationControls: false,
+                paginationPageSize: pageSettings.itemsPerPageCount
+                 })">
+        <div ui-grid="gridOptions" ui-grid-auto-resize ui-grid-save-state ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-pagination ui-grid-height></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="broken-link-list.row.html">
+  <div ng-click='grid.appScope.selectNode(row.entity)'
+       ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid"
+       ng-class="{'ui-grid-row-header-cell': col.isRowHeader, '__hovered': grid.appScope.contextMenuEntity === row.entity, '__selected': grid.appScope.selectedNodeId === row.entity.id}"
+       data-selected-id="{{grid.appScope.selectedNodeId}}"
+       data-item-id="{{row.entity.id}}"
+       ui-grid-one-bind-id-grid="rowRenderIndex + '-' + col.uid + '-cell'"
+       ui-grid-cell
+       class="ui-grid-cell"
+       role="{{col.isRowHeader ? 'rowheader' : 'gridcell' }}"
+       style="cursor: pointer;">
+  </div>
+</script>
+
+<script type="text/ng-template" id="template-broken-link-list.cell.html">
+  <div class="ui-grid-cell-contents">
+    <div class="inner-contents" style="width:100%;">
+      <div class="table-t" title="{{ row.entity.id }}">{{COL_FIELD}}</div>
+      <div class="list-descr" style="width:100%">
+        <span style="color:gray;">{{ row.entity.outerId }}</span>
+      </div>
+    </div>
+  </div>
+</script>

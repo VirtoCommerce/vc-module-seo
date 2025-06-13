@@ -8,7 +8,15 @@ namespace VirtoCommerce.Seo.Core.Extensions;
 
 public static class SeoExtensions
 {
-    public static string[] OrderedObjectTypes { get; set; } = [];
+    // the last element in the array has the highest priority
+    public static string[] OrderedObjectTypes { get; set; } =
+    [
+        "CatalogProduct",
+        "Category",
+        "Catalog",
+        "ContentFile",
+        "Pages",
+    ];
 
     public static SeoInfo GetFallbackSeoInfo(string id, string name, string cultureName)
     {

@@ -5,6 +5,13 @@ namespace VirtoCommerce.Seo.Core;
 
 public static class ModuleConstants
 {
+    public static class LinkStatus
+    {
+        public const string Active = "Active";
+        public const string Resolved = "Resolved";
+        public const string Accepted = "Accepted";
+    }
+
     public static class Security
     {
         public static class Permissions

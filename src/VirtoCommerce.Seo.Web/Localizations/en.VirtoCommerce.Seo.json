@@ -1,6 +1,14 @@
 {
-  "Seo": {
+  "seo": {
     "blades": {
+      "broken-link-list": {
+        "title": "Broken Links",
+        "subtitle": "List of broken links in the store",
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Status"
+        }
+      }
     }
   },
   "permissions": {
