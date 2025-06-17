@@ -12,11 +12,11 @@ public class SeoFallbackHandler(
     IBrokenLinkSearchService brokenLinkSearchService, IBrokenLinkService brokenLinkService
 ) : ISeoFallbackHandler
 {
-    public async Task HandleFallback(SeoSearchCriteria criteria)
+    public Task HandleFallback(SeoSearchCriteria criteria)
     {
         ArgumentNullException.ThrowIfNull(criteria);
 
-        await HandleFallbackInternal(criteria);
+        return HandleFallbackInternal(criteria);
     }
 
     private async Task HandleFallbackInternal(SeoSearchCriteria criteria)
