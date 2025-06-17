@@ -16,10 +16,10 @@ public class SeoFallbackHandler(
     {
         ArgumentNullException.ThrowIfNull(criteria);
 
-        await AddOrUpdateBrokenLink(criteria);
+        await HandleFallbackInternal(criteria);
     }
 
-    private async Task AddOrUpdateBrokenLink(SeoSearchCriteria criteria)
+    private async Task HandleFallbackInternal(SeoSearchCriteria criteria)
     {
         var brokenListCriteria = AbstractTypeFactory<BrokenLinkSearchCriteria>.TryCreateInstance();
         brokenListCriteria.Permalink = criteria.Permalink;
