@@ -14,10 +14,7 @@ public class SeoFallbackHandler(
 {
     public async Task HandleFallback(SeoSearchCriteria criteria)
     {
-        if (criteria == null)
-        {
-            throw new ArgumentNullException(nameof(criteria));
-        }
+        ArgumentNullException.ThrowIfNull(criteria);
 
         var brokenListCriteria = AbstractTypeFactory<BrokenLinkSearchCriteria>.TryCreateInstance();
         brokenListCriteria.Permalink = criteria.Permalink;

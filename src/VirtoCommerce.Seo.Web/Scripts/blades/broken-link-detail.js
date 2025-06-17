@@ -15,7 +15,8 @@ angular.module('virtoCommerce.seo')
         };
 
         blade.onClose = function (closeCallback) {
-            bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, saveChanges, closeCallback, "seo.dialogs.broken-list-save.title", "seo.dialogs.broken-list-save.message");
+            bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, saveChanges, closeCallback,
+                "seo.dialogs.broken-list-save.title", "seo.dialogs.broken-list-save.message");
         };
 
         blade.toolbarCommands = [
@@ -51,7 +52,7 @@ angular.module('virtoCommerce.seo')
         };
 
         $scope.validateRedirectUrl = function (value) {
-            return blade.editEntity.status != "Resolved" || !!value;
+            return blade.editEntity.status !== "Resolved" || !!value;
         };
 
         $scope.revalidate = function () {

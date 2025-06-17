@@ -16,8 +16,9 @@ angular.module('virtoCommerce.seo')
 
         blade.refresh = function () {
             blade.isLoading = true;
-            if ($scope.pageSettings.currentPage !== 1)
+            if ($scope.pageSettings.currentPage !== 1) {
                 $scope.pageSettings.currentPage = 1;
+            }
 
             api.search(getSearchCriteria(), function (data) {
                 $scope.data = data.results;
@@ -68,7 +69,9 @@ angular.module('virtoCommerce.seo')
                 callback: function (remove) {
                     if (remove) {
                         blade.isLoading = true;
-                        const ids = selection.map(function (item) { return item.id; });
+                        const ids = selection.map(function (item) {
+                            return item.id;
+                        });
                         api.delete({ ids }, function () {
                             blade.isLoading = false;
                             blade.refresh();
