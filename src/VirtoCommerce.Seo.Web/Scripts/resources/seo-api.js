@@ -5,5 +5,6 @@ angular.module('virtoCommerce.seo')
                 url: 'api/seo/broken-links/search',
                 method: 'POST',
             },
+            save: { method: 'POST' },
         });
     }]);

@@ -25,6 +25,11 @@ public class BrokenLinkSearchService(
     {
         var query = ((IBrokenLinksRepository)repository).BrokenLinks;
 
+        if (!string.IsNullOrEmpty(criteria.Keyword))
+        {
+            query = query.Where(x => x.Permalink.Contains(criteria.Keyword));
+        }
+
         if (!string.IsNullOrEmpty(criteria.Permalink))
         {
             query = query.Where(x => x.Permalink == criteria.Permalink);

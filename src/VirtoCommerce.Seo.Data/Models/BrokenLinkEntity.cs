@@ -34,8 +34,8 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
         model.CreatedDate = CreatedDate;
         model.ModifiedBy = ModifiedBy;
         model.ModifiedDate = ModifiedDate;
-        model.Language = LanguageCode;
 
+        model.Language = LanguageCode;
         model.Count = Count;
         model.Permalink = Permalink;
         model.StoreId = StoreId;
@@ -55,8 +55,8 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
         CreatedDate = model.CreatedDate;
         ModifiedBy = model.ModifiedBy;
         ModifiedDate = model.ModifiedDate;
-        LanguageCode = model.Language;
 
+        LanguageCode = model.Language;
         Count = model.Count;
         Permalink = model.Permalink;
         StoreId = model.StoreId;
@@ -69,10 +69,12 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
 
     public void Patch(BrokenLinkEntity target)
     {
+        target.LanguageCode = LanguageCode;
         target.Count = Count;
         target.Permalink = Permalink;
         target.StoreId = StoreId;
         target.Status = Status;
         target.RedirectUrl = RedirectUrl;
+        target.LastAttemptTimestamp = LastAttemptTimestamp;
     }
 }

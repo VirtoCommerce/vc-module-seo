@@ -8,6 +8,36 @@
           "permalink": "Permalink",
           "status": "Status"
         }
+      },
+      "broken-link-detail": {
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Status",
+          "redirectUrl": "Redirect URL",
+          "requestCount": "Number of requests",
+          "language": "Language",
+          "createdDate": "Created Date",
+          "lastAttempt": "Latest request"
+        },
+        "placeholders": {
+          "status": "Status",
+          "redirectUrl": "Redirect URL"
+        },
+        "statuses": {
+          "active": "Active",
+          "resolved": "Resolved",
+          "accepted": "Accepted"
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Delete Broken Link",
+        "message": "Are you sure you want to delete the broken link?"
+      },
+      "broken-link-save": {
+        "title": "Save changes",
+        "message": "This entity has been modified. Do you want to save changes?"
       }
     }
   },

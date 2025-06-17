@@ -1,0 +1,69 @@
+<div class="blade-content">
+  <div class="blade-inner">
+    <div class="inner-block">
+      <form class="form" name="formScope">
+        <fieldset ng-init="setForm(formScope)">
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.permalink' | translate }}</label>
+            <div class="form-input">
+              <input class="form-control" value="{{ blade.editEntity.permalink }}" readonly="readonly" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.redirectUrl' | translate }}</label>
+            <div class="form-input">
+              <input name="redirectUrl" 
+                     ng-class="{'error': blade.formScope.redirectUrl.$invalid}"
+                     ui-validate=" 'validateRedirectUrl($value)' "
+                     class="form-control"
+                     ng-model="blade.editEntity.redirectUrl"
+                     placeholder="{{ 'seo.blades.broken-link-detail.placeholders.redirectUrl' | translate }}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.status' | translate }}</label>
+            <div class="form-input">
+              <ui-select name="status" ng-model="blade.editEntity.status" search-enabled="false" on-select="revalidate()">
+                <ui-select-match placeholder="{{ 'seo.blades.broken-link-detail.placeholders.status' | translate }}">{{ 'seo.blades.broken-link-detail.statuses.' + $select.selected.toLowerCase() | translate }}</ui-select-match>
+                <ui-select-choices repeat="status in blade.availableStatuses">
+                  <span ng-bind-html="('seo.blades.broken-link-detail.statuses.' + status.toLowerCase()) | translate | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.requestCount' | translate }}</label>
+            <div class="form-input">
+              <input class="form-control" ng-model="blade.editEntity.count" readonly="readonly" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.language' | translate }}</label>
+            <div class="form-input">
+              <input class="form-control" ng-model="blade.editEntity.language" readonly="readonly" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.lastAttempt' | translate }}</label>
+            <div class="form-input">
+              <input class="form-control" ng-model="blade.editEntity.lastAttemptTimestamp" readonly="readonly" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.broken-link-detail.labels.createdDate' | translate }}</label>
+            <div class="form-input">
+              <input class="form-control" ng-model="blade.editEntity.createdDate" readonly="readonly" />
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

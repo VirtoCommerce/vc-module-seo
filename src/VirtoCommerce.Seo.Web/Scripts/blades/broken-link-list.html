@@ -13,14 +13,11 @@
   <div class="blade-inner">
     <div class="inner-block">
       <div class="table-wrapper" ng-init="setGridOptions({
-                data: 'listEntries',
+                data: 'data',
                 rowTemplate: 'broken-link-list.row.html',
-                rowHeight: 61,
                 columnDefs: [
                         {
-                            name: 'permalink', displayName: 'seo.blades.broken-link-list.labels.permalink',
-                            cellTooltip: true,
-                            cellTemplate: 'template-broken-link-list.cell.html'
+                            name: 'permalink', displayName: 'seo.blades.broken-link-list.labels.permalink'
                         },
                         {
                             name: 'status', displayName: 'seo.blades.broken-link-list.labels.status'
@@ -46,16 +43,5 @@
        class="ui-grid-cell"
        role="{{col.isRowHeader ? 'rowheader' : 'gridcell' }}"
        style="cursor: pointer;">
-  </div>
-</script>
-
-<script type="text/ng-template" id="template-broken-link-list.cell.html">
-  <div class="ui-grid-cell-contents">
-    <div class="inner-contents" style="width:100%;">
-      <div class="table-t" title="{{ row.entity.id }}">{{COL_FIELD}}</div>
-      <div class="list-descr" style="width:100%">
-        <span style="color:gray;">{{ row.entity.outerId }}</span>
-      </div>
-    </div>
   </div>
 </script>

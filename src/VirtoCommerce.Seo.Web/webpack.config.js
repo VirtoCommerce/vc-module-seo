@@ -1,4 +1,4 @@
-const namespace = 'VirtoCommerce.BrokenLinks'
+const namespace = 'VirtoCommerce.Seo'
 
 const glob = require('glob');
 const path = require('path');
