@@ -8,9 +8,9 @@ using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
-public class SeoFallbackHandler(
+public class SeoInfoNotFoundHandler(
     IBrokenLinkSearchService brokenLinkSearchService, IBrokenLinkService brokenLinkService
-) : ISeoFallbackHandler
+) : ISeoInfoNotFoundHandler
 {
     public Task HandleFallback(SeoSearchCriteria criteria)
     {

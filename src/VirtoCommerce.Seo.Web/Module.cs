@@ -62,7 +62,7 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<IBrokenLinkSearchService, BrokenLinkSearchService>();
         serviceCollection.AddTransient<IBrokenLinkService, BrokenLinkService>();
-        serviceCollection.AddTransient<ISeoFallbackHandler, SeoFallbackHandler>();
+        serviceCollection.AddTransient<ISeoInfoNotFoundHandler, SeoInfoNotFoundHandler>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)

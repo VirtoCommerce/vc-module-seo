@@ -8,7 +8,7 @@ namespace VirtoCommerce.Seo.Data.Services;
 
 public class CompositeSeoResolver(
     IEnumerable<ISeoResolver> resolvers,
-    IEnumerable<ISeoFallbackHandler> seoFallbackHandlers)
+    IEnumerable<ISeoInfoNotFoundHandler> seoInfoHandlers)
     : ICompositeSeoResolver
 {
     public virtual async Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
@@ -25,7 +25,7 @@ public class CompositeSeoResolver(
 
         if (result.Count == 0)
         {
-            var handlerTasks = seoFallbackHandlers.Select(x => x.HandleFallback(criteria)).ToArray();
+            var handlerTasks = seoInfoHandlers.Select(x => x.HandleFallback(criteria)).ToArray();
             await Task.WhenAll(handlerTasks);
         }
 

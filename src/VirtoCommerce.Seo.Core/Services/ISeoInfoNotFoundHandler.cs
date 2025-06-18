@@ -3,7 +3,7 @@ using VirtoCommerce.Seo.Core.Models;
 
 namespace VirtoCommerce.Seo.Core.Services;
 
-public interface ISeoFallbackHandler
+public interface ISeoInfoNotFoundHandler
 {
     Task HandleFallback(SeoSearchCriteria criteria);
 }
