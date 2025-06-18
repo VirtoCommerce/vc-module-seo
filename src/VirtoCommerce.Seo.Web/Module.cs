@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -11,8 +12,10 @@ using VirtoCommerce.Platform.Data.MySql.Extensions;
 using VirtoCommerce.Platform.Data.PostgreSql.Extensions;
 using VirtoCommerce.Platform.Data.SqlServer.Extensions;
 using VirtoCommerce.Seo.Core;
+using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Services;
+using VirtoCommerce.Seo.Data.Handlers;
 using VirtoCommerce.Seo.Data.MySql;
 using VirtoCommerce.Seo.Data.PostgreSql;
 using VirtoCommerce.Seo.Data.Repositories;
@@ -62,7 +65,7 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<IBrokenLinkSearchService, BrokenLinkSearchService>();
         serviceCollection.AddTransient<IBrokenLinkService, BrokenLinkService>();
-        serviceCollection.AddTransient<ISeoInfoNotFoundHandler, SeoInfoNotFoundHandler>();
+        serviceCollection.AddTransient<SeoInfoNotFoundEventHandler>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
@@ -81,6 +84,8 @@ public class Module : IModule, IHasConfiguration
         using var serviceScope = serviceProvider.CreateScope();
         using var dbContext = serviceScope.ServiceProvider.GetRequiredService<SeoDbContext>();
         dbContext.Database.Migrate();
+
+        appBuilder.RegisterEventHandler<SeoInfoNotFoundEvent, SeoInfoNotFoundEventHandler>();
     }
 
     public void Uninstall()

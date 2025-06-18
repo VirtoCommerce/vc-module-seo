@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
 
@@ -8,7 +11,7 @@ namespace VirtoCommerce.Seo.Data.Services;
 
 public class CompositeSeoResolver(
     IEnumerable<ISeoResolver> resolvers,
-    IEnumerable<ISeoInfoNotFoundHandler> seoInfoHandlers)
+    IEventPublisher eventPublisher)
     : ICompositeSeoResolver
 {
     public virtual async Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
@@ -25,8 +28,9 @@ public class CompositeSeoResolver(
 
         if (result.Count == 0)
         {
-            var handlerTasks = seoInfoHandlers.Select(x => x.Handle(criteria)).ToArray();
-            await Task.WhenAll(handlerTasks);
+            var infoNotFoundEvent = AbstractTypeFactory<SeoInfoNotFoundEvent>.TryCreateInstance();
+            infoNotFoundEvent.Criteria = criteria;
+            await eventPublisher.Publish(infoNotFoundEvent);
         }
 
         return result;
