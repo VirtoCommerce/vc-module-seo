@@ -25,7 +25,7 @@ public class CompositeSeoResolver(
 
         if (result.Count == 0)
         {
-            var handlerTasks = seoInfoHandlers.Select(x => x.HandleFallback(criteria)).ToArray();
+            var handlerTasks = seoInfoHandlers.Select(x => x.Handle(criteria)).ToArray();
             await Task.WhenAll(handlerTasks);
         }
 

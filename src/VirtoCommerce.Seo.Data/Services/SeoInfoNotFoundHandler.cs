@@ -12,7 +12,7 @@ public class SeoInfoNotFoundHandler(
     IBrokenLinkSearchService brokenLinkSearchService, IBrokenLinkService brokenLinkService
 ) : ISeoInfoNotFoundHandler
 {
-    public Task HandleFallback(SeoSearchCriteria criteria)
+    public Task Handle(SeoSearchCriteria criteria)
     {
         ArgumentNullException.ThrowIfNull(criteria);
 

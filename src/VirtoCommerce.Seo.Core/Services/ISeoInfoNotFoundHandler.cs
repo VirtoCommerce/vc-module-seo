@@ -5,5 +5,5 @@ namespace VirtoCommerce.Seo.Core.Services;
 
 public interface ISeoInfoNotFoundHandler
 {
-    Task HandleFallback(SeoSearchCriteria criteria);
+    Task Handle(SeoSearchCriteria criteria);
 }
