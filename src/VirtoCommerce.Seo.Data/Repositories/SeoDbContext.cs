@@ -21,7 +21,7 @@ public class SeoDbContext : DbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<BrokenLinkEntity>().ToTable("BrokenLinks").HasKey(x => x.Id);
+        modelBuilder.Entity<BrokenLinkEntity>().ToTable("BrokenLink").HasKey(x => x.Id);
         modelBuilder.Entity<BrokenLinkEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
 
         switch (Database.ProviderName)

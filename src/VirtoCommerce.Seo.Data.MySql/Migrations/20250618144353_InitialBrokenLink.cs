@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtoCommerce.Seo.Data.MySql.Migrations
 {
     /// <inheritdoc />
-    public partial class Seo_Initial_BrokenLinks : Migration
+    public partial class InitialBrokenLink : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "BrokenLinks",
+                name: "BrokenLink",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
@@ -41,7 +41,7 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BrokenLinks", x => x.Id);
+                    table.PrimaryKey("PK_BrokenLink", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -50,7 +50,7 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BrokenLinks");
+                name: "BrokenLink");
         }
     }
 }

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class Seo_Initial_BrokenLinks : Migration
+    public partial class InitialBrokenLink : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BrokenLinks",
+                name: "BrokenLink",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
@@ -30,7 +30,7 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BrokenLinks", x => x.Id);
+                    table.PrimaryKey("PK_BrokenLink", x => x.Id);
                 });
         }
 
@@ -38,7 +38,7 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BrokenLinks");
+                name: "BrokenLink");
         }
     }
 }

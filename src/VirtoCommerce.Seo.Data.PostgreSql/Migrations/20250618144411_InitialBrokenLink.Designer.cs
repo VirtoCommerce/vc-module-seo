@@ -12,8 +12,8 @@ using VirtoCommerce.Seo.Data.Repositories;
 namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(SeoDbContext))]
-    [Migration("20250613143120_Seo_Initial_BrokenLinks")]
-    partial class Seo_Initial_BrokenLinks
+    [Migration("20250618144411_InitialBrokenLink")]
+    partial class InitialBrokenLink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,7 +74,7 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BrokenLinks", (string)null);
+                    b.ToTable("BrokenLink", (string)null);
                 });
 #pragma warning restore 612, 618
         }

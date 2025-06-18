@@ -71,7 +71,7 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BrokenLinks", (string)null);
+                    b.ToTable("BrokenLink", (string)null);
                 });
 #pragma warning restore 612, 618
         }
