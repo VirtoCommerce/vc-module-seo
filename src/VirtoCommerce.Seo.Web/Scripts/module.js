@@ -9,8 +9,8 @@ angular.module(moduleName, [])
     .run(['platformWebApp.widgetService',
         function (widgetService) {
             widgetService.registerWidget({
-                controller: 'virtoCommerce.seo.storeWidgetController',
-                template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/storeWidget.html'
+                controller: 'virtoCommerce.seo.brokenLinksWidgetController',
+                template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/broken-links-widget.html'
             }, 'storeDetail');
         }]
     );
