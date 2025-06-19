@@ -34,9 +34,9 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BrokenLink_StoreId_Permalink_LanguageCode",
+                name: "IX_BrokenLink_Permalink_StoreId_LanguageCode",
                 table: "BrokenLink",
-                columns: new[] { "StoreId", "Permalink", "LanguageCode" },
+                columns: new[] { "Permalink", "StoreId", "LanguageCode" },
                 unique: true);
         }
 

@@ -74,7 +74,7 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoreId", "Permalink", "LanguageCode")
+                    b.HasIndex("Permalink", "StoreId", "LanguageCode")
                         .IsUnique();
 
                     b.ToTable("BrokenLink", (string)null);

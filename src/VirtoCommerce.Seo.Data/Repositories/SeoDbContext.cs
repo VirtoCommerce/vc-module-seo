@@ -23,7 +23,7 @@ public class SeoDbContext : DbContextBase
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<BrokenLinkEntity>().ToAuditableEntityTable("BrokenLink");
-        modelBuilder.Entity<BrokenLinkEntity>().HasIndex(x => new { x.StoreId, x.Permalink, x.LanguageCode }).IsUnique();
+        modelBuilder.Entity<BrokenLinkEntity>().HasIndex(x => new { x.Permalink, x.StoreId, x.LanguageCode }).IsUnique();
 
         switch (Database.ProviderName)
         {

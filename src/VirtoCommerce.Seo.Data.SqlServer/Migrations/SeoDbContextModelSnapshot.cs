@@ -71,7 +71,7 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoreId", "Permalink", "LanguageCode")
+                    b.HasIndex("Permalink", "StoreId", "LanguageCode")
                         .IsUnique()
                         .HasFilter("[StoreId] IS NOT NULL AND [Permalink] IS NOT NULL AND [LanguageCode] IS NOT NULL");
 
