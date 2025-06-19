@@ -51,12 +51,12 @@ angular.module('virtoCommerce.seo')
         function openDetailsBlade(listItem) {
             const newBlade = {
                 id: 'brokenLinkDetails',
+                controller: 'virtoCommerce.seo.brokenLinkDetailsController',
+                template: 'Modules/$(virtoCommerce.seo)/Scripts/blades/broken-link-details.html',
                 currentEntity: listItem,
                 parentBlade: blade,
                 title: listItem.permalink,
                 updatePermission: blade.updatePermission,
-                controller: 'virtoCommerce.seo.brokenLinkDetailsController',
-                template: 'Modules/$(virtoCommerce.seo)/Scripts/blades/broken-link-details.html',
             };
             bladeNavigationService.showBlade(newBlade, blade);
         }

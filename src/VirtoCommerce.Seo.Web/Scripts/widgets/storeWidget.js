@@ -20,13 +20,13 @@ angular.module('virtoCommerce.seo')
             $scope.openBlade = function () {
                 const newBlade = {
                     id: "seoBrokenLinkList",
+                    controller: 'virtoCommerce.seo.brokenLinkListController',
+                    template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/broken-link-list.html',
                     storeId: blade.currentEntityId,
                     headIcon: 'fa fa-file-o',
                     title: 'seo.blades.broken-link-list.title',
                     titleValues: { name: store.name },
                     subtitle: 'seo.blades.broken-link-list.subtitle',
-                    controller: 'virtoCommerce.seo.brokenLinkListController',
-                    template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/broken-link-list.html',
                 };
                 bladeNavigationService.showBlade(newBlade, blade);
             };
