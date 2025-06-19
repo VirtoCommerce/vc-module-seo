@@ -8,13 +8,14 @@ namespace VirtoCommerce.Seo.Data.Models;
 
 public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, BrokenLink>
 {
-    public int HitCount { get; set; }
-
     [StringLength(2048)]
     public string Permalink { get; set; }
 
     [StringLength(128)]
     public string StoreId { get; set; }
+
+    [StringLength(128)]
+    public string LanguageCode { get; set; }
 
     [StringLength(64)]
     public string Status { get; set; }
@@ -22,12 +23,11 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
     [StringLength(2048)]
     public string RedirectUrl { get; set; }
 
-    [StringLength(128)]
-    public string LanguageCode { get; set; }
+    public int HitCount { get; set; }
 
-    public DateTime LastAttemptTimestamp { get; set; }
+    public DateTime LastHitDate { get; set; }
 
-    public BrokenLink ToModel(BrokenLink model)
+    public virtual BrokenLink ToModel(BrokenLink model)
     {
         model.Id = Id;
         model.CreatedBy = CreatedBy;
@@ -35,18 +35,18 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
         model.ModifiedBy = ModifiedBy;
         model.ModifiedDate = ModifiedDate;
 
-        model.Language = LanguageCode;
-        model.HitCount = HitCount;
         model.Permalink = Permalink;
         model.StoreId = StoreId;
+        model.Language = LanguageCode;
         model.Status = Status;
         model.RedirectUrl = RedirectUrl;
-        model.LastAttemptTimestamp = LastAttemptTimestamp;
+        model.HitCount = HitCount;
+        model.LastHitDate = LastHitDate;
 
         return model;
     }
 
-    public BrokenLinkEntity FromModel(BrokenLink model, PrimaryKeyResolvingMap pkMap)
+    public virtual BrokenLinkEntity FromModel(BrokenLink model, PrimaryKeyResolvingMap pkMap)
     {
         pkMap.AddPair(model, this);
 
@@ -56,25 +56,25 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
         ModifiedBy = model.ModifiedBy;
         ModifiedDate = model.ModifiedDate;
 
-        LanguageCode = model.Language;
-        HitCount = model.HitCount;
         Permalink = model.Permalink;
         StoreId = model.StoreId;
+        LanguageCode = model.Language;
         Status = model.Status;
         RedirectUrl = model.RedirectUrl;
-        LastAttemptTimestamp = model.LastAttemptTimestamp;
+        HitCount = model.HitCount;
+        LastHitDate = model.LastHitDate;
 
         return this;
     }
 
-    public void Patch(BrokenLinkEntity target)
+    public virtual void Patch(BrokenLinkEntity target)
     {
-        target.LanguageCode = LanguageCode;
-        target.HitCount = HitCount;
         target.Permalink = Permalink;
         target.StoreId = StoreId;
+        target.LanguageCode = LanguageCode;
         target.Status = Status;
         target.RedirectUrl = RedirectUrl;
-        target.LastAttemptTimestamp = LastAttemptTimestamp;
+        target.HitCount = HitCount;
+        target.LastHitDate = LastHitDate;
     }
 }

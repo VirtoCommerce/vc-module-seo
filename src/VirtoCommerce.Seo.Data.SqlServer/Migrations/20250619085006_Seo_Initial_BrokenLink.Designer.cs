@@ -12,7 +12,7 @@ using VirtoCommerce.Seo.Data.Repositories;
 namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SeoDbContext))]
-    [Migration("20250619082722_Seo_Initial_BrokenLink")]
+    [Migration("20250619085006_Seo_Initial_BrokenLink")]
     partial class Seo_Initial_BrokenLink
     {
         /// <inheritdoc />
@@ -46,7 +46,7 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<DateTime>("LastAttemptTimestamp")
+                    b.Property<DateTime>("LastHitDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")

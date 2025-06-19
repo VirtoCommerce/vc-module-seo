@@ -43,7 +43,7 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
-                    b.Property<DateTime>("LastAttemptTimestamp")
+                    b.Property<DateTime>("LastHitDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ModifiedBy")

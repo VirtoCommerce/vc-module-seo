@@ -9,15 +9,15 @@
           "status": "Status"
         }
       },
-      "broken-link-detail": {
+      "broken-link-details": {
         "labels": {
           "permalink": "Permalink",
           "status": "Status",
           "redirectUrl": "Redirect URL",
           "hitCount": "Hit count",
           "language": "Language",
-          "createdDate": "Created Date",
-          "lastAttempt": "Latest request"
+          "createdDate": "Created date",
+          "lastHitDate": "Latest hit date"
         },
         "placeholders": {
           "status": "Status",

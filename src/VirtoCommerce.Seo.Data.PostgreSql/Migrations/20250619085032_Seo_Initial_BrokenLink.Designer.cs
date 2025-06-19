@@ -12,7 +12,7 @@ using VirtoCommerce.Seo.Data.Repositories;
 namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(SeoDbContext))]
-    [Migration("20250619082710_Seo_Initial_BrokenLink")]
+    [Migration("20250619085032_Seo_Initial_BrokenLink")]
     partial class Seo_Initial_BrokenLink
     {
         /// <inheritdoc />
@@ -46,7 +46,7 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<DateTime>("LastAttemptTimestamp")
+                    b.Property<DateTime>("LastHitDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ModifiedBy")

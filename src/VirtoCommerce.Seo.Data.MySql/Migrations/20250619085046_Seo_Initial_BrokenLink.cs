@@ -20,18 +20,18 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    HitCount = table.Column<int>(type: "int", nullable: false),
                     Permalink = table.Column<string>(type: "varchar(2048)", maxLength: 2048, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     StoreId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LanguageCode = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RedirectUrl = table.Column<string>(type: "varchar(2048)", maxLength: 2048, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LanguageCode = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastAttemptTimestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    HitCount = table.Column<int>(type: "int", nullable: false),
+                    LastHitDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CreatedBy = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)

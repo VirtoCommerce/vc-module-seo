@@ -43,7 +43,7 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<DateTime>("LastAttemptTimestamp")
+                    b.Property<DateTime>("LastHitDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ModifiedBy")

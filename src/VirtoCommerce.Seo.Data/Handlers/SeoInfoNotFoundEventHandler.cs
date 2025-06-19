@@ -25,8 +25,8 @@ public class SeoInfoNotFoundEventHandler(
     private async Task HandleInternal(SeoSearchCriteria criteria)
     {
         var searchCriteria = AbstractTypeFactory<BrokenLinkSearchCriteria>.TryCreateInstance();
-        searchCriteria.StoreId = criteria.StoreId;
         searchCriteria.Permalink = criteria.Permalink;
+        searchCriteria.StoreId = criteria.StoreId;
         searchCriteria.LanguageCode = criteria.LanguageCode;
         searchCriteria.Take = 1;
 
@@ -43,15 +43,15 @@ public class SeoInfoNotFoundEventHandler(
         {
             model = AbstractTypeFactory<BrokenLink>.TryCreateInstance();
 
-            model.StoreId = criteria.StoreId;
             model.Permalink = criteria.Permalink;
+            model.StoreId = criteria.StoreId;
             model.Language = criteria.LanguageCode;
             model.Status = ModuleConstants.LinkStatus.Active;
             model.CreatedDate = DateTime.UtcNow;
         }
 
         model.HitCount++;
-        model.LastAttemptTimestamp = DateTime.UtcNow;
+        model.LastHitDate = DateTime.UtcNow;
 
         await brokenLinkService.SaveChangesAsync([model]);
     }

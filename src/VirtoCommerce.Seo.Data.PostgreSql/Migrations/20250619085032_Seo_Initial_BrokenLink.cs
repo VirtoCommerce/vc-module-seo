@@ -16,13 +16,13 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    HitCount = table.Column<int>(type: "integer", nullable: false),
                     Permalink = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
                     StoreId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    LanguageCode = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     Status = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     RedirectUrl = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
-                    LanguageCode = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    LastAttemptTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    HitCount = table.Column<int>(type: "integer", nullable: false),
+                    LastHitDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),

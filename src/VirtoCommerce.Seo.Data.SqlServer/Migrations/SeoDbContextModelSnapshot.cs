@@ -43,7 +43,7 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<DateTime>("LastAttemptTimestamp")
+                    b.Property<DateTime>("LastHitDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")

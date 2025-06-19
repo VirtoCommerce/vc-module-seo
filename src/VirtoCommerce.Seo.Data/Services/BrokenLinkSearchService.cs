@@ -41,14 +41,14 @@ public class BrokenLinkSearchService(
             query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
-        if (!string.IsNullOrEmpty(criteria.Status))
-        {
-            query = query.Where(x => x.Status == criteria.Status);
-        }
-
         if (!string.IsNullOrEmpty(criteria.LanguageCode))
         {
             query = query.Where(x => x.LanguageCode == criteria.LanguageCode || string.IsNullOrEmpty(x.LanguageCode));
+        }
+
+        if (!string.IsNullOrEmpty(criteria.Status))
+        {
+            query = query.Where(x => x.Status == criteria.Status);
         }
 
         return query;

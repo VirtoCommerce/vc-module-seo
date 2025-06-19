@@ -50,7 +50,7 @@ angular.module('virtoCommerce.seo')
 
         function openDetailsBlade(listItem) {
             const newBlade = {
-                id: 'brokenLinkDetail',
+                id: 'brokenLinkDetails',
                 currentEntity: listItem,
                 parentBlade: blade,
                 title: listItem.permalink,
