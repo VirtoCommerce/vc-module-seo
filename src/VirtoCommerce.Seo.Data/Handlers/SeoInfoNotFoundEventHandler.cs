@@ -24,14 +24,15 @@ public class SeoInfoNotFoundEventHandler(
 
     private async Task HandleInternal(SeoSearchCriteria criteria)
     {
-        var brokenListCriteria = AbstractTypeFactory<BrokenLinkSearchCriteria>.TryCreateInstance();
-        brokenListCriteria.Permalink = criteria.Permalink;
-        brokenListCriteria.StoreId = criteria.StoreId;
-        brokenListCriteria.LanguageCode = criteria.LanguageCode;
+        var searchCriteria = AbstractTypeFactory<BrokenLinkSearchCriteria>.TryCreateInstance();
+        searchCriteria.StoreId = criteria.StoreId;
+        searchCriteria.Permalink = criteria.Permalink;
+        searchCriteria.LanguageCode = criteria.LanguageCode;
+        searchCriteria.Take = 1;
 
-        var models = await brokenLinkSearchService.SearchNoCloneAsync(brokenListCriteria);
+        var searchResult = await brokenLinkSearchService.SearchNoCloneAsync(searchCriteria);
 
-        var model = models.Results.FirstOrDefault();
+        var model = searchResult.Results.FirstOrDefault();
 
         if (model != null && model.Status != ModuleConstants.LinkStatus.Active)
         {
@@ -42,8 +43,8 @@ public class SeoInfoNotFoundEventHandler(
         {
             model = AbstractTypeFactory<BrokenLink>.TryCreateInstance();
 
-            model.Permalink = criteria.Permalink;
             model.StoreId = criteria.StoreId;
+            model.Permalink = criteria.Permalink;
             model.Language = criteria.LanguageCode;
             model.Status = ModuleConstants.LinkStatus.Active;
             model.CreatedDate = DateTime.UtcNow;
@@ -53,6 +54,5 @@ public class SeoInfoNotFoundEventHandler(
         model.LastAttemptTimestamp = DateTime.UtcNow;
 
         await brokenLinkService.SaveChangesAsync([model]);
-
     }
 }

@@ -13,7 +13,7 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
     [StringLength(2048)]
     public string Permalink { get; set; }
 
-    [StringLength(64)]
+    [StringLength(128)]
     public string StoreId { get; set; }
 
     [StringLength(64)]

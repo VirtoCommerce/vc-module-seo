@@ -18,8 +18,9 @@ public class BrokenLinkSearchService(
     IPlatformMemoryCache platformMemoryCache,
     IBrokenLinkService crudService,
     IOptions<CrudOptions> crudOptions)
-    : SearchService<BrokenLinkSearchCriteria, BrokenLinkSearchResult, BrokenLink, BrokenLinkEntity>(repositoryFactory,
-        platformMemoryCache, crudService, crudOptions), IBrokenLinkSearchService
+    : SearchService<BrokenLinkSearchCriteria, BrokenLinkSearchResult, BrokenLink, BrokenLinkEntity>
+        (repositoryFactory, platformMemoryCache, crudService, crudOptions),
+        IBrokenLinkSearchService
 {
     protected override IQueryable<BrokenLinkEntity> BuildQuery(IRepository repository, BrokenLinkSearchCriteria criteria)
     {

@@ -19,7 +19,7 @@ public class BrokenLinksController(
 {
     [HttpGet]
     [Route("{id}")]
-    [Authorize(ModuleConstants.Security.Permissions.Access)]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<BrokenLink>> GetById(string id)
     {
         var contract = await brokenLinkService.GetNoCloneAsync(id);
@@ -82,7 +82,6 @@ public class BrokenLinksController(
 
         return NoContent();
     }
-
 
     [HttpDelete]
     [Route("")]

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Seo.Core;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
 using SeoInfo = VirtoCommerce.Seo.Core.Models.SeoInfo;
@@ -24,6 +25,7 @@ public class SeoController(
     /// <returns></returns>
     [HttpPut]
     [Route("batchupdate")]
+    [Authorize(ModuleConstants.Security.Permissions.Update)]
     public Task<ActionResult> BatchUpdateSeoInfos([FromBody] SeoInfo[] seoInfos)
     {
         throw new NotImplementedException();
@@ -37,6 +39,7 @@ public class SeoController(
     /// <returns></returns>
     [HttpGet]
     [Route("duplicates")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<SeoInfo[]>> GetSeoDuplicates([FromQuery] string objectId, [FromQuery] string objectType)
     {
         var result = await seoDuplicatesDetector.DetectSeoDuplicatesAsync(new TenantIdentity(objectId, objectType));
@@ -50,6 +53,7 @@ public class SeoController(
     /// <param name="slug">slug</param>
     [HttpGet]
     [Route("{slug}")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<SeoInfo[]>> GetSeoInfoBySlug(string slug)
     {
         var criteria = new SeoSearchCriteria
@@ -68,6 +72,7 @@ public class SeoController(
     /// <returns></returns>
     [HttpPost]
     [Route("search")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<SeoInfo[]>> SearchSeo([FromBody] SeoSearchCriteria criteria)
     {
         var result = await compositeSeoResolver.FindSeoAsync(criteria);

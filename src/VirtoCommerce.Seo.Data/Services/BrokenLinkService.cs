@@ -17,8 +17,9 @@ public class BrokenLinkService(
     Func<IBrokenLinksRepository> repositoryFactory,
     IPlatformMemoryCache platformMemoryCache,
     IEventPublisher eventPublisher)
-    : CrudService<BrokenLink, BrokenLinkEntity, BrokenLinkChangingEvent, BrokenLinkChangedEvent>(repositoryFactory,
-        platformMemoryCache, eventPublisher), IBrokenLinkService
+    : CrudService<BrokenLink, BrokenLinkEntity, BrokenLinkChangingEvent, BrokenLinkChangedEvent>
+        (repositoryFactory, platformMemoryCache, eventPublisher),
+        IBrokenLinkService
 {
     protected override Task<IList<BrokenLinkEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {

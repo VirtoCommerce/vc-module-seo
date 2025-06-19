@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.Seo.Data.Models;
 
@@ -21,8 +22,8 @@ public class SeoDbContext : DbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<BrokenLinkEntity>().ToTable("BrokenLink").HasKey(x => x.Id);
-        modelBuilder.Entity<BrokenLinkEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+        modelBuilder.Entity<BrokenLinkEntity>().ToAuditableEntityTable("BrokenLink");
+        modelBuilder.Entity<BrokenLinkEntity>().HasIndex(x => new { x.StoreId, x.Permalink, x.LanguageCode }).IsUnique();
 
         switch (Database.ProviderName)
         {
