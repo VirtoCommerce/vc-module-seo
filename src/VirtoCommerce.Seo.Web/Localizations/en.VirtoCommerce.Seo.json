@@ -1,20 +1,58 @@
 {
-  "Seo": {
+  "seo": {
     "blades": {
+      "broken-link-list": {
+        "title": "Broken links",
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Status"
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Status",
+          "redirectUrl": "Redirect URL",
+          "hitCount": "Hit count",
+          "language": "Language",
+          "createdDate": "Created date",
+          "lastHitDate": "Latest hit date"
+        },
+        "placeholders": {
+          "status": "Status",
+          "redirectUrl": "Redirect URL"
+        },
+        "statuses": {
+          "active": "Active",
+          "resolved": "Resolved",
+          "accepted": "Accepted"
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Confirm delete",
+        "message": "Are you sure you want to delete this broken link?",
+        "messagePlural": "Are you sure you want to delete selected broken links?"
+      },
+      "broken-link-save": {
+        "title": "Save changes",
+        "message": "This entity has been modified. Do you want to save changes?"
+      }
     }
   },
   "permissions": {
-    "seo:access": "Open Seo menu",
-    "seo:create": "Create Seo related data",
-    "seo:read": "View Seo related data",
-    "seo:update": "Update Seo related data",
-    "seo:delete": "Delete Seo related data"
+    "seo:access": "Open SEO menu",
+    "seo:create": "Create SEO related data",
+    "seo:read": "View SEO related data",
+    "seo:update": "Update SEO related data",
+    "seo:delete": "Delete SEO related data"
   },
   "settings": {
     "Seo": {
       "Enabled": {
-        "title": "Seo Enabled",
-        "description": "Seo Enabled setting"
+        "title": "SEO enabled",
+        "description": "SEO enabled setting"
       }
     }
   }

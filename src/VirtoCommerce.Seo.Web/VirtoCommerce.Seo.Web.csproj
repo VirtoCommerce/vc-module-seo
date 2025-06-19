@@ -18,6 +18,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.Seo.Core\VirtoCommerce.Seo.Core.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.Seo.Data.MySql\VirtoCommerce.Seo.Data.MySql.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.Seo.Data.PostgreSql\VirtoCommerce.Seo.Data.PostgreSql.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.Seo.Data.SqlServer\VirtoCommerce.Seo.Data.SqlServer.csproj" />
     <ProjectReference Include="..\VirtoCommerce.Seo.Data\VirtoCommerce.Seo.Data.csproj" />
   </ItemGroup>
 </Project>
