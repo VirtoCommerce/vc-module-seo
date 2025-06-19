@@ -33,6 +33,14 @@ angular.module('virtoCommerce.seo')
                 return $scope.gridApi.selection.getSelectedRows();
             };
 
+            blade.selectEntity = function (entity) {
+                openDetailsBlade(entity);
+            };
+
+            blade.deleteEntity = function (entity) {
+                onDeleteList([entity]);
+            };
+
             blade.toolbarCommands = [
                 {
                     name: "platform.commands.refresh", icon: 'fa fa-refresh',
@@ -62,10 +70,11 @@ angular.module('virtoCommerce.seo')
             }
 
             function onDeleteList(selection) {
-                var dialog = {
-                    id: "brokenLinkConfirmDelete",
-                    title: "seo.dialogs.broken-link-delete.title",
-                    message: "seo.dialogs.broken-link-delete.message",
+                const message = selection.length > 1 ? 'seo.dialogs.broken-link-delete.messagePlural' : 'seo.dialogs.broken-link-delete.message';
+                const dialog = {
+                    id: 'brokenLinkConfirmDelete',
+                    title: 'seo.dialogs.broken-link-delete.title',
+                    message: message,
                     callback: function (remove) {
                         if (remove) {
                             blade.isLoading = true;

@@ -32,7 +32,8 @@
     "dialogs": {
       "broken-link-delete": {
         "title": "Confirm delete",
-        "message": "Are you sure you want to delete this broken link?"
+        "message": "Are you sure you want to delete this broken link?",
+        "messagePlural": "Are you sure you want to delete selected broken links?"
       },
       "broken-link-save": {
         "title": "Save changes",
