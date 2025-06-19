@@ -1,5 +1,6 @@
 angular.module('virtoCommerce.seo')
-    .controller('virtoCommerce.seo.brokenLinksWidgetController', ['$scope',
+    .controller('virtoCommerce.seo.brokenLinksWidgetController', [
+        '$scope',
         'virtoCommerce.seo.brokenLinksApi',
         'platformWebApp.bladeNavigationService',
         function ($scope, brokenLinksApi, bladeNavigationService) {
@@ -10,7 +11,7 @@ angular.module('virtoCommerce.seo')
             function initWidget() {
                 const criteria = {
                     storeid: blade.currentEntityId,
-                    // status: 'active',
+                    take: 0,
                 };
                 blade.currentEntityId && brokenLinksApi.search(criteria, function (result) {
                     $scope.count = result.totalCount;
@@ -23,8 +24,6 @@ angular.module('virtoCommerce.seo')
                     controller: 'virtoCommerce.seo.brokenLinkListController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/broken-link-list.html',
                     storeId: blade.currentEntityId,
-                    headIcon: 'fa fa-file-o',
-                    titleValues: { name: store.name },
                 };
                 bladeNavigationService.showBlade(newBlade, blade);
             };

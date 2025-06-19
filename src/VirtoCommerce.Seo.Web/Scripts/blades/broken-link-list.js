@@ -7,13 +7,13 @@ angular.module('virtoCommerce.seo')
         'platformWebApp.bladeNavigationService',
         'platformWebApp.dialogService',
         function ($scope, brokenLinksApi, bladeUtils, uiGridHelper, bladeNavigationService, dialogService) {
-
-            $scope.data = [];
-
             const blade = $scope.blade;
-            blade.searchKeyword = null;
+            blade.headIcon = 'fa fa-chain-broken';
             blade.title = 'seo.blades.broken-link-list.title';
             blade.updatePermission = 'seo:update';
+            blade.searchKeyword = null;
+
+            $scope.data = [];
 
             blade.refresh = function () {
                 blade.isLoading = true;
