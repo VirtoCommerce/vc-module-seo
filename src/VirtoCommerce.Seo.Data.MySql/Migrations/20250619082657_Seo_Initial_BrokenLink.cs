@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtoCommerce.Seo.Data.MySql.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialBrokenLink : Migration
+    public partial class Seo_Initial_BrokenLink : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,10 +20,10 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Count = table.Column<int>(type: "int", nullable: false),
+                    HitCount = table.Column<int>(type: "int", nullable: false),
                     Permalink = table.Column<string>(type: "varchar(2048)", maxLength: 2048, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    StoreId = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
+                    StoreId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -44,6 +44,12 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                     table.PrimaryKey("PK_BrokenLink", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BrokenLink_StoreId_Permalink_LanguageCode",
+                table: "BrokenLink",
+                columns: new[] { "StoreId", "Permalink", "LanguageCode" },
+                unique: true);
         }
 
         /// <inheritdoc />

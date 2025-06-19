@@ -55,8 +55,8 @@ angular.module('virtoCommerce.seo')
                 parentBlade: blade,
                 title: listItem.permalink,
                 updatePermission: blade.updatePermission,
-                controller: 'virtoCommerce.seo.brokenLinkDetailController',
-                template: 'Modules/$(virtoCommerce.seo)/Scripts/blades/broken-link-detail.html',
+                controller: 'virtoCommerce.seo.brokenLinkDetailsController',
+                template: 'Modules/$(virtoCommerce.seo)/Scripts/blades/broken-link-details.html',
             };
             bladeNavigationService.showBlade(newBlade, blade);
         }

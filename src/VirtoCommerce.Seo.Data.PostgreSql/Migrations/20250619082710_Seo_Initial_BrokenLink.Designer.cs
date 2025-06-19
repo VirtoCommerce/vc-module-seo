@@ -12,8 +12,8 @@ using VirtoCommerce.Seo.Data.Repositories;
 namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(SeoDbContext))]
-    [Migration("20250618144411_InitialBrokenLink")]
-    partial class InitialBrokenLink
+    [Migration("20250619082710_Seo_Initial_BrokenLink")]
+    partial class Seo_Initial_BrokenLink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,15 +32,15 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("HitCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LanguageCode")
                         .HasMaxLength(128)
@@ -69,10 +69,13 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                         .HasColumnType("character varying(64)");
 
                     b.Property<string>("StoreId")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StoreId", "Permalink", "LanguageCode")
+                        .IsUnique();
 
                     b.ToTable("BrokenLink", (string)null);
                 });

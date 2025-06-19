@@ -29,15 +29,15 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("HitCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LanguageCode")
                         .HasMaxLength(128)
@@ -66,10 +66,13 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                         .HasColumnType("character varying(64)");
 
                     b.Property<string>("StoreId")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StoreId", "Permalink", "LanguageCode")
+                        .IsUnique();
 
                     b.ToTable("BrokenLink", (string)null);
                 });

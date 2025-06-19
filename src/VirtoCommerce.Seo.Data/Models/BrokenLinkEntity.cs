@@ -8,7 +8,7 @@ namespace VirtoCommerce.Seo.Data.Models;
 
 public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, BrokenLink>
 {
-    public int Count { get; set; }
+    public int HitCount { get; set; }
 
     [StringLength(2048)]
     public string Permalink { get; set; }
@@ -36,7 +36,7 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
         model.ModifiedDate = ModifiedDate;
 
         model.Language = LanguageCode;
-        model.Count = Count;
+        model.HitCount = HitCount;
         model.Permalink = Permalink;
         model.StoreId = StoreId;
         model.Status = Status;
@@ -57,7 +57,7 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
         ModifiedDate = model.ModifiedDate;
 
         LanguageCode = model.Language;
-        Count = model.Count;
+        HitCount = model.HitCount;
         Permalink = model.Permalink;
         StoreId = model.StoreId;
         Status = model.Status;
@@ -70,7 +70,7 @@ public class BrokenLinkEntity : AuditableEntity, IDataEntity<BrokenLinkEntity, B
     public void Patch(BrokenLinkEntity target)
     {
         target.LanguageCode = LanguageCode;
-        target.Count = Count;
+        target.HitCount = HitCount;
         target.Permalink = Permalink;
         target.StoreId = StoreId;
         target.Status = Status;

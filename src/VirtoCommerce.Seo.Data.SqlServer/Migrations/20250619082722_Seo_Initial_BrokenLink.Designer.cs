@@ -12,8 +12,8 @@ using VirtoCommerce.Seo.Data.Repositories;
 namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SeoDbContext))]
-    [Migration("20250618144424_InitialBrokenLink")]
-    partial class InitialBrokenLink
+    [Migration("20250619082722_Seo_Initial_BrokenLink")]
+    partial class Seo_Initial_BrokenLink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,15 +32,15 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("HitCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("LanguageCode")
                         .HasMaxLength(128)
@@ -69,10 +69,14 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("StoreId")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StoreId", "Permalink", "LanguageCode")
+                        .IsUnique()
+                        .HasFilter("[StoreId] IS NOT NULL AND [Permalink] IS NOT NULL AND [LanguageCode] IS NOT NULL");
 
                     b.ToTable("BrokenLink", (string)null);
                 });

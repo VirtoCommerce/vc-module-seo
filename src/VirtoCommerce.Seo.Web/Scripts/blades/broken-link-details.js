@@ -1,5 +1,5 @@
 angular.module('virtoCommerce.seo')
-    .controller('virtoCommerce.seo.brokenLinkDetailController', ['$scope', "$injector", function ($scope, $injector) {
+    .controller('virtoCommerce.seo.brokenLinkDetailsController', ['$scope', "$injector", function ($scope, $injector) {
         const api = $injector.get('virtoCommerce.seo.webApi');
         const dialogService = $injector.get('platformWebApp.dialogService');
         const bladeNavigationService = $injector.get('platformWebApp.bladeNavigationService');

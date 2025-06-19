@@ -14,7 +14,7 @@
           "permalink": "Permalink",
           "status": "Status",
           "redirectUrl": "Redirect URL",
-          "requestCount": "Number of requests",
+          "hitCount": "Hit count",
           "language": "Language",
           "createdDate": "Created Date",
           "lastAttempt": "Latest request"

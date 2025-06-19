@@ -5,7 +5,7 @@ namespace VirtoCommerce.Seo.Core.Models;
 
 public class BrokenLink : AuditableEntity, ICloneable
 {
-    public int Count { get; set; }
+    public int HitCount { get; set; }
 
     public string Permalink { get; set; }
 

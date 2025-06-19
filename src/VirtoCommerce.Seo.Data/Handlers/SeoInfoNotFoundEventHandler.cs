@@ -50,7 +50,7 @@ public class SeoInfoNotFoundEventHandler(
             model.CreatedDate = DateTime.UtcNow;
         }
 
-        model.Count++;
+        model.HitCount++;
         model.LastAttemptTimestamp = DateTime.UtcNow;
 
         await brokenLinkService.SaveChangesAsync([model]);

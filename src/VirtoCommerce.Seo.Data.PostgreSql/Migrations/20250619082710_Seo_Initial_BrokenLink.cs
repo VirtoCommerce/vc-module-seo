@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialBrokenLink : Migration
+    public partial class Seo_Initial_BrokenLink : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +16,9 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    Count = table.Column<int>(type: "integer", nullable: false),
+                    HitCount = table.Column<int>(type: "integer", nullable: false),
                     Permalink = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
-                    StoreId = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
+                    StoreId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     Status = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     RedirectUrl = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
                     LanguageCode = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
@@ -32,6 +32,12 @@ namespace VirtoCommerce.Seo.Data.PostgreSql.Migrations
                 {
                     table.PrimaryKey("PK_BrokenLink", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BrokenLink_StoreId_Permalink_LanguageCode",
+                table: "BrokenLink",
+                columns: new[] { "StoreId", "Permalink", "LanguageCode" },
+                unique: true);
         }
 
         /// <inheritdoc />
