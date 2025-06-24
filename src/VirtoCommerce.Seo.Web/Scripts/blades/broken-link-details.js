@@ -19,7 +19,7 @@ angular.module('virtoCommerce.seo')
 
             blade.onClose = function (closeCallback) {
                 bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, saveChanges, closeCallback,
-                    "seo.dialogs.broken-list-save.title", "seo.dialogs.broken-list-save.message");
+                    "seo.dialogs.broken-link-save.title", "seo.dialogs.broken-link-save.message");
             };
 
             blade.toolbarCommands = [
