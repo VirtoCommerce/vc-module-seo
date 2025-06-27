@@ -1,31 +1,51 @@
 angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.brokenLinkListController', [
         '$scope',
+        '$translate',
+        '$sce',
         'virtoCommerce.seo.brokenLinksApi',
         'platformWebApp.bladeUtils',
         'platformWebApp.uiGridHelper',
         'platformWebApp.bladeNavigationService',
         'platformWebApp.dialogService',
-        function ($scope, brokenLinksApi, bladeUtils, uiGridHelper, bladeNavigationService, dialogService) {
+        'platformWebApp.settings',
+        function ($scope, $translate, $sce, brokenLinksApi, bladeUtils, uiGridHelper, bladeNavigationService, dialogService, settings) {
             const blade = $scope.blade;
             blade.headIcon = 'fa fa-chain-broken';
             blade.title = 'seo.blades.broken-link-list.title';
             blade.updatePermission = 'seo:update';
             blade.searchKeyword = null;
 
+            $scope.featureDisabled = false;
+            $scope.featureDisabledMessage = '';
+
             $scope.data = [];
 
-            blade.refresh = function () {
+            blade.refresh = function (refreshParent) {
                 blade.isLoading = true;
-                if ($scope.pageSettings.currentPage !== 1) {
-                    $scope.pageSettings.currentPage = 1;
-                }
+                settings.getValues({ id: 'Seo.BrokenLinkDetection.Enabled' }, function (setting) {
+                    const featuerEnabled = setting[0];
+                    $scope.featureDisabled = !featuerEnabled;
+                    if (featuerEnabled) {
+                        if ($scope.pageSettings.currentPage !== 1) {
+                            $scope.pageSettings.currentPage = 1;
+                        }
 
-                brokenLinksApi.search(getSearchCriteria(), function (data) {
-                    $scope.data = data.results;
-                    $scope.pageSettings.totalItems = data.totalCount;
+                        brokenLinksApi.search(getSearchCriteria(), function (data) {
+                            $scope.data = data.results;
+                            $scope.pageSettings.totalItems = data.totalCount;
 
-                    blade.isLoading = false;
+                            blade.isLoading = false;
+                        });
+                        if (refreshParent && blade.refreshWidget) {
+                            blade.refreshWidget();
+                        }
+                    } else {
+                        blade.isLoading = false;
+                        const result = $translate.instant('seo.blades.broken-link-list.messages.feature-disabled');
+                        $scope.featureDisabledMessage = $sce.trustAsHtml(result);
+
+                    }
                 });
             };
 
@@ -44,7 +64,7 @@ angular.module('virtoCommerce.seo')
             blade.toolbarCommands = [
                 {
                     name: "platform.commands.refresh", icon: 'fa fa-refresh',
-                    executeMethod: blade.refresh,
+                    executeMethod: function () { blade.refresh(true); },
                     canExecuteMethod: function () {
                         return true;
                     }

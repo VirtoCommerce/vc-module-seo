@@ -1,4 +1,10 @@
-<div class="blade-static">
+<div class="blade-content" ng-if="featureDisabled">
+  <div style="text-align:center;display: flex;flex-direction: column;height: calc(100% - 60px);align-items: center;justify-content: center;margin: 30px;">
+    <div ng-bind-html="featureDisabledMessage"></div>
+  </div>
+</div>
+
+<div class="blade-static" ng-if="!featureDisabled">
   <div class="form-group">
     <div class="form-input __other">
       <input placeholder="{{ 'platform.placeholders.search-keyword' | translate }}" ng-model="blade.searchKeyword" ng-keyup="$event.which === 13 && blade.refresh()">
@@ -8,8 +14,8 @@
     </div>
   </div>
 </div>
-<div class="blade-static __bottom" ng-if="pageSettings.itemsPerPageCount < pageSettings.totalItems" ng-include="'pagerTemplate.html'"></div>
-<div class="blade-content __medium-wide">
+<div class="blade-static __bottom" ng-if="pageSettings.itemsPerPageCount < pageSettings.totalItems" ng-include="'pagerTemplate.html'" ng-if="!featureDisabled"></div>
+<div class="blade-content __medium-wide" ng-if="!featureDisabled">
   <div class="blade-inner">
     <div class="inner-block">
       <div class="table-wrapper" ng-init="setGridOptions({
@@ -21,6 +27,9 @@
                         },
                         {
                             name: 'status', displayName: 'seo.blades.broken-link-list.labels.status'
+                        },
+                        {
+                            name: 'hitCount', displayName: 'seo.blades.broken-link-list.labels.hitCount'
                         },
                 ],
                 enablePaginationControls: false,
