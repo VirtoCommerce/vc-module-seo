@@ -13,7 +13,7 @@ angular.module('virtoCommerce.seo')
             blade.refresh = function (parentRefresh) {
                 initializeBlade();
                 if (parentRefresh) {
-                    blade.parentBlade.refresh();
+                    blade.parentBlade.refresh(true);
                 }
             };
 

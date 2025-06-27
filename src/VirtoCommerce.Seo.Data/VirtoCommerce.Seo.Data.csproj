@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.889.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Hangfire" Version="3.889.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.Seo.Core\VirtoCommerce.Seo.Core.csproj" />

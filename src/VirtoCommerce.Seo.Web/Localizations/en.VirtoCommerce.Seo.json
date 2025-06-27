@@ -5,7 +5,11 @@
         "title": "Broken links",
         "labels": {
           "permalink": "Permalink",
-          "status": "Status"
+          "status": "Status",
+          "hitCount": "Hit count"
+        },
+        "messages": {
+          "feature-disabled": "Broken link detection is currently disabled.<br/>Please contact your administrator to enable it via<br/><strong>Settings > SEO > Detect broken links</strong>."
         }
       },
       "broken-link-details": {
@@ -39,6 +43,11 @@
         "title": "Save changes",
         "message": "This entity has been modified. Do you want to save changes?"
       }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Active broken links"
+      }
     }
   },
   "permissions": {
@@ -53,6 +62,12 @@
       "Enabled": {
         "title": "SEO enabled",
         "description": "SEO enabled setting"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Detect broken links",
+          "description": "Should the platform record requests to non-existent pages"
+        }
       }
     }
   }

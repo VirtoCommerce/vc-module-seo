@@ -42,7 +42,15 @@ public static class ModuleConstants
                 Name = "Seo.Enabled",
                 GroupName = "Seo|General",
                 ValueType = SettingValueType.Boolean,
-                DefaultValue = false,
+                DefaultValue = true,
+            };
+
+            public static SettingDescriptor BrokenLinkDetectionEnabled { get; } = new()
+            {
+                Name = "Seo.BrokenLinkDetection.Enabled",
+                GroupName = "Seo|General",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = true,
             };
 
             public static IEnumerable<SettingDescriptor> AllGeneralSettings
@@ -50,6 +58,7 @@ public static class ModuleConstants
                 get
                 {
                     yield return SeoEnabled;
+                    yield return BrokenLinkDetectionEnabled;
                 }
             }
         }
