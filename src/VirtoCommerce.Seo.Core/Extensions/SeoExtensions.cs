@@ -14,6 +14,7 @@ public static class SeoExtensions
         "CatalogProduct",
         "Category",
         "Catalog",
+        "Brand",
         "ContentFile",
         "Pages",
     ];
