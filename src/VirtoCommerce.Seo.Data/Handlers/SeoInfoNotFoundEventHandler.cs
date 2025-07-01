@@ -27,7 +27,8 @@ public class SeoInfoNotFoundEventHandler(
 
     private async Task HandleInternal(SeoSearchCriteria criteria)
     {
-        if (!settingsManager.GetValue<bool>(ModuleConstants.Settings.General.BrokenLinkDetectionEnabled))
+        var brokenLinkDetectionEnabled = await settingsManager.GetValueAsync<bool>(ModuleConstants.Settings.General.BrokenLinkDetectionEnabled);
+        if (!brokenLinkDetectionEnabled)
         {
             return;
         }

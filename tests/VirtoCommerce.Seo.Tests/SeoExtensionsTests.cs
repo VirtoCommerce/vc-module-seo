@@ -52,6 +52,44 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
+        public void GetBestMatchingSeoInfo_Brand_vc_Category()
+        {
+            // Arrange
+            var storeId = "B2B-store";
+            var storeDefaultLanguage = "en-US";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new()
+                {
+                    SemanticUrl = "absolut",
+                    PageTitle = "Absolut",
+                    StoreId = "B2B-store",
+                    ObjectType = "Category",
+                    IsActive = true,
+                    LanguageCode = "en-US",
+                },
+                new()
+                {
+                    SemanticUrl = "Brands/absolut",
+                    StoreId = "B2B-store",
+                    ObjectType = "Brand",
+                    IsActive = true,
+                    LanguageCode = "en-US",
+                }
+            };
+
+            // Act
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("B2B-store", result.StoreId);
+            Assert.Equal("en-US", result.LanguageCode);
+            Assert.Equal("Brands/absolut", result.SemanticUrl);
+        }
+
+        [Fact]
         public void GetBestMatchingSeoInfo_WithNullLanguage_ReturnsSeoInfo()
         {
             var storeId = "Store1";
