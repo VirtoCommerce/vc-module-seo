@@ -51,7 +51,7 @@ public class SeoInfoNotFoundEventHandler(
         BackgroundJob.Enqueue(() => SaveBrokenLink(model, criteria));
     }
 
-    private Task SaveBrokenLink(BrokenLink model, SeoSearchCriteria criteria)
+    public Task SaveBrokenLink(BrokenLink model, SeoSearchCriteria criteria)
     {
         if (model == null)
         {
