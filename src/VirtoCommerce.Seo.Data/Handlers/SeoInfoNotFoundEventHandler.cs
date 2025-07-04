@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Seo.Core;
 using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Models;
@@ -12,7 +14,8 @@ namespace VirtoCommerce.Seo.Data.Handlers;
 
 public class SeoInfoNotFoundEventHandler(
     IBrokenLinkSearchService brokenLinkSearchService,
-    IBrokenLinkService brokenLinkService)
+    IBrokenLinkService brokenLinkService,
+    ISettingsManager settingsManager)
     : IEventHandler<SeoInfoNotFoundEvent>
 {
     public Task Handle(SeoInfoNotFoundEvent message)
@@ -24,6 +27,12 @@ public class SeoInfoNotFoundEventHandler(
 
     private async Task HandleInternal(SeoSearchCriteria criteria)
     {
+        var brokenLinkDetectionEnabled = await settingsManager.GetValueAsync<bool>(ModuleConstants.Settings.General.BrokenLinkDetectionEnabled);
+        if (!brokenLinkDetectionEnabled)
+        {
+            return;
+        }
+
         var searchCriteria = AbstractTypeFactory<BrokenLinkSearchCriteria>.TryCreateInstance();
         searchCriteria.Permalink = criteria.Permalink;
         searchCriteria.StoreId = criteria.StoreId;
@@ -39,6 +48,11 @@ public class SeoInfoNotFoundEventHandler(
             return;
         }
 
+        BackgroundJob.Enqueue(() => SaveBrokenLink(model, criteria));
+    }
+
+    public Task SaveBrokenLink(BrokenLink model, SeoSearchCriteria criteria)
+    {
         if (model == null)
         {
             model = AbstractTypeFactory<BrokenLink>.TryCreateInstance();
@@ -53,6 +67,6 @@ public class SeoInfoNotFoundEventHandler(
         model.HitCount++;
         model.LastHitDate = DateTime.UtcNow;
 
-        await brokenLinkService.SaveChangesAsync([model]);
+        return brokenLinkService.SaveChangesAsync([model]);
     }
 }

@@ -93,10 +93,10 @@ public static class SeoExtensions
             .Sum();
 
         // the example of the score calculation:
-        // seoInfo = { IsActive = true, SemanticUrl = "blog/article", StoreId = "Store", LanguageCode = null }
-        // method parameters are: storeId = "Store", storeDefaultLanguage = "en-US", language = "en-US", slug = null, permalink = "blog/article"
-        // result array is: [true, true, false, true, false, false, true]
-        // it transforms into binary: 1101001b = 105d
+        // seoInfo = { IsActive = true, StoreId = "Store", LanguageCode = null }
+        // method parameters are: storeId = "Store", storeDefaultLanguage = "en-US", language = "en-US"
+        // result array is: [IsActive:true, StoreId:true, language:false, storeLanguage:false, seoLanguage:true]
+        // it transforms into binary: 10011b = 19d
 
         return score;
     }
