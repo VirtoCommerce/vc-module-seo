@@ -31,6 +31,24 @@
           "resolved": "Resolved",
           "accepted": "Accepted"
         }
+      },
+      "redirect-rule-list": {
+        "title": "Redirect rules",
+        "labels": {
+          "inbound": "Inbound",
+          "outbound": "Outbound"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Inbound rule",
+          "outbound": "Replace rule",
+          "is-active": ""
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": ""
+        }
       }
     },
     "dialogs": {
@@ -42,11 +60,23 @@
       "broken-link-save": {
         "title": "Save changes",
         "message": "This entity has been modified. Do you want to save changes?"
+      },
+      "redirect-rule-delete": {
+        "title": "Confirm delete",
+        "message": "Are you sure you want to delete this redirect rule?",
+        "messagePlural": "Are you sure you want to delete selected redirect rules?"
+      },
+      "redirect-rule-save": {
+        "title": "Save changes",
+        "message": "This entity has been modified. Do you want to save changes?"
       }
     },
     "widgets": {
       "broken-link-widget": {
         "title": "Active broken links"
+      },
+      "redirect-rule-widget": {
+        "title": "Active rules"
       }
     }
   },

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.Seo.Data.Repositories;
 
@@ -11,9 +12,11 @@ using VirtoCommerce.Seo.Data.Repositories;
 namespace VirtoCommerce.Seo.Data.MySql.Migrations
 {
     [DbContext(typeof(SeoDbContext))]
-    partial class SeoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250714054745_Seo_Initial_RedirectRule")]
+    partial class Seo_Initial_RedirectRule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -73,9 +73,50 @@ namespace VirtoCommerce.Seo.Data.SqlServer.Migrations
 
                     b.HasIndex("Permalink", "StoreId", "LanguageCode")
                         .IsUnique()
-                        .HasFilter("[StoreId] IS NOT NULL AND [Permalink] IS NOT NULL AND [LanguageCode] IS NOT NULL");
+                        .HasFilter("[Permalink] IS NOT NULL AND [StoreId] IS NOT NULL AND [LanguageCode] IS NOT NULL");
 
                     b.ToTable("BrokenLink", (string)null);
+                });
+
+            modelBuilder.Entity("VirtoCommerce.Seo.Data.Models.RedirectRuleEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Inbound")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Outbound")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("StoreId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RedirectRule", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -60,11 +60,20 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<ISeoDuplicatesDetector, NullSeoDuplicateDetector>();
         serviceCollection.AddTransient<ICompositeSeoResolver, CompositeSeoResolver>();
+        serviceCollection.AddTransient<IRedirectResolver, RedirectResolver>();
+
         serviceCollection.AddTransient<IBrokenLinksRepository, BrokenLinksRepository>();
         serviceCollection.AddSingleton<Func<IBrokenLinksRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IBrokenLinksRepository>());
 
+        serviceCollection.AddTransient<IRedirectRulesRepository, RedirectRulesRepository>();
+        serviceCollection.AddSingleton<Func<IRedirectRulesRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IRedirectRulesRepository>());
+
         serviceCollection.AddTransient<IBrokenLinkSearchService, BrokenLinkSearchService>();
         serviceCollection.AddTransient<IBrokenLinkService, BrokenLinkService>();
+
+        serviceCollection.AddTransient<IRedirectRuleSearchService, RedirectRuleSearchService>();
+        serviceCollection.AddTransient<IRedirectRuleService, RedirectRuleService>();
+
         serviceCollection.AddTransient<SeoInfoNotFoundEventHandler>();
     }
 

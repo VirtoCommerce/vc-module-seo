@@ -11,36 +11,36 @@ using VirtoCommerce.Seo.Core.Services;
 namespace VirtoCommerce.Seo.Web.Controllers.Api;
 
 [Authorize]
-[Route("api/seo/redirect-rules")]
-public class RedirectRulesController(
-    IRedirectRuleSearchService redirectRuleSearchService,
-    IRedirectRuleService redirectRuleService)
+[Route("api/seo/broken-links")]
+public class BrokenLinksController(
+    IBrokenLinkSearchService brokenLinkSearchService,
+    IBrokenLinkService brokenLinkService)
     : Controller
 {
     [HttpGet]
     [Route("{id}")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<RedirectRule>> GetById(string id)
+    public async Task<ActionResult<BrokenLink>> GetById(string id)
     {
-        var contract = await redirectRuleService.GetNoCloneAsync(id);
+        var contract = await brokenLinkService.GetNoCloneAsync(id);
         return Ok(contract);
     }
 
     [HttpPost]
     [Route("search")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<RedirectRuleSearchResult>> Search([FromBody] RedirectRuleSearchCriteria criteria)
+    public async Task<ActionResult<BrokenLinkSearchResult>> Search([FromBody] BrokenLinkSearchCriteria criteria)
     {
-        var result = await redirectRuleSearchService.SearchNoCloneAsync(criteria);
+        var result = await brokenLinkSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
 
     [HttpPost]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
-    public async Task<ActionResult<RedirectRule>> Create([FromBody] RedirectRule model)
+    public async Task<ActionResult<BrokenLink>> Create([FromBody] BrokenLink model)
     {
-        await redirectRuleService.SaveChangesAsync([model]);
+        await brokenLinkService.SaveChangesAsync([model]);
         return Ok(model);
     }
 
@@ -48,9 +48,9 @@ public class RedirectRulesController(
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-    public async Task<ActionResult<RedirectRule>> Update([FromBody] RedirectRule model)
+    public async Task<ActionResult<BrokenLink>> Update([FromBody] BrokenLink model)
     {
-        await redirectRuleService.SaveChangesAsync([model]);
+        await brokenLinkService.SaveChangesAsync([model]);
         return NoContent();
     }
 
@@ -58,27 +58,27 @@ public class RedirectRulesController(
     [Route("{id}")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> PatchAssociation(string id, [FromBody] JsonPatchDocument<RedirectRule> patchDocument)
+    public async Task<ActionResult> PatchAssociation(string id, [FromBody] JsonPatchDocument<BrokenLink> patchDocument)
     {
         if (patchDocument == null)
         {
             return BadRequest();
         }
 
-        var model = await redirectRuleService.GetByIdAsync(id);
-        if (model == null)
+        var brokenLink = await brokenLinkService.GetByIdAsync(id);
+        if (brokenLink == null)
         {
             return NotFound();
         }
 
-        patchDocument.ApplyTo(model, ModelState);
+        patchDocument.ApplyTo(brokenLink, ModelState);
 
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        await redirectRuleService.SaveChangesAsync([model]);
+        await brokenLinkService.SaveChangesAsync([brokenLink]);
 
         return NoContent();
     }
@@ -89,7 +89,7 @@ public class RedirectRulesController(
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
     public async Task<ActionResult> Delete([FromQuery] string[] ids)
     {
-        await redirectRuleService.DeleteAsync(ids);
+        await brokenLinkService.DeleteAsync(ids);
         return NoContent();
     }
 }

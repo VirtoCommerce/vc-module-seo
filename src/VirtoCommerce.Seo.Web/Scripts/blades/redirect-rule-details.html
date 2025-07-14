@@ -1,0 +1,42 @@
+<div class="blade-content">
+  <div class="blade-inner">
+    <div class="inner-block">
+      <form class="form" name="formScope">
+        <fieldset ng-init="setForm(formScope)">
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.redirect-rule-details.labels.inbound' | translate }}</label>
+            <div class="form-input">
+              <input name="inbound"
+                     ng-class="{'error': blade.formScope.inbound.$invalid}"
+                     class="form-control"
+                     ng-model="blade.editEntity.inbound"
+                     placeholder="{{ 'seo.blades.redirect-rule-details.placeholders.inbound' | translate }}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.redirect-rule-details.labels.outbound' | translate }}</label>
+            <div class="form-input">
+              <input name="outbound" 
+                     ng-class="{'error': blade.formScope.outbound.$invalid}"
+                     class="form-control"
+                     ng-model="blade.editEntity.outbound"
+                     placeholder="{{ 'seo.blades.redirect-rule-details.placeholders.outbound' | translate }}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ 'seo.blades.redirect-rule-details.labels.is-active' | translate }}</label>
+            <div class="form-input">
+              <label class="form-label __switch">
+                <input type="checkbox" ng-model="blade.editEntity.isActive" />
+                <span class="switch"></span>
+              </label>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

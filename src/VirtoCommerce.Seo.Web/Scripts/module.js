@@ -12,5 +12,10 @@ angular.module(moduleName, [])
                 controller: 'virtoCommerce.seo.brokenLinksWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/broken-links-widget.html'
             }, 'storeDetail');
+
+            widgetService.registerWidget({
+                controller: 'virtoCommerce.seo.redirectRulesWidgetController',
+                template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/redirect-rules-widget.html'
+            }, 'storeDetail');
         }]
     );

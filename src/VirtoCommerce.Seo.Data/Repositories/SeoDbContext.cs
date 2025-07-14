@@ -25,6 +25,8 @@ public class SeoDbContext : DbContextBase
         modelBuilder.Entity<BrokenLinkEntity>().ToAuditableEntityTable("BrokenLink");
         modelBuilder.Entity<BrokenLinkEntity>().HasIndex(x => new { x.Permalink, x.StoreId, x.LanguageCode }).IsUnique();
 
+        modelBuilder.Entity<RedirectRuleEntity>().ToAuditableEntityTable("RedirectRule");
+
         switch (Database.ProviderName)
         {
             case "Pomelo.EntityFrameworkCore.MySql":
