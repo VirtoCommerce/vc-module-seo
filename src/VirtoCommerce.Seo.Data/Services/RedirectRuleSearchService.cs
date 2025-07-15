@@ -26,6 +26,11 @@ public class RedirectRuleSearchService(
     {
         var query = ((IRedirectRulesRepository)repository).RedirectRules;
 
+        if (!string.IsNullOrEmpty(criteria.Keyword))
+        {
+            query = query.Where(x => x.Inbound.Contains(criteria.Keyword) || x.Outbound.Contains(criteria.Keyword));
+        }
+
         if (!string.IsNullOrEmpty(criteria.StoreId))
         {
             query = query.Where(x => x.StoreId == criteria.StoreId);
