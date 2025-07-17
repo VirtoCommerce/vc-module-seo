@@ -7,7 +7,8 @@ The **VirtoCommerce SEO Module** provides a flexible infrastructure for managing
 - **SEO Info Lookup**: Efficient retrieval of SEO records matching given criteria such as `permalink`, `storeId`, `language`, and others.
 - **Best Match Resolution**: Logic to determine the most relevant SEO entry when multiple matches are found.
 - **Duplicate Detection**: Extensible interface `ISeoDuplicatesDetector` for identifying and resolving conflicting SEO entries.
-- **Broken Links Detection and management** *(coming soon)*: Identify and report dead or misconfigured SEO links.
+- **Broken Links Detection and management** : Identify and report dead or misconfigured SEO links.
+- **Custom rewrite rules**: detect inbound requests by rules and return redirectUrl.
 
 ## Configuration
 
@@ -34,6 +35,15 @@ This setting defines the precedence for resolving SEO entries. For example, if b
 - UI for managing SEO priorities
 - Integration with sitemap and robots.txt generation
 -->
+
+### Rewrite rules
+
+You can configure rewrite rules to intercept incoming requests and respond with a redirect to a new URL.
+
+![UI for rewrite rules](docs/images/rewrite-rules.png)
+
+These rules are evaluated in the `getSlugInfo` GraphQL query. They are checked **before** attempting to resolve a general SEO object. If a matching rule is found, the user will receive a response containing a `redirectUrl`.
+
 
 ## Documentation links
 
