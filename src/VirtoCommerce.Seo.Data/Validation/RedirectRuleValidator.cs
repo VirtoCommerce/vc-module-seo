@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FluentValidation;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core;
@@ -5,7 +6,7 @@ using VirtoCommerce.Seo.Core.Models;
 
 namespace VirtoCommerce.Seo.Data.Validation;
 
-public class RedirectRuleValidator : AbstractValidator<RedirectRule>
+public partial class RedirectRuleValidator : AbstractValidator<RedirectRule>
 {
     public RedirectRuleValidator()
     {
@@ -40,7 +41,7 @@ public class RedirectRuleValidator : AbstractValidator<RedirectRule>
 
         try
         {
-            _ = new System.Text.RegularExpressions.Regex(pattern);
+            _ = new Regex(pattern);
             return true;
         }
         catch
@@ -48,6 +49,9 @@ public class RedirectRuleValidator : AbstractValidator<RedirectRule>
             return false;
         }
     }
+
+    [GeneratedRegex(@"\$(\d+)")]
+    private static partial Regex OutboundParametersGeneratedRegex();
 
     private bool BeAValidReplaceNumbers(RedirectRule rule, string outbound)
     {
@@ -60,7 +64,7 @@ public class RedirectRuleValidator : AbstractValidator<RedirectRule>
         int groupCount;
         try
         {
-            var regex = new System.Text.RegularExpressions.Regex(rule.Inbound);
+            var regex = new Regex(rule.Inbound);
             groupCount = regex.GetGroupNumbers().Length - 1; // Exclude group 0 (entire match)
         }
         catch
@@ -68,11 +72,10 @@ public class RedirectRuleValidator : AbstractValidator<RedirectRule>
             return false;
         }
 
-        // Find all $N in outbound
-        var matches = System.Text.RegularExpressions.Regex.Matches(outbound, @"\$(\d+)");
-        foreach (System.Text.RegularExpressions.Match match in matches)
+        var matches = OutboundParametersGeneratedRegex().Matches(outbound);
+        foreach (Match match in matches)
         {
-            if (!int.TryParse(match.Groups[1].Value, out int n) || n < 1 || n > groupCount)
+            if (!int.TryParse(match.Groups[1].Value, out var n) || n < 1 || n > groupCount)
             {
                 return false;
             }
