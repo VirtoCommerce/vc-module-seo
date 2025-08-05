@@ -9,6 +9,8 @@ public class RedirectRule : AuditableEntity, ICloneable
     public string Inbound { get; set; }
     public string Outbound { get; set; }
     public string StoreId { get; set; }
+    public int Priority { get; set; }
+    public string RedirectRuleType { get; set; }
 
     public object Clone()
     {

@@ -52,8 +52,8 @@ public class RedirectRuleSearchService(
         {
             sortInfos =
             [
-                new SortInfo { SortColumn = nameof(BrokenLinkEntity.CreatedDate), SortDirection = SortDirection.Descending },
-                new SortInfo { SortColumn = nameof(BrokenLinkEntity.Id) },
+                new SortInfo { SortColumn = nameof(RedirectRuleEntity.CreatedDate), SortDirection = SortDirection.Descending },
+                new SortInfo { SortColumn = nameof(RedirectRuleEntity.Id) },
             ];
         }
 

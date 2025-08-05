@@ -5,6 +5,12 @@ namespace VirtoCommerce.Seo.Core;
 
 public static class ModuleConstants
 {
+    public static class RedirectRuleType
+    {
+        public const string Static = "Static";
+        public const string Regex = "Regex";
+    }
+
     public static class LinkStatus
     {
         public const string Active = "Active";

@@ -18,6 +18,10 @@ public class RedirectRuleEntity : AuditableEntity, IDataEntity<RedirectRuleEntit
     [StringLength(128)]
     public string StoreId { get; set; }
 
+    public int Priority { get; set; }
+
+    [StringLength(128)]
+    public string RedirectRuleType { get; set; }
 
     public RedirectRule ToModel(RedirectRule model)
     {
@@ -31,6 +35,8 @@ public class RedirectRuleEntity : AuditableEntity, IDataEntity<RedirectRuleEntit
         model.Inbound = Inbound;
         model.Outbound = Outbound;
         model.StoreId = StoreId;
+        model.Priority = Priority;
+        model.RedirectRuleType = RedirectRuleType;
 
         return model;
     }
@@ -49,6 +55,8 @@ public class RedirectRuleEntity : AuditableEntity, IDataEntity<RedirectRuleEntit
         Inbound = model.Inbound;
         Outbound = model.Outbound;
         StoreId = model.StoreId;
+        Priority = model.Priority;
+        RedirectRuleType = model.RedirectRuleType;
 
         return this;
     }
@@ -59,5 +67,7 @@ public class RedirectRuleEntity : AuditableEntity, IDataEntity<RedirectRuleEntit
         target.IsActive = IsActive;
         target.Inbound = Inbound;
         target.Outbound = Outbound;
+        target.Priority = Priority;
+        target.RedirectRuleType = RedirectRuleType;
     }
 }

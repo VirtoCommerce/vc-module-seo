@@ -43,11 +43,14 @@
         "labels": {
           "inbound": "Inbound rule",
           "outbound": "Replace rule",
-          "is-active": ""
+          "is-active": "",
+          "redirect-rule-type": "Redirect rule type",
+          "priority": "Priority"
         },
         "placeholders": {
           "inbound": "",
-          "outbound": ""
+          "outbound": "",
+          "redirect-rule-type": ""
         }
       }
     },

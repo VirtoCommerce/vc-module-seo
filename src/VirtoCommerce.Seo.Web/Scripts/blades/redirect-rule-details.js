@@ -10,6 +10,8 @@ angular.module('virtoCommerce.seo')
             blade.formScope = null;
             blade.isNew = true;
 
+            $scope.redirectTypes = ["Static", "Regex"];
+
             blade.refresh = function (parentRefresh) {
                 initializeBlade();
                 if (parentRefresh) {
@@ -54,9 +56,13 @@ angular.module('virtoCommerce.seo')
                 blade.formScope = form;
             };
 
-            $scope.validateRedirectUrl = function (value) {
-                return blade.editEntity?.status !== "Resolved" || !!value;
+            $scope.validateInboundRule = function (value) {
+                return (!!value && blade.editEntity.redirectRuleType === 'Static') || validateRegex(value);
             };
+
+            $scope.validateOutboundRule = function (value) {
+                return (!!value && blade.editEntity.redirectRuleType === 'Static') || validateParameters(value);
+            }
 
             $scope.revalidate = function () {
                 blade.formScope.redirectUrl.$validate();
@@ -85,7 +91,7 @@ angular.module('virtoCommerce.seo')
                     });
                 } else {
                     blade.isLoading = false;
-                    var data = { storeId: blade.storeId };
+                    var data = { storeId: blade.storeId, priority: 0, redirectRuleType: "Static" };
                     blade.currentEntity = data;
                     //blade.title = blade.currentEntity.permalink;
                     blade.editEntity = angular.copy(blade.currentEntity);
@@ -122,6 +128,50 @@ angular.module('virtoCommerce.seo')
                     }
                 };
                 dialogService.showConfirmationDialog(dialog);
+            }
+
+            function validateRegex(value) {
+                if (!value) {
+                    return false;
+                }
+                try {
+                    new RegExp(value);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function validateParameters(value) {
+                if (!value || !blade.editEntity.inbound) {
+                    return false;
+                }
+
+                // Count groups in inboundRule (regex)
+                let inbound = blade.editEntity.inbound;
+                let groupCount = 0;
+                try {
+                    // Match all non-escaped opening parentheses that are not part of a non-capturing group
+                    // This regex counts capturing groups: ( ... )
+                    let regex = /(?:[^\\]|^)\((?!\?)/g;
+                    groupCount = (inbound.match(regex) || []).length;
+                } catch (e) {
+                    return false;
+                }
+
+                // Find all $n in outboundRule
+                let paramRegex = /\$(\d+)/g;
+                let match;
+                let maxParam = 0;
+                while ((match = paramRegex.exec(value)) !== null) {
+                    let n = parseInt(match[1], 10);
+                    if (n > maxParam) {
+                        maxParam = n;
+                    }
+                }
+
+                // Valid if maxParam <= groupCount
+                return maxParam <= groupCount;
             }
 
             blade.refresh();

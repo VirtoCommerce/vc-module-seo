@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentValidation;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
@@ -16,7 +17,8 @@ namespace VirtoCommerce.Seo.Data.Services;
 public class RedirectRuleService(
     Func<IRedirectRulesRepository> repositoryFactory,
     IPlatformMemoryCache platformMemoryCache,
-    IEventPublisher eventPublisher)
+    IEventPublisher eventPublisher,
+    AbstractValidator<RedirectRule> ruleValidator)
     : CrudService<RedirectRule, RedirectRuleEntity, RedirectRuleChangingEvent, RedirectRuleChangedEvent>
         (repositoryFactory, platformMemoryCache, eventPublisher),
         IRedirectRuleService
@@ -24,5 +26,19 @@ public class RedirectRuleService(
     protected override Task<IList<RedirectRuleEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
         return ((IRedirectRulesRepository)repository).GetRedirectRulesByIdsAsync(ids, responseGroup);
+    }
+
+    protected override async Task BeforeSaveChanges(IList<RedirectRule> models)
+    {
+        await ValidateRulesAsync(models);
+        await base.BeforeSaveChanges(models);
+    }
+
+    private async Task ValidateRulesAsync(IList<RedirectRule> models)
+    {
+        foreach (var model in models)
+        {
+            await ruleValidator.ValidateAndThrowAsync(model);
+        }
     }
 }
