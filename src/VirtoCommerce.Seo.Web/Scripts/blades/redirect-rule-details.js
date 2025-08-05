@@ -148,23 +148,23 @@ angular.module('virtoCommerce.seo')
                 }
 
                 // Count groups in inboundRule (regex)
-                let inbound = blade.editEntity.inbound;
+                const inbound = blade.editEntity.inbound;
                 let groupCount = 0;
                 try {
                     // Match all non-escaped opening parentheses that are not part of a non-capturing group
                     // This regex counts capturing groups: ( ... )
-                    let regex = /(?:[^\\]|^)\((?!\?)/g;
+                    const regex = /(?:[^\\]|^)\((?!\?)/g;
                     groupCount = (inbound.match(regex) || []).length;
                 } catch (e) {
                     return false;
                 }
 
                 // Find all $n in outboundRule
-                let paramRegex = /\$(\d+)/g;
+                const paramRegex = /\$(\d+)/g;
                 let match;
                 let maxParam = 0;
                 while ((match = paramRegex.exec(value)) !== null) {
-                    let n = parseInt(match[1], 10);
+                    const n = parseInt(match[1], 10);
                     if (n > maxParam) {
                         maxParam = n;
                     }
