@@ -35,7 +35,7 @@ public class RedirectResolver(IRedirectRuleSearchService redirectRuleSearchServi
                 {
                     return rule.Outbound;
                 }
-                return null;
+                continue;
             }
 
             var regex = new Regex(rule.Inbound);
