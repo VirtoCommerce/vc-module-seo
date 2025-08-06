@@ -10,7 +10,7 @@ angular.module('virtoCommerce.seo')
             blade.formScope = null;
             blade.isNew = true;
 
-            $scope.redirectTypes = ["Static", "Regex"];
+            $scope.redirectRuleTypes = ["Static", "Regex"];
 
             blade.refresh = function (parentRefresh) {
                 initializeBlade();
@@ -65,7 +65,8 @@ angular.module('virtoCommerce.seo')
             }
 
             $scope.revalidate = function () {
-                blade.formScope.redirectUrl.$validate();
+                blade.formScope.inbound.$validate();
+                blade.formScope.outbound.$validate();
             };
 
             function isDirty() {

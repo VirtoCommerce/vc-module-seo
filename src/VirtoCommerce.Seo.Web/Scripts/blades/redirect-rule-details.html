@@ -30,9 +30,9 @@
           <div class="form-group">
             <label class="form-label">{{'seo.blades.redirect-rule-details.labels.redirect-rule-type' | translate}}</label>
             <div class="form-input">
-              <ui-select ng-model="blade.editEntity.redirectRuleType" required>
+              <ui-select ng-model="blade.editEntity.redirectRuleType" required on-select="revalidate()">
                 <ui-select-match placeholder="{{ 'seo.blades.redirect-rule-details.placeholders.redirect-rule-type' | translate }}">{{$select.selected}}</ui-select-match>
-                <ui-select-choices repeat="x in redirectTypes | filter: $select.search">
+                <ui-select-choices repeat="x in redirectRuleTypes | filter: $select.search">
                   <span ng-bind-html="x | highlight: $select.search"></span>
                 </ui-select-choices>
               </ui-select>
