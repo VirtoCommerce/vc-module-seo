@@ -86,8 +86,7 @@ public class Module : IModule, IHasConfiguration, IExportSupport, IImportSupport
 
         serviceCollection.AddTransient<AbstractValidator<RedirectRule>, RedirectRuleValidator>();
 
-        serviceCollection.AddTransient<RedirectRulesExportImport>();
-        serviceCollection.AddTransient<BrokenLinksExportImport>();
+        serviceCollection.AddTransient<SeoExportImport>();
 
         serviceCollection.AddTransient<SeoInfoNotFoundEventHandler>();
     }
@@ -122,14 +121,12 @@ public class Module : IModule, IHasConfiguration, IExportSupport, IImportSupport
     public async Task ExportAsync(Stream outStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback,
         ICancellationToken cancellationToken)
     {
-        await _appBuilder.ApplicationServices.GetRequiredService<RedirectRulesExportImport>().ExportAsync(outStream, options, progressCallback, cancellationToken);
-        await _appBuilder.ApplicationServices.GetRequiredService<BrokenLinksExportImport>().ExportAsync(outStream, options, progressCallback, cancellationToken);
+        await _appBuilder.ApplicationServices.GetRequiredService<SeoExportImport>().ExportAsync(outStream, options, progressCallback, cancellationToken);
     }
 
     public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback,
         ICancellationToken cancellationToken)
     {
-        await _appBuilder.ApplicationServices.GetRequiredService<RedirectRulesExportImport>().ImportAsync(inputStream, options, progressCallback, cancellationToken);
-        await _appBuilder.ApplicationServices.GetRequiredService<BrokenLinksExportImport>().ImportAsync(inputStream, options, progressCallback, cancellationToken);
+        await _appBuilder.ApplicationServices.GetRequiredService<SeoExportImport>().ImportAsync(inputStream, options, progressCallback, cancellationToken);
     }
 }
