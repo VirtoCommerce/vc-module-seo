@@ -12,9 +12,9 @@ using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.ExportImport;
 
-public sealed class RedirectRulesExportImport(
-    IRedirectRuleSearchService redirectRuleSearchService,
-    IRedirectRuleService redirectRuleService,
+public sealed class BrokenLinksExportImport(
+    IBrokenLinkSearchService brokenLinkSearchService,
+    IBrokenLinkService brokenLinkService,
     JsonSerializer jsonSerializer)
 {
 
@@ -30,30 +30,30 @@ public sealed class RedirectRulesExportImport(
 
         await writer.WriteStartObjectAsync();
 
-        progressInfo.Description = "Redirect rules exporting...";
+        progressInfo.Description = "Broken links exporting...";
         progressCallback(progressInfo);
 
-        var rules = await redirectRuleSearchService.SearchAsync(new RedirectRuleSearchCriteria { Take = 0 });
-        var rulesCount = rules.TotalCount;
-        await writer.WritePropertyNameAsync("RedirectRulesTotalCount");
-        await writer.WriteValueAsync(rulesCount);
+        var links = await brokenLinkSearchService.SearchAsync(new BrokenLinkSearchCriteria { Take = 0 });
+        var linksCount = links.TotalCount;
+        await writer.WritePropertyNameAsync("BrokenLinksTotalCount");
+        await writer.WriteValueAsync(linksCount);
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        await writer.WritePropertyNameAsync("RedirectRules");
+        await writer.WritePropertyNameAsync("BrokenLinks");
         await writer.WriteStartArrayAsync();
 
         const int batchSize = 100;
 
-        for (var i = 0; i < rulesCount; i += batchSize)
+        for (var i = 0; i < linksCount; i += batchSize)
         {
-            var searchResponse = await redirectRuleSearchService.SearchAsync(new RedirectRuleSearchCriteria { Skip = i, Take = batchSize });
+            var searchResponse = await brokenLinkSearchService.SearchAsync(new BrokenLinkSearchCriteria { Skip = i, Take = batchSize });
             foreach (var member in searchResponse.Results)
             {
                 jsonSerializer.Serialize(writer, member);
             }
             await writer.FlushAsync();
-            progressInfo.Description = $"{Math.Min(rulesCount, i + batchSize)} of {rulesCount} redirect rules exported";
+            progressInfo.Description = $"{Math.Min(linksCount, i + batchSize)} of {linksCount} broken links exported";
             progressCallback(progressInfo);
         }
         await writer.WriteEndArrayAsync();
@@ -66,7 +66,7 @@ public sealed class RedirectRulesExportImport(
     {
         cancellationToken.ThrowIfCancellationRequested();
         var progressInfo = new ExportImportProgressInfo();
-        var rulesTotalCount = 0;
+        var linksTotalCount = 0;
 
         const int batchSize = 100;
 
@@ -78,11 +78,11 @@ public sealed class RedirectRulesExportImport(
             {
                 var readerValueString = reader.Value?.ToString();
 
-                if (readerValueString.EqualsIgnoreCase("RedirectRulesTotalCount"))
+                if (readerValueString.EqualsIgnoreCase("BrokenLinksTotalCount"))
                 {
-                    rulesTotalCount = await reader.ReadAsInt32Async() ?? 0;
+                    linksTotalCount = await reader.ReadAsInt32Async() ?? 0;
                 }
-                else if (readerValueString.EqualsIgnoreCase("RedirectRules"))
+                else if (readerValueString.EqualsIgnoreCase("BrokenLinks"))
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await reader.ReadAsync();
@@ -90,26 +90,26 @@ public sealed class RedirectRulesExportImport(
                     {
                         await reader.ReadAsync();
 
-                        var redirectRules = new List<RedirectRule>();
-                        var rulesCount = 0;
+                        var brokenLinks = new List<BrokenLink>();
+                        var linksCount = 0;
                         while (reader.TokenType != JsonToken.EndArray)
                         {
-                            var redirectRule = jsonSerializer.Deserialize<RedirectRule>(reader);
-                            redirectRules.Add(redirectRule);
-                            rulesCount++;
+                            var brokenLink = jsonSerializer.Deserialize<BrokenLink>(reader);
+                            brokenLinks.Add(brokenLink);
+                            linksCount++;
 
                             await reader.ReadAsync();
                         }
 
                         cancellationToken.ThrowIfCancellationRequested();
 
-                        for (var i = 0; i < rulesCount; i += batchSize)
+                        for (var i = 0; i < linksCount; i += batchSize)
                         {
-                            await redirectRuleService.SaveChangesAsync(redirectRules.Skip(i).Take(batchSize).ToArray());
+                            await brokenLinkService.SaveChangesAsync(brokenLinks.Skip(i).Take(batchSize).ToArray());
 
-                            progressInfo.Description = rulesTotalCount > 0
-                                ? $"{i} of {rulesTotalCount} redirect rules imported"
-                                : $"{i} redirect rules imported";
+                            progressInfo.Description = linksTotalCount > 0
+                                ? $"{i} of {linksTotalCount} broken links imported"
+                                : $"{i} broken links imported";
 
                             progressCallback(progressInfo);
                         }
@@ -119,3 +119,4 @@ public sealed class RedirectRulesExportImport(
         }
     }
 }
+
