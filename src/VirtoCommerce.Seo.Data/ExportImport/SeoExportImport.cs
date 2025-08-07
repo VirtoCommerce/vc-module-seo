@@ -28,8 +28,12 @@ public sealed class SeoExportImport(
         await using var sw = new StreamWriter(outStream, Encoding.UTF8);
         await using var writer = new JsonTextWriter(sw);
 
+        await writer.WriteStartObjectAsync();
+
         await ExportRedirectRules(writer, progressCallback, cancellationToken);
         await ExportBrokenLinks(writer, progressCallback, cancellationToken);
+
+        await writer.WriteEndObjectAsync();
     }
 
     public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
@@ -47,7 +51,6 @@ public sealed class SeoExportImport(
     {
         var progressInfo = new ExportImportProgressInfo { Description = "loading data..." };
         progressCallback(progressInfo);
-        await writer.WriteStartObjectAsync();
 
         progressInfo.Description = "Redirect rules exporting...";
         progressCallback(progressInfo);
@@ -78,7 +81,6 @@ public sealed class SeoExportImport(
         }
         await writer.WriteEndArrayAsync();
 
-        await writer.WriteEndObjectAsync();
         await writer.FlushAsync();
 
     }
@@ -87,7 +89,6 @@ public sealed class SeoExportImport(
     {
         var progressInfo = new ExportImportProgressInfo { Description = "loading data..." };
         progressCallback(progressInfo);
-        await writer.WriteStartObjectAsync();
 
         progressInfo.Description = "Broken links exporting...";
         progressCallback(progressInfo);
@@ -117,7 +118,6 @@ public sealed class SeoExportImport(
         }
         await writer.WriteEndArrayAsync();
 
-        await writer.WriteEndObjectAsync();
         await writer.FlushAsync();
     }
 
