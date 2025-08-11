@@ -43,7 +43,7 @@
         "labels": {
           "inbound": "Inbound rule",
           "outbound": "Outbound rule",
-          "is-active": "",
+          "is-active": "Is active",
           "redirect-rule-type": "Redirect rule type",
           "priority": "Priority"
         },
