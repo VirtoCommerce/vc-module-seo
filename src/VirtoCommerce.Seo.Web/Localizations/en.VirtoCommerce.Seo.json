@@ -42,7 +42,7 @@
       "redirect-rule-details": {
         "labels": {
           "inbound": "Inbound rule",
-          "outbound": "Replace rule",
+          "outbound": "Outbound rule",
           "is-active": "",
           "redirect-rule-type": "Redirect rule type",
           "priority": "Priority"

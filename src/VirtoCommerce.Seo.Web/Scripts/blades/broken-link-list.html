@@ -7,7 +7,7 @@
 <div class="blade-static" ng-if="!featureDisabled">
   <div class="form-group">
     <div class="form-input __other">
-      <input placeholder="{{ 'platform.placeholders.search-keyword' | translate }}" ng-model="blade.searchKeyword" ng-keyup="$event.which === 13 && blade.refresh()">
+      <input placeholder="{{ 'platform.placeholders.search-keyword' | translate }}" ng-model="blade.searchKeyword" ng-keyup="$event.which === 13 && blade.criteriaChanged()">
       <button class="btn __other" type="button">
         <span class="btn-ico fa fa-times-circle" title="{{ 'platform.commands.clear' | translate }}" ng-click="blade.searchKeyword=null;blade.refresh()"></span>
       </button>

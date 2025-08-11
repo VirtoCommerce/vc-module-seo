@@ -27,10 +27,6 @@ angular.module('virtoCommerce.seo')
                     const featuerEnabled = setting[0];
                     $scope.featureDisabled = !featuerEnabled;
                     if (featuerEnabled) {
-                        if ($scope.pageSettings.currentPage !== 1) {
-                            $scope.pageSettings.currentPage = 1;
-                        }
-
                         brokenLinksApi.search(getSearchCriteria(), function (data) {
                             $scope.data = data.results;
                             $scope.pageSettings.totalItems = data.totalCount;
@@ -48,6 +44,13 @@ angular.module('virtoCommerce.seo')
                     }
                 });
             };
+
+            blade.criteriaChanged = function () {
+                if ($scope.pageSettings.currentPage > 1) {
+                    $scope.pageSettings.currentPage = 1;
+                }
+                blade.refresh();
+            }
 
             blade.getSelectedRows = function () {
                 return $scope.gridApi.selection.getSelectedRows();
