@@ -1,10 +1,15 @@
 using System;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.ExportImport;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -14,18 +19,23 @@ using VirtoCommerce.Platform.Data.SqlServer.Extensions;
 using VirtoCommerce.Seo.Core;
 using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Extensions;
+using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
+using VirtoCommerce.Seo.Data.ExportImport;
 using VirtoCommerce.Seo.Data.Handlers;
 using VirtoCommerce.Seo.Data.MySql;
 using VirtoCommerce.Seo.Data.PostgreSql;
 using VirtoCommerce.Seo.Data.Repositories;
 using VirtoCommerce.Seo.Data.Services;
 using VirtoCommerce.Seo.Data.SqlServer;
+using VirtoCommerce.Seo.Data.Validation;
 
 namespace VirtoCommerce.Seo.Web;
 
-public class Module : IModule, IHasConfiguration
+public class Module : IModule, IHasConfiguration, IExportSupport, IImportSupport
 {
+    private IApplicationBuilder _appBuilder;
+
     public ManifestModuleInfo ModuleInfo { get; set; }
     public IConfiguration Configuration { get; set; }
 
@@ -60,16 +70,31 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<ISeoDuplicatesDetector, NullSeoDuplicateDetector>();
         serviceCollection.AddTransient<ICompositeSeoResolver, CompositeSeoResolver>();
+        serviceCollection.AddTransient<IRedirectResolver, RedirectResolver>();
+
         serviceCollection.AddTransient<IBrokenLinksRepository, BrokenLinksRepository>();
         serviceCollection.AddSingleton<Func<IBrokenLinksRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IBrokenLinksRepository>());
 
+        serviceCollection.AddTransient<IRedirectRulesRepository, RedirectRulesRepository>();
+        serviceCollection.AddSingleton<Func<IRedirectRulesRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IRedirectRulesRepository>());
+
         serviceCollection.AddTransient<IBrokenLinkSearchService, BrokenLinkSearchService>();
         serviceCollection.AddTransient<IBrokenLinkService, BrokenLinkService>();
+
+        serviceCollection.AddTransient<IRedirectRuleSearchService, RedirectRuleSearchService>();
+        serviceCollection.AddTransient<IRedirectRuleService, RedirectRuleService>();
+
+        serviceCollection.AddTransient<AbstractValidator<RedirectRule>, RedirectRuleValidator>();
+
+        serviceCollection.AddTransient<SeoExportImport>();
+
         serviceCollection.AddTransient<SeoInfoNotFoundEventHandler>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
     {
+        _appBuilder = appBuilder;
+
         var serviceProvider = appBuilder.ApplicationServices;
 
         // Register settings
@@ -91,5 +116,17 @@ public class Module : IModule, IHasConfiguration
     public void Uninstall()
     {
         // Nothing to do here
+    }
+
+    public async Task ExportAsync(Stream outStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback,
+        ICancellationToken cancellationToken)
+    {
+        await _appBuilder.ApplicationServices.GetRequiredService<SeoExportImport>().ExportAsync(outStream, options, progressCallback, cancellationToken);
+    }
+
+    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback,
+        ICancellationToken cancellationToken)
+    {
+        await _appBuilder.ApplicationServices.GetRequiredService<SeoExportImport>().ImportAsync(inputStream, options, progressCallback, cancellationToken);
     }
 }

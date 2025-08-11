@@ -1,56 +1,36 @@
 angular.module('virtoCommerce.seo')
-    .controller('virtoCommerce.seo.brokenLinkListController', [
+    .controller('virtoCommerce.seo.redirectRuleListController', [
         '$scope',
-        '$translate',
-        '$sce',
-        'virtoCommerce.seo.brokenLinksApi',
+        'virtoCommerce.seo.redirectRulesApi',
         'platformWebApp.bladeUtils',
         'platformWebApp.uiGridHelper',
         'platformWebApp.bladeNavigationService',
         'platformWebApp.dialogService',
-        'platformWebApp.settings',
-        function ($scope, $translate, $sce, brokenLinksApi, bladeUtils, uiGridHelper, bladeNavigationService, dialogService, settings) {
+        function ($scope, redirectRulesApi, bladeUtils, uiGridHelper, bladeNavigationService, dialogService) {
             const blade = $scope.blade;
-            blade.headIcon = 'fa fa-chain-broken';
-            blade.title = 'seo.blades.broken-link-list.title';
+            blade.headIcon = 'fa fa-compass';
+            blade.title = 'seo.blades.redirect-rule-list.title';
             blade.updatePermission = 'seo:update';
             blade.searchKeyword = null;
-
-            $scope.featureDisabled = false;
-            $scope.featureDisabledMessage = '';
 
             $scope.data = [];
 
             blade.refresh = function (refreshParent) {
                 blade.isLoading = true;
-                settings.getValues({ id: 'Seo.BrokenLinkDetection.Enabled' }, function (setting) {
-                    const featuerEnabled = setting[0];
-                    $scope.featureDisabled = !featuerEnabled;
-                    if (featuerEnabled) {
-                        brokenLinksApi.search(getSearchCriteria(), function (data) {
-                            $scope.data = data.results;
-                            $scope.pageSettings.totalItems = data.totalCount;
-
-                            blade.isLoading = false;
-                        });
-                        if (refreshParent && blade.refreshWidget) {
-                            blade.refreshWidget();
-                        }
-                    } else {
-                        blade.isLoading = false;
-                        const result = $translate.instant('seo.blades.broken-link-list.messages.feature-disabled');
-                        $scope.featureDisabledMessage = $sce.trustAsHtml(result);
-
-                    }
-                });
-            };
-
-            blade.criteriaChanged = function () {
-                if ($scope.pageSettings.currentPage > 1) {
+                if ($scope.pageSettings.currentPage !== 1) {
                     $scope.pageSettings.currentPage = 1;
                 }
-                blade.refresh();
-            }
+
+                redirectRulesApi.search(getSearchCriteria(), function (data) {
+                    $scope.data = data.results;
+                    $scope.pageSettings.totalItems = data.totalCount;
+
+                    blade.isLoading = false;
+                });
+                if (refreshParent && blade.refreshWidget) {
+                    blade.refreshWidget();
+                }
+            };
 
             blade.getSelectedRows = function () {
                 return $scope.gridApi.selection.getSelectedRows();
@@ -73,6 +53,15 @@ angular.module('virtoCommerce.seo')
                     }
                 },
                 {
+                    name: "platform.commands.add", icon: 'fas fa-plus',
+                    executeMethod: function () {
+                        openDetailsBlade();
+                    },
+                    canExecuteMethod: function () {
+                        return true;
+                    },
+                },
+                {
                     name: "platform.commands.delete", icon: 'fa fa-trash-o',
                     executeMethod: function () { onDeleteList($scope.gridApi.selection.getSelectedRows()); },
                     canExecuteMethod: isItemsChecked,
@@ -82,10 +71,11 @@ angular.module('virtoCommerce.seo')
 
             function openDetailsBlade(listItem) {
                 const newBlade = {
-                    id: 'brokenLinkDetails',
-                    controller: 'virtoCommerce.seo.brokenLinkDetailsController',
-                    template: 'Modules/$(virtoCommerce.seo)/Scripts/blades/broken-link-details.html',
-                    currentEntityId: listItem.id,
+                    id: 'redirectRuleDetails',
+                    controller: 'virtoCommerce.seo.redirectRuleDetailsController',
+                    template: 'Modules/$(virtoCommerce.seo)/Scripts/blades/redirect-rule-details.html',
+                    currentEntityId: listItem?.id,
+                    storeId: blade.storeId,
                     parentBlade: blade,
                     updatePermission: blade.updatePermission,
                 };
@@ -93,10 +83,10 @@ angular.module('virtoCommerce.seo')
             }
 
             function onDeleteList(selection) {
-                const message = selection.length > 1 ? 'seo.dialogs.broken-link-delete.messagePlural' : 'seo.dialogs.broken-link-delete.message';
+                const message = selection.length > 1 ? 'seo.dialogs.redirect-rule-delete.messagePlural' : 'seo.dialogs.redirect-rule-delete.message';
                 const dialog = {
-                    id: 'brokenLinkConfirmDelete',
-                    title: 'seo.dialogs.broken-link-delete.title',
+                    id: 'redirectRuleConfirmDelete',
+                    title: 'seo.dialogs.redirect-rule-delete.title',
                     message: message,
                     callback: function (remove) {
                         if (remove) {
@@ -104,7 +94,7 @@ angular.module('virtoCommerce.seo')
                             const ids = selection.map(function (item) {
                                 return item.id;
                             });
-                            brokenLinksApi.delete({ ids }, function () {
+                            redirectRulesApi.delete({ ids }, function () {
                                 blade.isLoading = false;
                                 blade.refresh();
                             }, function (error) {

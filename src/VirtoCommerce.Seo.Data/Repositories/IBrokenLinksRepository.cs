@@ -11,4 +11,3 @@ public interface IBrokenLinksRepository : IRepository
     IQueryable<BrokenLinkEntity> BrokenLinks { get; }
     Task<IList<BrokenLinkEntity>> GetBrokenLinksByIdsAsync(IList<string> ids, string responseGroup);
 }
-
