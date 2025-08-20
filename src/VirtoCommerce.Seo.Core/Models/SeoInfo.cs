@@ -14,6 +14,11 @@ public class SeoInfo : AuditableEntity, IHasLanguage, ICloneable
     public string SemanticUrl { get; set; }
 
     /// <summary>
+    /// Outline of the current object if it exists
+    /// </summary>
+    public string Outline { get; set; }
+
+    /// <summary>
     /// head title tag content
     /// </summary>
     public string PageTitle { get; set; }
