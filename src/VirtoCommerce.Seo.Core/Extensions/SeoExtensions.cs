@@ -48,7 +48,7 @@ public static class SeoExtensions
         string language)
     {
         // this is impossible situation
-        if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty())
+        if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || seoInfos == null)
         {
             return null; // ToDo: Unexpected behavior
         }
@@ -63,7 +63,7 @@ public static class SeoExtensions
     }
 
     public static IEnumerable<SeoInfo> FilterSeoInfoCanBeFound(this IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language) =>
-        seoInfos?.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language));
+        seoInfos.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language));
 
     public static IEnumerable<SeoInfoScored> SelectSeoInfoScores(this IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language)
     {
