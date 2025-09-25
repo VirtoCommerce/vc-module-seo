@@ -2,7 +2,7 @@
 
 public class ProcessOrderSeoInfoResponse
 {
-    protected string Description { get; set; } = "Order of get best matching seo info.";
+    public string Description => "Order of get best matching seo info.";
     public SeoInfosResponse FoundSeoInfos { get; set; }
     public SeoInfosResponse FilteredSeoInfos { get; set; }
     public SeoInfoScoresResponse SelectedSeoInfoScores { get; set; }
