@@ -23,7 +23,7 @@ public class MaintenanceController(IMaintenanceService maintenanceService) : Con
         var languageCode = request.LanguageCode;
         var permalink = request.Permalink;
 
-        var processOrder = await maintenanceService.GetSeoInfoForTestAsync(storeId, languageCode, permalink, HttpContext.RequestAborted);
+        var processOrder = await maintenanceService.GetSeoInfoForTestAsync(storeId, languageCode, permalink);
 
         var response = new SeoForTestResponse(storeId, languageCode, permalink, processOrder);
 

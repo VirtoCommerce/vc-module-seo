@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
@@ -9,7 +8,6 @@ namespace VirtoCommerce.Seo.Data.Services;
 
 public class MaintenanceService(ICompositeSeoResolver compositeSeoResolver) : IMaintenanceService
 {
-    private const string StoreDefaultLanguage = "en-US";
     private const string Stage0Description = "Stage 0: Find SeoInfos from compositeResolver.";
     private const string Stage1Description = "Stage 1: Filtering is there seo.";
     private const string Stage2Description = "Stage 2: Select SeoInfo, ObjectTypePriority, Score.";
@@ -18,7 +16,7 @@ public class MaintenanceService(ICompositeSeoResolver compositeSeoResolver) : IM
     private const string Stage5Description = "Stage 5: Select SeoInfos.";
     private const string Stage6Description = "Stage 6: Select first or default SeoInfo.";
 
-    public async Task<ProcessOrderSeoInfoResponse> GetSeoInfoForTestAsync(string storeId, string languageCode, string permalink, CancellationToken cancellationToken)
+    public async Task<ProcessOrderSeoInfoResponse> GetSeoInfoForTestAsync(string storeId, string languageCode, string permalink, string storeDefaultLanguage = "en-US")
     {
         var criteria = new SeoSearchCriteria()
         {
@@ -44,10 +42,10 @@ public class MaintenanceService(ICompositeSeoResolver compositeSeoResolver) : IM
         }
 
         // Filtering is there seo.
-        var filteredSeoInfoCanBeFound = seoInfosFromCompositeResolver.FilterSeoInfoCanBeFound(storeId, StoreDefaultLanguage, languageCode).ToArray();
+        var filteredSeoInfoCanBeFound = seoInfosFromCompositeResolver.FilterSeoInfoCanBeFound(storeId, storeDefaultLanguage, languageCode).ToArray();
 
         // Select SeoInfo, ObjectTypePriority, Score.
-        var seoInfoScores = filteredSeoInfoCanBeFound.SelectSeoInfoScores(storeId, StoreDefaultLanguage, languageCode).ToArray();
+        var seoInfoScores = filteredSeoInfoCanBeFound.SelectSeoInfoScores(storeId, storeDefaultLanguage, languageCode).ToArray();
 
         // Filter score greater than 0.
         var filteredSeoInfoScores = seoInfoScores.FilterSeoInfoScoresGreaterThenZero().ToArray();

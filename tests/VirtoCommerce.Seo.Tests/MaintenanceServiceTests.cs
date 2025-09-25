@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
@@ -19,7 +17,7 @@ public class MaintenanceServiceTests
         var service = new MaintenanceService(resolver);
 
         // Act
-        var result = await service.GetSeoInfoForTestAsync("Store1", "en-US", "permalink", CancellationToken.None);
+        var result = await service.GetSeoInfoForTestAsync("Store1", "en-US", "permalink");
 
         // Assert
         Assert.IsType<ProcessOrderSeoInfoResponse>(result);
@@ -62,7 +60,7 @@ public class MaintenanceServiceTests
         var service = new MaintenanceService(resolver);
 
         // Act
-        var result = await service.GetSeoInfoForTestAsync(storeId, language, "XXX", CancellationToken.None);
+        var result = await service.GetSeoInfoForTestAsync(storeId, language, "XXX");
 
         // Assert
         Assert.NotNull(result);
