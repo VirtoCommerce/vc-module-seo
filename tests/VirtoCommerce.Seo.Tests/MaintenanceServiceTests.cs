@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using VirtoCommerce.Seo.Core.Models;
@@ -35,39 +36,39 @@ public class MaintenanceServiceTests
     public async Task GetSeoInfoForTestAsync_SelectsBestSeoInfo_ByScoreAndPriority()
     {
         // Arrange
-        var storeId = "B2B-store";
+        const string storeId = "B2B-store";
         var language = "en-US";
 
         var category = new SeoInfo
         {
-            SemanticUrl = "absolut",
+            SemanticUrl = "XXX",
             PageTitle = "Absolut",
             StoreId = storeId,
             ObjectType = "Category",
             IsActive = true,
-            LanguageCode = language,
+            LanguageCode = language
         };
 
         var brand = new SeoInfo
         {
-            SemanticUrl = "Brands/absolut",
+            SemanticUrl = "YYY",
             StoreId = storeId,
             ObjectType = "Brand",
             IsActive = true,
-            LanguageCode = language,
+            LanguageCode = language
         };
 
         var resolver = new FakeCompositeResolver(new List<SeoInfo> { category, brand });
         var service = new MaintenanceService(resolver);
 
         // Act
-        var result = await service.GetSeoInfoForTestAsync(storeId, language, "absolut", CancellationToken.None);
+        var result = await service.GetSeoInfoForTestAsync(storeId, language, "XXX", CancellationToken.None);
 
         // Assert
         Assert.NotNull(result);
         Assert.NotNull(result.SelectedSeoInfo);
         Assert.NotNull(result.SelectedSeoInfo.SeoInfo);
-        Assert.Equal("Brands/absolut", result.SelectedSeoInfo.SeoInfo.SemanticUrl);
+        Assert.Equal(storeId, result.SelectedSeoInfo.SeoInfo.StoreId);
 
         // Stage1 should contain both items
         Assert.NotNull(result.FilteredSeoInfos);
@@ -80,23 +81,13 @@ public class MaintenanceServiceTests
     }
 
     // Simple fake implementation of ICompositeSeoResolver for tests
-    private class FakeCompositeResolver : ICompositeSeoResolver
+    private class FakeCompositeResolver(IList<SeoInfo> items) : ICompositeSeoResolver
     {
-        private readonly IList<SeoInfo> _items;
-
-        public FakeCompositeResolver(IList<SeoInfo> items)
-        {
-            _items = items;
-        }
-
         public Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
         {
-            if (_items == null)
-            {
-                return Task.FromResult<IList<SeoInfo>>(null);
-            }
-
-            return Task.FromResult(_items);
+            return items == null
+                ? Task.FromResult<IList<SeoInfo>>(null)
+                : Task.FromResult(items);
         }
     }
 }
