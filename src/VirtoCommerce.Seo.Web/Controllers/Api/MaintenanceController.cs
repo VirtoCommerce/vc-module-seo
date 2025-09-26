@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.Seo.Core;
 using VirtoCommerce.Seo.Core.Models;
+using VirtoCommerce.Seo.Core.Services;
 using VirtoCommerce.Seo.Data.Services;
 
 namespace VirtoCommerce.Seo.Web.Controllers.Api;
 
 [Authorize]
-[Route("api/maintenance")]
+[Route("api/seo/maintenance")]
 public class MaintenanceController(IMaintenanceService maintenanceService) : Controller
 {
     /// <summary>
