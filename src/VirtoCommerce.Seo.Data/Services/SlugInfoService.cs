@@ -6,7 +6,7 @@ using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
-public class MaintenanceService(ICompositeSeoResolver compositeSeoResolver) : IMaintenanceService
+public class SlugInfoService(ICompositeSeoResolver compositeSeoResolver) : ISlugInfoService
 {
     private const string Stage0Description = "Stage 0: Find SeoInfos from compositeResolver.";
     private const string Stage1Description = "Stage 1: Filtering is there seo.";

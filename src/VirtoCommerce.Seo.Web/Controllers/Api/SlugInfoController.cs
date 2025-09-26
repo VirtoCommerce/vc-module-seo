@@ -10,21 +10,21 @@ using VirtoCommerce.Seo.Data.Services;
 namespace VirtoCommerce.Seo.Web.Controllers.Api;
 
 [Authorize]
-[Route("api/seo/maintenance")]
-public class MaintenanceController(IMaintenanceService maintenanceService) : Controller
+[Route("api/seo/slug-info")]
+public class SlugInfoController(ISlugInfoService slugInfoService) : Controller
 {
     /// <summary>
     /// Find all SEO records for test by StoreId, LanguageCode, Permalink
     /// </summary>
-    [HttpGet("seo-for-test-mode")]
+    [HttpGet("explain")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<SeoForTestResponse>> GetSeoInfoForTestAsync(SeoForTestRequest request)
+    public async Task<ActionResult<SeoForTestResponse>> GetExplainAsync(SeoForTestRequest request)
     {
         var storeId = request.StoreId;
         var languageCode = request.LanguageCode;
         var permalink = request.Permalink;
 
-        var processOrder = await maintenanceService.GetSeoInfoForTestAsync(storeId, languageCode, permalink);
+        var processOrder = await slugInfoService.GetSeoInfoForTestAsync(storeId, languageCode, permalink);
 
         var response = new SeoForTestResponse(storeId, languageCode, permalink, processOrder);
 

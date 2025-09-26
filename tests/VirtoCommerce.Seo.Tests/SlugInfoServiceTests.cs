@@ -7,14 +7,14 @@ using Xunit;
 
 namespace VirtoCommerce.Seo.Tests;
 
-public class MaintenanceServiceTests
+public class SlugInfoServiceTests
 {
     [Fact]
     public async Task GetSeoInfoForTestAsync_ReturnsEmptyProcessOrder_WhenNoSeoInfos()
     {
         // Arrange
         var resolver = new FakeCompositeResolver(null);
-        var service = new MaintenanceService(resolver);
+        var service = new SlugInfoService(resolver);
 
         // Act
         var result = await service.GetSeoInfoForTestAsync("Store1", "en-US", "permalink");
@@ -57,7 +57,7 @@ public class MaintenanceServiceTests
         };
 
         var resolver = new FakeCompositeResolver(new List<SeoInfo> { category, brand });
-        var service = new MaintenanceService(resolver);
+        var service = new SlugInfoService(resolver);
 
         // Act
         var result = await service.GetSeoInfoForTestAsync(storeId, language, "XXX");
