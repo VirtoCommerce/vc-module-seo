@@ -174,9 +174,8 @@ namespace VirtoCommerce.Seo.Tests
 
             var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
             Assert.NotNull(stage6);
-            // stage6 contains a single SeoInfoResponse with null SeoInfo
-            Assert.Single(stage6.SeoInfoResponses);
-            Assert.Null(stage6.SeoInfoResponses.First());
+            // stage6 contains no candidates
+            Assert.Empty(stage6.SeoInfoResponses);
         }
 
         [Fact]
