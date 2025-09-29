@@ -238,9 +238,20 @@ public static class SeoExtensions
                seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }
 
+    // Score bits as named flags for readability
+    [Flags]
+    private enum ScoreFactor
+    {
+        LanguageEmpty = 1 << 0,         // 1
+        LanguageStoreDefault = 1 << 1,  // 2
+        LanguageExact = 1 << 2,         // 4
+        StoreMatch = 1 << 3,            // 8
+        IsActive = 1 << 4,              // 16
+    }
+
     /// <summary>
     /// Calculates integer score for a SeoInfo based on several boolean factors (active, store match, language match etc.).
-    /// The score is computed as a bit-encoded value where each condition contributes a power-of-two weight.
+    /// The score is computed as a bit-encoded value where each condition contributes a named flag.
     /// </summary>
     /// <param name="seoInfo">SeoInfo to evaluate.</param>
     /// <param name="storeId">Requested store identifier.</param>
@@ -249,20 +260,32 @@ public static class SeoExtensions
     /// <returns>Integer score representing how well SeoInfo matches the requested parameters.</returns>
     private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
     {
-        // Bit weights (higher bit = higher priority):
-        // bit 4 (16) = IsActive
-        // bit 3 (8)  = StoreId match
-        // bit 2 (4)  = Language equals requested language
-        // bit 1 (2)  = Language equals store default language
-        // bit 0 (1)  = Language is null or empty (acts as wildcard)
-
         var score = 0;
 
-        if (seoInfo.IsActive) score |= 1 << 4; // 16
-        if (seoInfo.StoreId.EqualsIgnoreCase(storeId)) score |= 1 << 3; // 8
-        if (seoInfo.LanguageCode.EqualsIgnoreCase(language)) score |= 1 << 2; // 4
-        if (seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage)) score |= 1 << 1; // 2
-        if (seoInfo.LanguageCode.IsNullOrEmpty()) score |= 1 << 0; // 1
+        if (seoInfo.IsActive)
+        {
+            score |= (int)ScoreFactor.IsActive;
+        }
+
+        if (seoInfo.StoreId.EqualsIgnoreCase(storeId))
+        {
+            score |= (int)ScoreFactor.StoreMatch;
+        }
+
+        if (seoInfo.LanguageCode.EqualsIgnoreCase(language))
+        {
+            score |= (int)ScoreFactor.LanguageExact;
+        }
+
+        if (seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
+        {
+            score |= (int)ScoreFactor.LanguageStoreDefault;
+        }
+
+        if (seoInfo.LanguageCode.IsNullOrEmpty())
+        {
+            score |= (int)ScoreFactor.LanguageEmpty;
+        }
 
         return score;
     }
