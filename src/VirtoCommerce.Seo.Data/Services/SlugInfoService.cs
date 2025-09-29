@@ -1,22 +1,18 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
+using VirtoCommerce.Seo.Core.Models.SlugInfo;
 using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
 public class SlugInfoService(ICompositeSeoResolver compositeSeoResolver) : ISlugInfoService
 {
-    private const string Stage0Description = "Stage 0: Find SeoInfos from compositeResolver.";
-    private const string Stage1Description = "Stage 1: Filtering is there seo.";
-    private const string Stage2Description = "Stage 2: Select SeoInfo, ObjectTypePriority, Score.";
-    private const string Stage3Description = "Stage 3: Filter score greater than 0.";
-    private const string Stage4Description = "Stage 4: Order by score, then order by desc ObjectTypePriority.";
-    private const string Stage5Description = "Stage 5: Select SeoInfos.";
-    private const string Stage6Description = "Stage 6: Select first or default SeoInfo.";
-
-    public async Task<ProcessOrderSeoInfoResponse> GetSeoInfoForTestAsync(string storeId, string languageCode, string permalink, string storeDefaultLanguage = "en-US")
+    public async Task<SlugInfoResponse> GetExplainAsync(
+        string storeId,
+        string storeDefaultLanguage,
+        string languageCode,
+        string permalink)
     {
         var criteria = new SeoSearchCriteria()
         {
@@ -29,46 +25,12 @@ public class SlugInfoService(ICompositeSeoResolver compositeSeoResolver) : ISlug
 
         if (seoInfosFromCompositeResolver == null || seoInfosFromCompositeResolver.Count == 0)
         {
-            return new ProcessOrderSeoInfoResponse
-            {
-                FoundSeoInfos = new SeoInfosResponse(Stage0Description, null),
-                FilteredSeoInfos = new SeoInfosResponse(Stage1Description, null),
-                SelectedSeoInfoScores = new SeoInfoScoresResponse(Stage2Description, null),
-                FilteredSeoInfoScores = new SeoInfoScoresResponse(Stage3Description, null),
-                OrderedSeoInfoScores = new SeoInfoScoresResponse(Stage4Description, null),
-                SelectedSeoInfos = new SeoInfosResponse(Stage5Description, null),
-                SelectedSeoInfo = new SeoInfoResponse(Stage6Description, null)
-            };
+            return new SlugInfoResponse(storeId, languageCode, permalink);
         }
 
-        // Filtering is there seo.
-        var filteredSeoInfoCanBeFound = seoInfosFromCompositeResolver.FilterSeoInfoCanBeFound(storeId, storeDefaultLanguage, languageCode).ToArray();
+        var results = seoInfosFromCompositeResolver.GetSeoInfosResponses(storeId, storeDefaultLanguage, languageCode);
 
-        // Select SeoInfo, ObjectTypePriority, Score.
-        var seoInfoScores = filteredSeoInfoCanBeFound.SelectSeoInfoScores(storeId, storeDefaultLanguage, languageCode).ToArray();
-
-        // Filter score greater than 0.
-        var filteredSeoInfoScores = seoInfoScores.FilterSeoInfoScoresGreaterThenZero().ToArray();
-
-        // Order by score, then order by desc ObjectTypePriority.
-        var orderedSeoInfoScores = filteredSeoInfoScores.OrderSeoInfoScores().ToArray();
-
-        // Select SeoInfos.
-        var seoInfos = orderedSeoInfoScores.SelectSeoInfos().ToArray();
-
-        // Select first or default SeoInfo.
-        var seoInfo = seoInfos.FirstOrDefault();
-
-        var processOrder = new ProcessOrderSeoInfoResponse
-        {
-            FoundSeoInfos = new SeoInfosResponse(Stage0Description, seoInfosFromCompositeResolver.ToArray()),
-            FilteredSeoInfos = new SeoInfosResponse(Stage1Description, filteredSeoInfoCanBeFound),
-            SelectedSeoInfoScores = new SeoInfoScoresResponse(Stage2Description, seoInfoScores),
-            FilteredSeoInfoScores = new SeoInfoScoresResponse(Stage3Description, filteredSeoInfoScores),
-            OrderedSeoInfoScores = new SeoInfoScoresResponse(Stage4Description, orderedSeoInfoScores),
-            SelectedSeoInfos = new SeoInfosResponse(Stage5Description, seoInfos),
-            SelectedSeoInfo = new SeoInfoResponse(Stage6Description, seoInfo)
-        };
+        var processOrder = new SlugInfoResponse(storeId, languageCode, permalink, results);
 
         return processOrder;
     }

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using VirtoCommerce.Seo.Core.Models.SlugInfo;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
 using Xunit;
+using System.Linq;
 
 namespace VirtoCommerce.Seo.Tests
 {
@@ -190,7 +192,7 @@ namespace VirtoCommerce.Seo.Tests
             var storeId = "Store1";
             var storeDefaultLanguage = "en-US";
 
-            SeoExtensions.OrderedObjectTypes = ["Categories", "Pages"];
+            SeoExtensions.OrderedObjectTypes = new List<string> { "Categories", "Pages" };
 
             var seoInfos = new List<SeoInfo>
             {
@@ -306,6 +308,124 @@ namespace VirtoCommerce.Seo.Tests
             // Assert
             Assert.NotNull(result);
             Assert.Equal("Store2", result.StoreId);
+        }
+
+        [Fact]
+        public void GetSeoInfosResponses_ContainsAllPipelineStages()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new() { StoreId = storeId, LanguageCode = language, SemanticUrl = "product1" }
+            };
+
+            // Act
+            var stages = seoInfos.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
+
+            // Assert
+            Assert.NotNull(stages);
+            Assert.Equal(6, stages.Count);
+            Assert.Equal(PipelineStage.Original, stages[0].Stage);
+            Assert.Equal(PipelineStage.Filtered, stages[1].Stage);
+            Assert.Equal(PipelineStage.Scored, stages[2].Stage);
+            Assert.Equal(PipelineStage.FilteredScore, stages[3].Stage);
+            Assert.Equal(PipelineStage.Ordered, stages[4].Stage);
+            Assert.Equal(PipelineStage.Final, stages[5].Stage);
+        }
+
+        [Fact]
+        public void ObjectTypePriority_InfluencesOrdering()
+        {
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var cat = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "cat", ObjectType = "Category", IsActive = true };
+            var page = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "page", ObjectType = "Pages", IsActive = true };
+            var prod = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "prod", ObjectType = "CatalogProduct", IsActive = true };
+
+            var items = new List<SeoInfo> { cat, page, prod };
+
+            var original = SeoExtensions.OrderedObjectTypes.ToList();
+            try
+            {
+                SeoExtensions.OrderedObjectTypes = new List<string> { "Category", "Pages", "CatalogProduct" };
+
+                var stages = items.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
+                var orderedStage = stages.FirstOrDefault(s => s.Stage == PipelineStage.Ordered);
+                Assert.NotNull(orderedStage);
+                var top = orderedStage.SeoInfoResponses.First();
+                Assert.Equal("CatalogProduct", top.SeoInfo.ObjectType);
+            }
+            finally
+            {
+                SeoExtensions.OrderedObjectTypes = original;
+            }
+        }
+
+        [Fact]
+        public void ActiveFlag_AffectsSelection()
+        {
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var inactive = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "p", IsActive = false, ObjectType = "Pages" };
+            var active = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "p", IsActive = true, ObjectType = "Pages" };
+
+            var items = new List<SeoInfo> { inactive, active };
+            var stages = items.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
+            var final = stages.FirstOrDefault(s => s.Stage == PipelineStage.Final);
+            Assert.NotNull(final);
+            var chosen = final.SeoInfoResponses.First().SeoInfo;
+            Assert.True(chosen.IsActive);
+        }
+
+        [Fact]
+        public void LanguageFallback_PrefersStoreDefaultOverEmpty()
+        {
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var requestLanguage = "de-DE";
+
+            var english = new SeoInfo { StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "en", ObjectType = "Pages", IsActive = true };
+            var emptyLang = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "empty", ObjectType = "Pages", IsActive = true };
+
+            var items = new List<SeoInfo> { emptyLang, english };
+            var stages = items.GetSeoInfosResponses(storeId, storeDefaultLanguage, requestLanguage);
+            var final = stages.FirstOrDefault(s => s.Stage == PipelineStage.Final);
+            var chosen = final.SeoInfoResponses.First().SeoInfo;
+            Assert.Equal("en-US", chosen.LanguageCode);
+        }
+
+        [Fact]
+        public void PriorityMap_IsRebuiltOnOrderedObjectTypesChange()
+        {
+            var original = SeoExtensions.OrderedObjectTypes.ToList();
+            try
+            {
+                SeoExtensions.OrderedObjectTypes = new List<string> { "A", "B", "C" };
+                // create entries with types A,B,C and assert ordering reflects new priority
+                var storeId = "Store1";
+                var lang = "en-US";
+                var a = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "A", IsActive = true };
+                var b = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "B", IsActive = true };
+                var c = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "C", IsActive = true };
+
+                var items = new List<SeoInfo> { a, b, c };
+                var stages = items.GetSeoInfosResponses(storeId, lang, lang);
+                var ordered = stages.First(s => s.Stage == PipelineStage.Ordered);
+                var top = ordered.SeoInfoResponses.First().SeoInfo;
+                Assert.Equal("C", top.ObjectType);
+            }
+            finally
+            {
+                SeoExtensions.OrderedObjectTypes = original;
+            }
         }
     }
 }
