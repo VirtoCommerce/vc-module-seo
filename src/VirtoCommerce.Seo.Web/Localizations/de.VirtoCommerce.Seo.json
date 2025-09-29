@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Defekte Links",
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Status",
+          "hitCount": "Zugriffszähler"
+        },
+        "messages": {
+          "feature-disabled": "Die Erkennung defekter Links ist derzeit deaktiviert.<br/>Bitte kontaktieren Sie Ihren Administrator, um sie zu aktivieren unter<br/><strong>Einstellungen > SEO > Defekte Links erkennen</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Status",
+          "redirectUrl": "Weiterleitungs-URL",
+          "hitCount": "Zugriffszähler",
+          "language": "Sprache",
+          "createdDate": "Erstellungsdatum",
+          "lastHitDate": "Letztes Zugriffsdatum"
+        },
+        "placeholders": {
+          "status": "Status",
+          "redirectUrl": "Weiterleitungs-URL"
+        },
+        "statuses": {
+          "active": "Aktiv",
+          "resolved": "Gelöst",
+          "accepted": "Akzeptiert"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Weiterleitungsregeln",
+        "labels": {
+          "inbound": "Eingehend",
+          "outbound": "Ausgehend"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Eingehende Regel",
+          "outbound": "Ausgehende Regel",
+          "is-active": "Ist aktiv",
+          "redirect-rule-type": "Typ der Weiterleitungsregel",
+          "priority": "Priorität"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Löschen bestätigen",
+        "message": "Sind Sie sicher, dass Sie diesen defekten Link löschen möchten?",
+        "messagePlural": "Sind Sie sicher, dass Sie die ausgewählten defekten Links löschen möchten?"
+      },
+      "broken-link-save": {
+        "title": "Änderungen speichern",
+        "message": "Dieses Objekt wurde geändert. Möchten Sie die Änderungen speichern?"
+      },
+      "redirect-rule-delete": {
+        "title": "Löschen bestätigen",
+        "message": "Sind Sie sicher, dass Sie diese Weiterleitungsregel löschen möchten?",
+        "messagePlural": "Sind Sie sicher, dass Sie die ausgewählten Weiterleitungsregeln löschen möchten?"
+      },
+      "redirect-rule-save": {
+        "title": "Änderungen speichern",
+        "message": "Dieses Objekt wurde geändert. Möchten Sie die Änderungen speichern?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Aktive defekte Links"
+      },
+      "redirect-rule-widget": {
+        "title": "Aktive Regeln"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "SEO-Menü öffnen",
+    "seo:create": "SEO-bezogene Daten erstellen",
+    "seo:read": "SEO-bezogene Daten anzeigen",
+    "seo:update": "SEO-bezogene Daten aktualisieren",
+    "seo:delete": "SEO-bezogene Daten löschen"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO aktiviert",
+        "description": "Einstellung für aktivierte SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Defekte Links erkennen",
+          "description": "Soll die Plattform Anfragen an nicht existierende Seiten aufzeichnen?"
+        }
+      }
+    }
+  }
+}

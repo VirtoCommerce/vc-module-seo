@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Rikkinäiset linkit",
+        "labels": {
+          "permalink": "Pysyvä linkki",
+          "status": "Tila",
+          "hitCount": "Osumien määrä"
+        },
+        "messages": {
+          "feature-disabled": "Rikkinäisten linkkien tunnistus on tällä hetkellä pois käytöstä.<br/>Ota yhteyttä järjestelmänvalvojaasi ottaaksesi sen käyttöön kohdasta<br/><strong>Asetukset > SEO > Tunnista rikkinäiset linkit</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Pysyvä linkki",
+          "status": "Tila",
+          "redirectUrl": "Uudelleenohjaus-URL",
+          "hitCount": "Osumien määrä",
+          "language": "Kieli",
+          "createdDate": "Luontipäivä",
+          "lastHitDate": "Viimeisin osumapäivä"
+        },
+        "placeholders": {
+          "status": "Tila",
+          "redirectUrl": "Uudelleenohjaus-URL"
+        },
+        "statuses": {
+          "active": "Aktiivinen",
+          "resolved": "Ratkaistu",
+          "accepted": "Hyväksytty"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Uudelleenohjaussäännöt",
+        "labels": {
+          "inbound": "Saapuva",
+          "outbound": "Lähtevä"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Saapuva sääntö",
+          "outbound": "Lähtevä sääntö",
+          "is-active": "On aktiivinen",
+          "redirect-rule-type": "Uudelleenohjaussäännön tyyppi",
+          "priority": "Prioriteetti"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Vahvista poisto",
+        "message": "Oletko varma, että haluat poistaa tämän rikkinäisen linkin?",
+        "messagePlural": "Oletko varma, että haluat poistaa valitut rikkinäiset linkit?"
+      },
+      "broken-link-save": {
+        "title": "Tallenna muutokset",
+        "message": "Tätä kohdetta on muokattu. Haluatko tallentaa muutokset?"
+      },
+      "redirect-rule-delete": {
+        "title": "Vahvista poisto",
+        "message": "Oletko varma, että haluat poistaa tämän uudelleenohjaussäännön?",
+        "messagePlural": "Oletko varma, että haluat poistaa valitut uudelleenohjaussäännöt?"
+      },
+      "redirect-rule-save": {
+        "title": "Tallenna muutokset",
+        "message": "Tätä kohdetta on muokattu. Haluatko tallentaa muutokset?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Aktiiviset rikkinäiset linkit"
+      },
+      "redirect-rule-widget": {
+        "title": "Aktiiviset säännöt"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Avaa SEO-valikko",
+    "seo:create": "Luo SEO:oon liittyviä tietoja",
+    "seo:read": "Näytä SEO:oon liittyviä tietoja",
+    "seo:update": "Päivitä SEO:oon liittyviä tietoja",
+    "seo:delete": "Poista SEO:oon liittyviä tietoja"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO käytössä",
+        "description": "SEO:n käyttöönottoasetus"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Tunnista rikkinäiset linkit",
+          "description": "Pitäisikö alustan tallentaa pyynnöt olemattomille sivuille?"
+        }
+      }
+    }
+  }
+}

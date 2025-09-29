@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Links quebrados",
+        "labels": {
+          "permalink": "Link permanente",
+          "status": "Estado",
+          "hitCount": "Contagem de acessos"
+        },
+        "messages": {
+          "feature-disabled": "A deteção de links quebrados está atualmente desativada.<br/>Por favor, contacte o seu administrador para ativá-la em<br/><strong>Definições > SEO > Detetar links quebrados</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Link permanente",
+          "status": "Estado",
+          "redirectUrl": "URL de redirecionamento",
+          "hitCount": "Contagem de acessos",
+          "language": "Idioma",
+          "createdDate": "Data de criação",
+          "lastHitDate": "Última data de acesso"
+        },
+        "placeholders": {
+          "status": "Estado",
+          "redirectUrl": "URL de redirecionamento"
+        },
+        "statuses": {
+          "active": "Ativo",
+          "resolved": "Resolvido",
+          "accepted": "Aceite"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Regras de redirecionamento",
+        "labels": {
+          "inbound": "Entrada",
+          "outbound": "Saída"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Regra de entrada",
+          "outbound": "Regra de saída",
+          "is-active": "Está ativo",
+          "redirect-rule-type": "Tipo de regra de redirecionamento",
+          "priority": "Prioridade"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Confirmar eliminação",
+        "message": "Tem a certeza de que deseja eliminar este link quebrado?",
+        "messagePlural": "Tem a certeza de que deseja eliminar os links quebrados selecionados?"
+      },
+      "broken-link-save": {
+        "title": "Guardar alterações",
+        "message": "Esta entidade foi modificada. Deseja guardar as alterações?"
+      },
+      "redirect-rule-delete": {
+        "title": "Confirmar eliminação",
+        "message": "Tem a certeza de que deseja eliminar esta regra de redirecionamento?",
+        "messagePlural": "Tem a certeza de que deseja eliminar as regras de redirecionamento selecionadas?"
+      },
+      "redirect-rule-save": {
+        "title": "Guardar alterações",
+        "message": "Esta entidade foi modificada. Deseja guardar as alterações?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Links quebrados ativos"
+      },
+      "redirect-rule-widget": {
+        "title": "Regras ativas"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Abrir o menu de SEO",
+    "seo:create": "Criar dados relacionados com SEO",
+    "seo:read": "Visualizar dados relacionados com SEO",
+    "seo:update": "Atualizar dados relacionados com SEO",
+    "seo:delete": "Eliminar dados relacionados com SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO ativado",
+        "description": "Definição de SEO ativado"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Detetar links quebrados",
+          "description": "A plataforma deve registar pedidos a páginas inexistentes?"
+        }
+      }
+    }
+  }
+}

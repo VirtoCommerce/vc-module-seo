@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Liens brisés",
+        "labels": {
+          "permalink": "Permalien",
+          "status": "Statut",
+          "hitCount": "Nombre de visites"
+        },
+        "messages": {
+          "feature-disabled": "La détection des liens brisés est actuellement désactivée.<br/>Veuillez contacter votre administrateur pour l'activer via<br/><strong>Paramètres > SEO > Détecter les liens brisés</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Permalien",
+          "status": "Statut",
+          "redirectUrl": "URL de redirection",
+          "hitCount": "Nombre de visites",
+          "language": "Langue",
+          "createdDate": "Date de création",
+          "lastHitDate": "Date de la dernière visite"
+        },
+        "placeholders": {
+          "status": "Statut",
+          "redirectUrl": "URL de redirection"
+        },
+        "statuses": {
+          "active": "Actif",
+          "resolved": "Résolu",
+          "accepted": "Accepté"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Règles de redirection",
+        "labels": {
+          "inbound": "Entrant",
+          "outbound": "Sortant"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Règle entrante",
+          "outbound": "Règle sortante",
+          "is-active": "Est actif",
+          "redirect-rule-type": "Type de règle de redirection",
+          "priority": "Priorité"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Confirmer la suppression",
+        "message": "Êtes-vous sûr de vouloir supprimer ce lien brisé ?",
+        "messagePlural": "Êtes-vous sûr de vouloir supprimer les liens brisés sélectionnés ?"
+      },
+      "broken-link-save": {
+        "title": "Enregistrer les modifications",
+        "message": "Cette entité a été modifiée. Voulez-vous enregistrer les modifications ?"
+      },
+      "redirect-rule-delete": {
+        "title": "Confirmer la suppression",
+        "message": "Êtes-vous sûr de vouloir supprimer cette règle de redirection ?",
+        "messagePlural": "Êtes-vous sûr de vouloir supprimer les règles de redirection sélectionnées ?"
+      },
+      "redirect-rule-save": {
+        "title": "Enregistrer les modifications",
+        "message": "Cette entité a été modifiée. Voulez-vous enregistrer les modifications ?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Liens brisés actifs"
+      },
+      "redirect-rule-widget": {
+        "title": "Règles actives"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Ouvrir le menu SEO",
+    "seo:create": "Créer des données liées au SEO",
+    "seo:read": "Voir les données liées au SEO",
+    "seo:update": "Mettre à jour les données liées au SEO",
+    "seo:delete": "Supprimer les données liées au SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO activé",
+        "description": "Paramètre d'activation du SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Détecter les liens brisés",
+          "description": "La plateforme doit-elle enregistrer les requêtes vers des pages inexistantes ?"
+        }
+      }
+    }
+  }
+}

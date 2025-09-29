@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "リンク切れ",
+        "labels": {
+          "permalink": "パーマリンク",
+          "status": "ステータス",
+          "hitCount": "ヒット数"
+        },
+        "messages": {
+          "feature-disabled": "リンク切れ検出は現在無効です。<br/>管理者にお問い合わせの上、<br/><strong>設定 > SEO > リンク切れ検出</strong>で有効にしてください。"
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "パーマリンク",
+          "status": "ステータス",
+          "redirectUrl": "リダイレクトURL",
+          "hitCount": "ヒット数",
+          "language": "言語",
+          "createdDate": "作成日",
+          "lastHitDate": "最新ヒット日"
+        },
+        "placeholders": {
+          "status": "ステータス",
+          "redirectUrl": "リダイレクトURL"
+        },
+        "statuses": {
+          "active": "アクティブ",
+          "resolved": "解決済み",
+          "accepted": "承認済み"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "リダイレクトルール",
+        "labels": {
+          "inbound": "入力",
+          "outbound": "出力"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "入力ルール",
+          "outbound": "出力ルール",
+          "is-active": "アクティブ",
+          "redirect-rule-type": "リダイレクトルールの種類",
+          "priority": "優先度"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "削除の確認",
+        "message": "このリンク切れを削除してもよろしいですか？",
+        "messagePlural": "選択したリンク切れを削除してもよろしいですか？"
+      },
+      "broken-link-save": {
+        "title": "変更の保存",
+        "message": "このエンティティが変更されました。変更を保存しますか？"
+      },
+      "redirect-rule-delete": {
+        "title": "削除の確認",
+        "message": "このリダイレクトルールを削除してもよろしいですか？",
+        "messagePlural": "選択したリダイレクトルールを削除してもよろしいですか？"
+      },
+      "redirect-rule-save": {
+        "title": "変更の保存",
+        "message": "このエンティティが変更されました。変更を保存しますか？"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "アクティブなリンク切れ"
+      },
+      "redirect-rule-widget": {
+        "title": "アクティブなルール"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "SEOメニューを開く",
+    "seo:create": "SEO関連データの作成",
+    "seo:read": "SEO関連データの閲覧",
+    "seo:update": "SEO関連データの更新",
+    "seo:delete": "SEO関連データの削除"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO有効",
+        "description": "SEO有効設定"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "リンク切れ検出",
+          "description": "プラットフォームは存在しないページへのリクエストを記録する必要がありますか？"
+        }
+      }
+    }
+  }
+}

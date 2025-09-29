@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Ødelagte lenker",
+        "labels": {
+          "permalink": "Permalenke",
+          "status": "Status",
+          "hitCount": "Antall treff"
+        },
+        "messages": {
+          "feature-disabled": "Deteksjon av ødelagte lenker er for øyeblikket deaktivert.<br/>Kontakt administratoren din for å aktivere den via<br/><strong>Innstillinger > SEO > Oppdag ødelagte lenker</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Permalenke",
+          "status": "Status",
+          "redirectUrl": "Omdirigerings-URL",
+          "hitCount": "Antall treff",
+          "language": "Språk",
+          "createdDate": "Opprettelsesdato",
+          "lastHitDate": "Siste treffdato"
+        },
+        "placeholders": {
+          "status": "Status",
+          "redirectUrl": "Omdirigerings-URL"
+        },
+        "statuses": {
+          "active": "Aktiv",
+          "resolved": "Løst",
+          "accepted": "Godkjent"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Omdirigeringsregler",
+        "labels": {
+          "inbound": "Innkommende",
+          "outbound": "Utgående"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Innkommende regel",
+          "outbound": "Utgående regel",
+          "is-active": "Er aktiv",
+          "redirect-rule-type": "Type omdirigeringsregel",
+          "priority": "Prioritet"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Bekreft sletting",
+        "message": "Er du sikker på at du vil slette denne ødelagte lenken?",
+        "messagePlural": "Er du sikker på at du vil slette de valgte ødelagte lenkene?"
+      },
+      "broken-link-save": {
+        "title": "Lagre endringer",
+        "message": "Denne enheten har blitt endret. Vil du lagre endringene?"
+      },
+      "redirect-rule-delete": {
+        "title": "Bekreft sletting",
+        "message": "Er du sikker på at du vil slette denne omdirigeringsregelen?",
+        "messagePlural": "Er du sikker på at du vil slette de valgte omdirigeringsreglene?"
+      },
+      "redirect-rule-save": {
+        "title": "Lagre endringer",
+        "message": "Denne enheten har blitt endret. Vil du lagre endringene?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Aktive ødelagte lenker"
+      },
+      "redirect-rule-widget": {
+        "title": "Aktive regler"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Åpne SEO-menyen",
+    "seo:create": "Opprett SEO-relaterte data",
+    "seo:read": "Vis SEO-relaterte data",
+    "seo:update": "Oppdater SEO-relaterte data",
+    "seo:delete": "Slett SEO-relaterte data"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO aktivert",
+        "description": "Innstilling for aktivert SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Oppdag ødelagte lenker",
+          "description": "Bør plattformen registrere forespørsler til ikke-eksisterende sider?"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "失效链接",
+        "labels": {
+          "permalink": "永久链接",
+          "status": "状态",
+          "hitCount": "访问次数"
+        },
+        "messages": {
+          "feature-disabled": "失效链接检测当前已被禁用。<br/>请联系您的管理员通过<br/><strong>设置 > SEO > 检测失效链接</strong>启用该功能。"
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "永久链接",
+          "status": "状态",
+          "redirectUrl": "重定向URL",
+          "hitCount": "访问次数",
+          "language": "语言",
+          "createdDate": "创建日期",
+          "lastHitDate": "最近访问日期"
+        },
+        "placeholders": {
+          "status": "状态",
+          "redirectUrl": "重定向URL"
+        },
+        "statuses": {
+          "active": "活跃",
+          "resolved": "已解决",
+          "accepted": "已接受"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "重定向规则",
+        "labels": {
+          "inbound": "传入",
+          "outbound": "传出"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "传入规则",
+          "outbound": "传出规则",
+          "is-active": "是否活跃",
+          "redirect-rule-type": "重定向规则类型",
+          "priority": "优先级"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "确认删除",
+        "message": "您确定要删除此失效链接吗？",
+        "messagePlural": "您确定要删除选中的失效链接吗？"
+      },
+      "broken-link-save": {
+        "title": "保存更改",
+        "message": "此实体已被修改。您想保存更改吗？"
+      },
+      "redirect-rule-delete": {
+        "title": "确认删除",
+        "message": "您确定要删除此重定向规则吗？",
+        "messagePlural": "您确定要删除选中的重定向规则吗？"
+      },
+      "redirect-rule-save": {
+        "title": "保存更改",
+        "message": "此实体已被修改。您想保存更改吗？"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "活跃的失效链接"
+      },
+      "redirect-rule-widget": {
+        "title": "活跃规则"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "打开SEO菜单",
+    "seo:create": "创建SEO相关数据",
+    "seo:read": "查看SEO相关数据",
+    "seo:update": "更新SEO相关数据",
+    "seo:delete": "删除SEO相关数据"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO启用",
+        "description": "SEO启用设置"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "检测失效链接",
+          "description": "平台是否应记录对不存在页面的请求？"
+        }
+      }
+    }
+  }
+}

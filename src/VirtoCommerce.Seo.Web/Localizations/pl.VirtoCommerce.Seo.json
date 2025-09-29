@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Uszkodzone linki",
+        "labels": {
+          "permalink": "Link stały",
+          "status": "Status",
+          "hitCount": "Liczba odwiedzin"
+        },
+        "messages": {
+          "feature-disabled": "Wykrywanie uszkodzonych linków jest obecnie wyłączone.<br/>Skontaktuj się z administratorem, aby włączyć tę funkcję w<br/><strong>Ustawienia > SEO > Wykrywanie uszkodzonych linków</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Link stały",
+          "status": "Status",
+          "redirectUrl": "Adres URL przekierowania",
+          "hitCount": "Liczba odwiedzin",
+          "language": "Język",
+          "createdDate": "Data utworzenia",
+          "lastHitDate": "Data ostatniego odwiedzenia"
+        },
+        "placeholders": {
+          "status": "Status",
+          "redirectUrl": "Adres URL przekierowania"
+        },
+        "statuses": {
+          "active": "Aktywny",
+          "resolved": "Rozwiązany",
+          "accepted": "Zaakceptowany"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Reguły przekierowań",
+        "labels": {
+          "inbound": "Przychodzące",
+          "outbound": "Wychodzące"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Reguła przychodząca",
+          "outbound": "Reguła wychodząca",
+          "is-active": "Jest aktywna",
+          "redirect-rule-type": "Typ reguły przekierowania",
+          "priority": "Priorytet"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Potwierdź usunięcie",
+        "message": "Czy na pewno chcesz usunąć ten uszkodzony link?",
+        "messagePlural": "Czy na pewno chcesz usunąć wybrane uszkodzone linki?"
+      },
+      "broken-link-save": {
+        "title": "Zapisz zmiany",
+        "message": "Ten obiekt został zmodyfikowany. Czy chcesz zapisać zmiany?"
+      },
+      "redirect-rule-delete": {
+        "title": "Potwierdź usunięcie",
+        "message": "Czy na pewno chcesz usunąć tę regułę przekierowania?",
+        "messagePlural": "Czy na pewno chcesz usunąć wybrane reguły przekierowania?"
+      },
+      "redirect-rule-save": {
+        "title": "Zapisz zmiany",
+        "message": "Ten obiekt został zmodyfikowany. Czy chcesz zapisać zmiany?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Aktywne uszkodzone linki"
+      },
+      "redirect-rule-widget": {
+        "title": "Aktywne reguły"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Otwórz menu SEO",
+    "seo:create": "Tworzenie danych związanych z SEO",
+    "seo:read": "Przeglądanie danych związanych z SEO",
+    "seo:update": "Aktualizacja danych związanych z SEO",
+    "seo:delete": "Usuwanie danych związanych z SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO włączone",
+        "description": "Ustawienie włączenia SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Wykrywanie uszkodzonych linków",
+          "description": "Czy platforma powinna rejestrować żądania do nieistniejących stron?"
+        }
+      }
+    }
+  }
+}

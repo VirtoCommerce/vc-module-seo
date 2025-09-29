@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Нерабочие ссылки",
+        "labels": {
+          "permalink": "Постоянная ссылка",
+          "status": "Статус",
+          "hitCount": "Количество посещений"
+        },
+        "messages": {
+          "feature-disabled": "Обнаружение нерабочих ссылок в настоящее время отключено.<br/>Пожалуйста, свяжитесь с вашим администратором, чтобы включить эту функцию через<br/><strong>Настройки > SEO > Обнаружение нерабочих ссылок</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Постоянная ссылка",
+          "status": "Статус",
+          "redirectUrl": "URL перенаправления",
+          "hitCount": "Количество посещений",
+          "language": "Язык",
+          "createdDate": "Дата создания",
+          "lastHitDate": "Дата последнего посещения"
+        },
+        "placeholders": {
+          "status": "Статус",
+          "redirectUrl": "URL перенаправления"
+        },
+        "statuses": {
+          "active": "Активная",
+          "resolved": "Разрешена",
+          "accepted": "Принята"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Правила перенаправления",
+        "labels": {
+          "inbound": "Входящая",
+          "outbound": "Исходящая"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Входящее правило",
+          "outbound": "Исходящее правило",
+          "is-active": "Активно",
+          "redirect-rule-type": "Тип правила перенаправления",
+          "priority": "Приоритет"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Подтверждение удаления",
+        "message": "Вы уверены, что хотите удалить эту нерабочую ссылку?",
+        "messagePlural": "Вы уверены, что хотите удалить выбранные нерабочие ссылки?"
+      },
+      "broken-link-save": {
+        "title": "Сохранить изменения",
+        "message": "Этот объект был изменен. Хотите сохранить изменения?"
+      },
+      "redirect-rule-delete": {
+        "title": "Подтверждение удаления",
+        "message": "Вы уверены, что хотите удалить это правило перенаправления?",
+        "messagePlural": "Вы уверены, что хотите удалить выбранные правила перенаправления?"
+      },
+      "redirect-rule-save": {
+        "title": "Сохранить изменения",
+        "message": "Этот объект был изменен. Хотите сохранить изменения?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Активные нерабочие ссылки"
+      },
+      "redirect-rule-widget": {
+        "title": "Активные правила"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Открыть меню SEO",
+    "seo:create": "Создание данных, связанных с SEO",
+    "seo:read": "Просмотр данных, связанных с SEO",
+    "seo:update": "Обновление данных, связанных с SEO",
+    "seo:delete": "Удаление данных, связанных с SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO включено",
+        "description": "Настройка включения SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Обнаружение нерабочих ссылок",
+          "description": "Должна ли платформа регистрировать запросы к несуществующим страницам?"
+        }
+      }
+    }
+  }
+}
