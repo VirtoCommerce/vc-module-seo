@@ -97,8 +97,8 @@ public static class SeoExtensions
     {
         var results = seoInfos.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
 
-        return results?.Where(x => x.Description.StartsWith("Stage 6"))
-            .SelectMany(x => x.SeoInfoResponses.Select(t => t.SeoInfo))
+        return results?.Where(x => x.Stage == PipelineStage.Final)
+            .SelectMany(x => x.SeoInfoResponses.Where(r => r != null).Select(t => t.SeoInfo))
             .FirstOrDefault();
     }
 
@@ -190,10 +190,12 @@ public static class SeoExtensions
     /// <returns>New list of responses populated with priority and score values.</returns>
     private static IList<SeoInfoResponse> CalculateScores(this IList<SeoInfoResponse> seoInfoResponses, string storeId, string storeDefaultLanguage, string language)
     {
+        var map = _priorityMap; // snapshot to avoid races if OrderedObjectTypes changes concurrently
+
         return seoInfoResponses.Select(seoInfoResponse => new SeoInfoResponse
         {
             SeoInfo = seoInfoResponse.SeoInfo,
-            ObjectTypePriority = _priorityMap.GetValueOrDefault(seoInfoResponse.SeoInfo.ObjectType ?? string.Empty, -1),
+            ObjectTypePriority = map != null && map.TryGetValue(seoInfoResponse.SeoInfo.ObjectType ?? string.Empty, out var idx) ? idx : -1,
             Score = seoInfoResponse.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language),
         }).ToList();
     }
