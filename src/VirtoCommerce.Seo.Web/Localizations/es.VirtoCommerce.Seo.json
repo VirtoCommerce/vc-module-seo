@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Enlaces rotos",
+        "labels": {
+          "permalink": "Enlace permanente",
+          "status": "Estado",
+          "hitCount": "Número de visitas"
+        },
+        "messages": {
+          "feature-disabled": "La detección de enlaces rotos está actualmente deshabilitada.<br/>Por favor, contacta con tu administrador para habilitarla a través de<br/><strong>Configuración > SEO > Detectar enlaces rotos</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Enlace permanente",
+          "status": "Estado",
+          "redirectUrl": "URL de redirección",
+          "hitCount": "Número de visitas",
+          "language": "Idioma",
+          "createdDate": "Fecha de creación",
+          "lastHitDate": "Fecha de última visita"
+        },
+        "placeholders": {
+          "status": "Estado",
+          "redirectUrl": "URL de redirección"
+        },
+        "statuses": {
+          "active": "Activo",
+          "resolved": "Resuelto",
+          "accepted": "Aceptado"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Reglas de redirección",
+        "labels": {
+          "inbound": "Entrante",
+          "outbound": "Saliente"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Regla entrante",
+          "outbound": "Regla saliente",
+          "is-active": "Está activo",
+          "redirect-rule-type": "Tipo de regla de redirección",
+          "priority": "Prioridad"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Confirmar eliminación",
+        "message": "¿Estás seguro de que quieres eliminar este enlace roto?",
+        "messagePlural": "¿Estás seguro de que quieres eliminar los enlaces rotos seleccionados?"
+      },
+      "broken-link-save": {
+        "title": "Guardar cambios",
+        "message": "Esta entidad ha sido modificada. ¿Quieres guardar los cambios?"
+      },
+      "redirect-rule-delete": {
+        "title": "Confirmar eliminación",
+        "message": "¿Estás seguro de que quieres eliminar esta regla de redirección?",
+        "messagePlural": "¿Estás seguro de que quieres eliminar las reglas de redirección seleccionadas?"
+      },
+      "redirect-rule-save": {
+        "title": "Guardar cambios",
+        "message": "Esta entidad ha sido modificada. ¿Quieres guardar los cambios?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Enlaces rotos activos"
+      },
+      "redirect-rule-widget": {
+        "title": "Reglas activas"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Abrir el menú de SEO",
+    "seo:create": "Crear datos relacionados con SEO",
+    "seo:read": "Ver datos relacionados con SEO",
+    "seo:update": "Actualizar datos relacionados con SEO",
+    "seo:delete": "Eliminar datos relacionados con SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO habilitado",
+        "description": "Configuración de SEO habilitado"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Detectar enlaces rotos",
+          "description": "¿Debería la plataforma registrar solicitudes a páginas inexistentes?"
+        }
+      }
+    }
+  }
+}

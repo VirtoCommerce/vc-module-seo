@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Link non funzionanti",
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Stato",
+          "hitCount": "Conteggio accessi"
+        },
+        "messages": {
+          "feature-disabled": "Il rilevamento dei link non funzionanti è attualmente disabilitato.<br/>Contatta il tuo amministratore per abilitarlo tramite<br/><strong>Impostazioni > SEO > Rileva link non funzionanti</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Permalink",
+          "status": "Stato",
+          "redirectUrl": "URL di reindirizzamento",
+          "hitCount": "Conteggio accessi",
+          "language": "Lingua",
+          "createdDate": "Data di creazione",
+          "lastHitDate": "Ultima data di accesso"
+        },
+        "placeholders": {
+          "status": "Stato",
+          "redirectUrl": "URL di reindirizzamento"
+        },
+        "statuses": {
+          "active": "Attivo",
+          "resolved": "Risolto",
+          "accepted": "Accettato"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Regole di reindirizzamento",
+        "labels": {
+          "inbound": "In entrata",
+          "outbound": "In uscita"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Regola in entrata",
+          "outbound": "Regola in uscita",
+          "is-active": "È attivo",
+          "redirect-rule-type": "Tipo di regola di reindirizzamento",
+          "priority": "Priorità"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Conferma eliminazione",
+        "message": "Sei sicuro di voler eliminare questo link non funzionante?",
+        "messagePlural": "Sei sicuro di voler eliminare i link non funzionanti selezionati?"
+      },
+      "broken-link-save": {
+        "title": "Salva modifiche",
+        "message": "Questa entità è stata modificata. Vuoi salvare le modifiche?"
+      },
+      "redirect-rule-delete": {
+        "title": "Conferma eliminazione",
+        "message": "Sei sicuro di voler eliminare questa regola di reindirizzamento?",
+        "messagePlural": "Sei sicuro di voler eliminare le regole di reindirizzamento selezionate?"
+      },
+      "redirect-rule-save": {
+        "title": "Salva modifiche",
+        "message": "Questa entità è stata modificata. Vuoi salvare le modifiche?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Link non funzionanti attivi"
+      },
+      "redirect-rule-widget": {
+        "title": "Regole attive"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Apri il menu SEO",
+    "seo:create": "Crea dati relativi alla SEO",
+    "seo:read": "Visualizza dati relativi alla SEO",
+    "seo:update": "Aggiorna dati relativi alla SEO",
+    "seo:delete": "Elimina dati relativi alla SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO abilitato",
+        "description": "Impostazione per SEO abilitato"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Rileva link non funzionanti",
+          "description": "La piattaforma dovrebbe registrare le richieste a pagine inesistenti?"
+        }
+      }
+    }
+  }
+}

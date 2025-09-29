@@ -99,7 +99,7 @@
       "BrokenLinkDetection": {
         "Enabled": {
           "title": "Detect broken links",
-          "description": "Should the platform record requests to non-existent pages"
+          "description": "Should the platform record requests to non-existent pages?"
         }
       }
     }
