@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Platform.Core.Common;
@@ -12,39 +13,51 @@ public static class SeoExtensions
     /// <summary>
     /// Ordered list of object type names used to determine object type priority when comparing SeoInfo entries.
     /// The last element in the list has the highest priority.
-    /// This property is mutable to allow configuration at application startup or in tests.
-    /// When set, an internal priority map is rebuilt for fast lookups.
+    /// This property is mutable via the setter, but the getter returns a read-only snapshot to prevent
+    /// accidental runtime mutation which would make the internal priority map stale.
     /// </summary>
-    private static IList<string> _orderedObjectTypes = new List<string>
-    {
+    private static string[] _orderedObjectTypes =
+    [
         "CatalogProduct",
         "Category",
         "Catalog",
         "Brand",
         "ContentFile",
-        "Pages",
-    };
+        "Pages"
+    ];
+
+    // Cached concurrent map for object type -> priority index (higher index = higher priority).
+    // Rebuilt atomically by assigning a new ConcurrentDictionary instance.
+    private static ConcurrentDictionary<string, int> _priorityMap = new(
+        _orderedObjectTypes.Select((t, i) => new KeyValuePair<string, int>(t, i)),
+        StringComparer.OrdinalIgnoreCase);
 
     public static IList<string> OrderedObjectTypes
     {
-        get => _orderedObjectTypes;
+        get
+        {
+            // Return a read-only wrapper to prevent external mutation of the internal array
+            return Array.AsReadOnly(_orderedObjectTypes);
+        }
         set
         {
-            _orderedObjectTypes = value ?? new List<string>();
+            // Copy input to a new array to avoid external references and publish atomically
+            var arr = (value == null) ? [] : value.ToArray();
+            _orderedObjectTypes = arr;
             BuildPriorityMap();
         }
     }
 
-    // Cached map for object type -> priority index (higher index = higher priority).
-    private static IReadOnlyDictionary<string, int> _priorityMap = _orderedObjectTypes
-        .Select((t, i) => new { Type = t, Index = i })
-        .ToDictionary(x => x.Type, x => x.Index, StringComparer.OrdinalIgnoreCase);
-
     private static void BuildPriorityMap()
     {
-        _priorityMap = OrderedObjectTypes
-            .Select((t, i) => new { Type = t, Index = i })
-            .ToDictionary(x => x.Type, x => x.Index, StringComparer.OrdinalIgnoreCase);
+        var map = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        for (var i = 0; i < _orderedObjectTypes.Length; i++)
+        {
+            map[_orderedObjectTypes[i]] = i;
+        }
+
+        // Publish new map instance atomically
+        _priorityMap = map;
     }
 
     /// <summary>
@@ -97,9 +110,9 @@ public static class SeoExtensions
     {
         var results = seoInfos.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
 
-        return results?.Where(x => x.Stage == PipelineStage.Final)
-            .SelectMany(x => x.SeoInfoResponses.Where(r => r != null).Select(t => t.SeoInfo))
-            .FirstOrDefault();
+        // Locate final stage and return the first non-null SeoInfo found there (or null)
+        var finalStage = results?.FirstOrDefault(x => x.Stage == PipelineStage.Final);
+        return finalStage?.SeoInfoResponses?.Where(r => r?.SeoInfo != null).Select(r => r.SeoInfo).FirstOrDefault();
     }
 
     /// <summary>
@@ -107,11 +120,6 @@ public static class SeoExtensions
     /// a list of stage results. Each stage entry contains a snapshot of the evaluated responses
     /// so the caller can inspect filtering, scoring and ordering steps for diagnostics or testing.
     /// </summary>
-    /// <param name="enumerable">Collection of SeoInfo records to process.</param>
-    /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns>List of <see cref="SeoInfosResponse"/> representing the pipeline stages, or <c>null</c> if input is invalid.</returns>
     public static IList<SeoInfosResponse> GetSeoInfosResponses(this IEnumerable<SeoInfo> enumerable,
         string storeId,
         string storeDefaultLanguage,
@@ -147,8 +155,9 @@ public static class SeoExtensions
         current = current.OrderScoresAndPriority();
         results.Add(new SeoInfosResponse(PipelineStage.Ordered, "Stage 5: Order by score, then order by desc objectTypePriority.", current.ToList().AsReadOnly()));
 
-        var final = new List<SeoInfoResponse> { current.FirstOrDefault() };
-        results.Add(new SeoInfosResponse(PipelineStage.Final, "Stage 6: Select first or default SeoInfo.", final.AsReadOnly()));
+        // Only include non-null final candidate(s)
+        var finalList = current.Where(x => x != null).Take(1).ToList();
+        results.Add(new SeoInfosResponse(PipelineStage.Final, "Stage 6: Select first or default SeoInfo.", finalList.AsReadOnly()));
 
         return results;
     }
