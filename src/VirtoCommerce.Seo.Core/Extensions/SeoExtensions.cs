@@ -23,7 +23,7 @@ public static class SeoExtensions
         "Catalog",
         "Brand",
         "ContentFile",
-        "Pages"
+        "Pages",
     ];
 
     // Cached concurrent map for object type -> priority index (higher index = higher priority).
@@ -201,11 +201,20 @@ public static class SeoExtensions
     {
         var map = _priorityMap; // snapshot to avoid races if OrderedObjectTypes changes concurrently
 
-        return seoInfoResponses.Select(seoInfoResponse => new SeoInfoResponse
+        return seoInfoResponses.Select(seoInfoResponse =>
         {
-            SeoInfo = seoInfoResponse.SeoInfo,
-            ObjectTypePriority = map != null && map.TryGetValue(seoInfoResponse.SeoInfo.ObjectType ?? string.Empty, out var idx) ? idx : -1,
-            Score = seoInfoResponse.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language),
+            // handle null entries gracefully
+            var info = seoInfoResponse?.SeoInfo;
+            if (info == null)
+            {
+                return new SeoInfoResponse(null, -1, 0);
+            }
+
+            var objectTypeKey = info.ObjectType ?? string.Empty;
+            var priority = map != null && map.TryGetValue(objectTypeKey, out var idx) ? idx : -1;
+            var score = info.CalculateScore(storeId, storeDefaultLanguage, language);
+
+            return new SeoInfoResponse(info, priority, score);
         }).ToList();
     }
 
