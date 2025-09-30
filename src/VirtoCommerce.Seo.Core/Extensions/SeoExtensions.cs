@@ -92,8 +92,8 @@ public static class SeoExtensions
     /// <param name="storeDefaultLanguage">Store default language used for fallback.</param>
     /// <param name="language">Requested language code (may be null).</param>
     /// <param name="withExplain">When true, the returned Results list contains full snapshots for each pipeline stage.</param>
-    /// <returns>Tuple containing a list of <see cref="SeoInfoExplainResult"/> and the chosen <see cref="SeoInfo"/>.</returns>
-    public static (IList<SeoInfoExplainResult> Results, SeoInfo SeoInfo) GetSeoInfoExplain(this IEnumerable<SeoInfo> enumerable,
+    /// <returns>Tuple containing a list of <see cref="SeoExplainResult"/> and the chosen <see cref="SeoInfo"/>.</returns>
+    public static (IList<SeoExplainResult> Results, SeoInfo SeoInfo) GetSeoInfoExplain(this IEnumerable<SeoInfo> enumerable,
           string storeId,
         string storeDefaultLanguage,
         string language,
@@ -111,7 +111,7 @@ public static class SeoExtensions
         }
 
         // Prepare explain results container (filled only when withExplain==true)
-        var explainResults = new List<SeoInfoExplainResult>();
+        var explainResults = new List<SeoExplainResult>();
 
         // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
         var stageOriginal = seoInfos
@@ -119,7 +119,7 @@ public static class SeoExtensions
             .ToList();
         if (withExplain)
         {
-            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Original, stageOriginal));
+            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Original, stageOriginal));
         }
 
         // Stage 2: Filtered - keep only entries that match store and language criteria
@@ -128,21 +128,21 @@ public static class SeoExtensions
             .ToList();
         if (withExplain)
         {
-            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Filtered, stageFiltered));
+            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Filtered, stageFiltered));
         }
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
         var stageScored = stageFiltered.CalculatePriorityAndScores(storeId, storeDefaultLanguage, language).ToList();
         if (withExplain)
         {
-            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Scored, stageScored));
+            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Scored, stageScored));
         }
 
         // Stage 4: FilteredScore - remove entries with non-positive score
         var stageFilteredScore = stageScored.Where(candidate => candidate.Score > 0).ToList();
         if (withExplain)
         {
-            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.FilteredScore, stageFilteredScore));
+            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.FilteredScore, stageFilteredScore));
         }
 
         // Stage 5: Ordered - order by score (desc) then by object type priority (desc)
@@ -152,14 +152,14 @@ public static class SeoExtensions
             .ToList();
         if (withExplain)
         {
-            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Ordered, stageOrdered));
+            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Ordered, stageOrdered));
         }
 
         // Stage 6: Final - take first candidate (if any)
         var stageFinal = stageOrdered.Where(candidate => candidate.SeoInfo != null).Take(1).ToList();
         if (withExplain)
         {
-            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Final, stageFinal));
+            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Final, stageFinal));
         }
 
         var selectedSeoInfo = stageFinal.FirstOrDefault().SeoInfo; // safe: FirstOrDefault returns default tuple when empty

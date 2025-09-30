@@ -3,7 +3,7 @@ namespace VirtoCommerce.Seo.Core.Models.Explain.Enums;
 /// <summary>
 /// Enumerates the stages of the SEO resolution pipeline used for producing explain information.
 /// </summary>
-public enum PipelineExplainStage
+public enum SeoExplainPipelineStage
 {
     /// <summary>
     /// Unknown or uninitialized stage.

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace VirtoCommerce.Seo.Tests
 {
-    public class SeoInfoExplainServiceTests
+    public class SeoExplainServiceTests
     {
         private sealed class FakeCompositeSeoResolver(IList<SeoInfo> toReturn) : ICompositeSeoResolver
         {
@@ -41,7 +41,7 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoInfoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
             Assert.NotNull(result);
@@ -73,7 +73,7 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoInfoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
             Assert.NotNull(result);
@@ -102,7 +102,7 @@ namespace VirtoCommerce.Seo.Tests
             // Act
             try
             {
-                var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+                var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
                 // If the service returns explain Results, verify stage 6 contains expected best match
                 if (result.Results != null && result.Results.Count > 0)
@@ -151,7 +151,7 @@ namespace VirtoCommerce.Seo.Tests
 
             try
             {
-                var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+                var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
                 if (result.Results != null && result.Results.Count > 0)
                 {
@@ -197,13 +197,13 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoInfoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
+            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
 
             // Assert: with explain enabled the service returns pipeline stages, but filtered/ordered/final stages contain no candidates
             Assert.NotNull(result);
             Assert.NotNull(result.Results);
-            var stage5 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 5") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.PipelineExplainStage.Ordered);
-            var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.PipelineExplainStage.Final);
+            var stage5 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 5") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.SeoExplainPipelineStage.Ordered);
+            var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.SeoExplainPipelineStage.Final);
             Assert.NotNull(stage5);
             Assert.NotNull(stage6);
             Assert.Empty(stage5.SeoInfoWithScoredList);
@@ -229,7 +229,7 @@ namespace VirtoCommerce.Seo.Tests
 
             try
             {
-                var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
+                var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
 
                 if (result.Results != null && result.Results.Count > 0)
                 {
@@ -304,7 +304,7 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoInfoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
             Assert.NotNull(result);
@@ -325,7 +325,7 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoInfoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
             Assert.NotNull(result);
@@ -346,7 +346,7 @@ namespace VirtoCommerce.Seo.Tests
 
             // Act / Assert
             await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink));
+                await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink));
         }
     }
 }

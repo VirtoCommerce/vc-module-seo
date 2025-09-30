@@ -86,15 +86,15 @@ public class SeoController(
     /// </summary>
     [HttpGet("explain")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    [ProducesResponseType(typeof(SeoInfoExplainResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<SeoInfoExplainResponse>> GetExplainAsync(
-        [FromServices] ISeoInfoExplainService seoInfoExplainService,
+    [ProducesResponseType(typeof(SeoExplainResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<SeoExplainResponse>> GetExplainAsync(
+        [FromServices] ISeoExplainService seoExplainService,
         [FromQuery] string storeId,
         [FromQuery] string storeDefaultLanguage,
         [FromQuery] string languageCode,
         [FromQuery] string permalink)
     {
-        var response = await seoInfoExplainService.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+        var response = await seoExplainService.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
         return Ok(response);
     }

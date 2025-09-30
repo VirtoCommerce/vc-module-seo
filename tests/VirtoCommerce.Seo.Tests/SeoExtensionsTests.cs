@@ -23,7 +23,7 @@ namespace VirtoCommerce.Seo.Tests
             }
         }
 
-        private static (IList<SeoInfoExplainResult> Results, SeoInfo SeoInfo) SafeGetSeoInfosResponses(IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language, bool withExplain = false)
+        private static (IList<SeoExplainResult> Results, SeoInfo SeoInfo) SafeGetSeoInfosResponses(IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language, bool withExplain = false)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace VirtoCommerce.Seo.Tests
             }
             catch (ArgumentOutOfRangeException)
             {
-                return (new List<SeoInfoExplainResult>(), null);
+                return (new List<SeoExplainResult>(), null);
             }
         }
 
@@ -39,7 +39,7 @@ namespace VirtoCommerce.Seo.Tests
         {
             var items = new List<SeoInfo> { seoInfo };
             var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
-            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == PipelineExplainStage.Scored);
+            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Scored);
             Assert.NotNull(scoredStage);
             var tuple = scoredStage.SeoInfoWithScoredList.First();
             return tuple.Score;
@@ -363,12 +363,12 @@ namespace VirtoCommerce.Seo.Tests
             // Assert
             Assert.NotNull(stages);
             Assert.Equal(6, stages.Count);
-            Assert.Equal(PipelineExplainStage.Original, stages[0].Stage);
-            Assert.Equal(PipelineExplainStage.Filtered, stages[1].Stage);
-            Assert.Equal(PipelineExplainStage.Scored, stages[2].Stage);
-            Assert.Equal(PipelineExplainStage.FilteredScore, stages[3].Stage);
-            Assert.Equal(PipelineExplainStage.Ordered, stages[4].Stage);
-            Assert.Equal(PipelineExplainStage.Final, stages[5].Stage);
+            Assert.Equal(SeoExplainPipelineStage.Original, stages[0].Stage);
+            Assert.Equal(SeoExplainPipelineStage.Filtered, stages[1].Stage);
+            Assert.Equal(SeoExplainPipelineStage.Scored, stages[2].Stage);
+            Assert.Equal(SeoExplainPipelineStage.FilteredScore, stages[3].Stage);
+            Assert.Equal(SeoExplainPipelineStage.Ordered, stages[4].Stage);
+            Assert.Equal(SeoExplainPipelineStage.Final, stages[5].Stage);
         }
 
         [Fact]
@@ -391,7 +391,7 @@ namespace VirtoCommerce.Seo.Tests
 
                 var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
                 var stages = result.Results;
-                var orderedStage = stages.FirstOrDefault(s => s.Stage == PipelineExplainStage.Ordered);
+                var orderedStage = stages.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Ordered);
                 Assert.NotNull(orderedStage);
                 var top = orderedStage.SeoInfoWithScoredList.First();
                 Assert.Equal("CatalogProduct", top.SeoInfo.ObjectType);
@@ -415,7 +415,7 @@ namespace VirtoCommerce.Seo.Tests
             var items = new List<SeoInfo> { inactiveSeoInfo, activeSeoInfo };
             var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
             var stages = result.Results;
-            var final = stages.FirstOrDefault(s => s.Stage == PipelineExplainStage.Final);
+            var final = stages.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Final);
             Assert.NotNull(final);
             var chosen = final.SeoInfoWithScoredList.First().SeoInfo;
             Assert.True(chosen.IsActive);
@@ -434,7 +434,7 @@ namespace VirtoCommerce.Seo.Tests
             var items = new List<SeoInfo> { emptyLangSeoInfo, englishSeoInfo };
             var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, requestLanguage, withExplain: true);
             var stages = result.Results;
-            var final = stages.FirstOrDefault(s => s.Stage == PipelineExplainStage.Final);
+            var final = stages.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Final);
             var chosen = final.SeoInfoWithScoredList.First().SeoInfo;
             Assert.Equal("en-US", chosen.LanguageCode);
         }
@@ -456,7 +456,7 @@ namespace VirtoCommerce.Seo.Tests
                 var items = new List<SeoInfo> { aSeoInfo, bSeoInfo, cSeoInfo };
                 var result = SafeGetSeoInfosResponses(items, storeId, lang, lang, withExplain: true);
                 var stages = result.Results;
-                var ordered = stages.First(s => s.Stage == PipelineExplainStage.Ordered);
+                var ordered = stages.First(s => s.Stage == SeoExplainPipelineStage.Ordered);
                 var top = ordered.SeoInfoWithScoredList.First().SeoInfo;
                 Assert.Equal("C", top.ObjectType);
             }
@@ -481,7 +481,7 @@ namespace VirtoCommerce.Seo.Tests
 
             // Act
             var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
-            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == PipelineExplainStage.Scored);
+            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Scored);
 
             // Assert
             Assert.NotNull(scoredStage);
