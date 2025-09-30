@@ -37,7 +37,8 @@ public class SeoInfoExplainService(ICompositeSeoResolver compositeSeoResolver) :
             return new SeoInfoExplainResponse(storeId, languageCode, permalink, null);
         }
 
-        var tuple = seoInfosFromCompositeResolver.GetSeoInfoExplain(storeId, storeDefaultLanguage, languageCode);
+        // Request explain snapshots explicitly so the response contains pipeline stages
+        var tuple = seoInfosFromCompositeResolver.GetSeoInfoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
 
         var response = new SeoInfoExplainResponse(storeId, languageCode, permalink, tuple.Results);
 

@@ -164,7 +164,8 @@ public static class SeoExtensions
 
         var selectedSeoInfo = stageFinal.FirstOrDefault().SeoInfo; // safe: FirstOrDefault returns default tuple when empty
 
-        return (withExplain ? explainResults : explainResults, selectedSeoInfo);
+        // When explain is not requested, avoid allocating and returning the explainResults list to reduce memory usage.
+        return (withExplain ? explainResults : null, selectedSeoInfo);
     }
 
     /// <summary>
