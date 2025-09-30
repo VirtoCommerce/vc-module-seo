@@ -196,11 +196,18 @@ namespace VirtoCommerce.Seo.Tests
             var fakeResolver = new FakeCompositeSeoResolver(items);
             var service = new SeoInfoExplainService(fakeResolver);
 
-            // Act: current implementation returns a response with null or empty Results rather than throwing
+            // Act
             var result = await service.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
 
+            // Assert: with explain enabled the service returns pipeline stages, but filtered/ordered/final stages contain no candidates
             Assert.NotNull(result);
-            Assert.True(result.Results == null || result.Results.Count == 0);
+            Assert.NotNull(result.Results);
+            var stage5 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 5") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.PipelineExplainStage.Ordered);
+            var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.PipelineExplainStage.Final);
+            Assert.NotNull(stage5);
+            Assert.NotNull(stage6);
+            Assert.Empty(stage5.SeoInfoWithScoredList);
+            Assert.Empty(stage6.SeoInfoWithScoredList);
         }
 
         [Fact]
