@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core;
 using VirtoCommerce.Seo.Core.Models;
+using VirtoCommerce.Seo.Core.Models.Explain;
 using VirtoCommerce.Seo.Core.Services;
 using SeoInfo = VirtoCommerce.Seo.Core.Models.SeoInfo;
 
@@ -48,7 +50,7 @@ public class SeoController(
     }
 
     /// <summary>
-    /// Find all SEO records for object by slug 
+    /// Find all SEO records for object by slug
     /// </summary>
     /// <param name="slug">slug</param>
     [HttpGet]
@@ -77,5 +79,23 @@ public class SeoController(
     {
         var result = await compositeSeoResolver.FindSeoAsync(criteria);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Find all SEO records for test by StoreId, StoreDefaultLanguage, LanguageCode, Permalink
+    /// </summary>
+    [HttpGet("explain")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    [ProducesResponseType(typeof(SeoInfoExplainResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<SeoInfoExplainResponse>> GetExplainAsync(
+        [FromServices] ISeoInfoExplainService seoInfoExplainService,
+        [FromQuery] string storeId,
+        [FromQuery] string storeDefaultLanguage,
+        [FromQuery] string languageCode,
+        [FromQuery] string permalink)
+    {
+        var response = await seoInfoExplainService.GetSeoInfoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+
+        return Ok(response);
     }
 }

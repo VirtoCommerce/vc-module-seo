@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
-using VirtoCommerce.Seo.Core.Models.SlugInfo;
+using VirtoCommerce.Seo.Core.Models.Explain;
 using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
-public class SlugExplainService(ICompositeSeoResolver compositeSeoResolver) : ISlugExplainService
+public class SeoInfoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoInfoExplainService
 {
-    public async Task<SlugInfoResponse> GetExplainAsync(
+    public async Task<SeoInfoExplainResponse> GetSeoInfoExplainAsync(
         string storeId,
         string storeDefaultLanguage,
         string languageCode,
@@ -25,12 +25,12 @@ public class SlugExplainService(ICompositeSeoResolver compositeSeoResolver) : IS
 
         if (seoInfosFromCompositeResolver == null || seoInfosFromCompositeResolver.Count == 0)
         {
-            return new SlugInfoResponse(storeId, languageCode, permalink);
+            return new SeoInfoExplainResponse(storeId, languageCode, permalink, null);
         }
 
-        var results = seoInfosFromCompositeResolver.GetSeoInfosResponses(storeId, storeDefaultLanguage, languageCode);
+        var tuple = seoInfosFromCompositeResolver.GetSeoInfoExplain(storeId, storeDefaultLanguage, languageCode);
 
-        var processOrder = new SlugInfoResponse(storeId, languageCode, permalink, results);
+        var processOrder = new SeoInfoExplainResponse(storeId, languageCode, permalink, tuple.Results);
 
         return processOrder;
     }

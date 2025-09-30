@@ -1,22 +1,22 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Models;
-using VirtoCommerce.Seo.Core.Models.SlugInfo;
+using VirtoCommerce.Seo.Core.Models.Explain;
+using VirtoCommerce.Seo.Core.Models.Explain.Enums;
 
 namespace VirtoCommerce.Seo.Core.Extensions;
 
 public static class SeoExtensions
 {
     /// <summary>
-    /// Ordered list of object type names used to determine object type priority when comparing SeoInfo entries.
-    /// The last element in the list has the highest priority.
-    /// This property is mutable via the setter, but the getter returns a read-only snapshot to prevent
-    /// accidental runtime mutation which would make the internal priority map stale.
+    /// Ordered list of object type names used to determine object type priority when comparing <see cref="SeoInfo"/> entries.
+    /// The last element in the list has the highest priority. Applications can override this ordering to change which
+    /// object types are preferred when multiple SeoInfo records have identical scores. This property represents the
+    /// configured ordering and should be treated as configuration data rather than runtime state.
     /// </summary>
-    private static string[] _orderedObjectTypes =
+    public static string[] OrderedObjectTypes =
     [
         "CatalogProduct",
         "Category",
@@ -26,48 +26,15 @@ public static class SeoExtensions
         "Pages",
     ];
 
-    // Cached concurrent map for object type -> priority index (higher index = higher priority).
-    // Rebuilt atomically by assigning a new ConcurrentDictionary instance.
-    private static ConcurrentDictionary<string, int> _priorityMap = new(
-        _orderedObjectTypes.Select((t, i) => new KeyValuePair<string, int>(t, i)),
-        StringComparer.OrdinalIgnoreCase);
-
-    public static IList<string> OrderedObjectTypes
-    {
-        get
-        {
-            // Return a read-only wrapper to prevent external mutation of the internal array
-            return Array.AsReadOnly(_orderedObjectTypes);
-        }
-        set
-        {
-            // Copy input to a new array to avoid external references and publish atomically
-            var arr = (value == null) ? [] : value.ToArray();
-            _orderedObjectTypes = arr;
-            BuildPriorityMap();
-        }
-    }
-
-    private static void BuildPriorityMap()
-    {
-        var map = new ConcurrentDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-        for (var i = 0; i < _orderedObjectTypes.Length; i++)
-        {
-            map[_orderedObjectTypes[i]] = i;
-        }
-
-        // Publish new map instance atomically
-        _priorityMap = map;
-    }
-
     /// <summary>
-    /// Creates a fallback <see cref="SeoInfo"/> instance with minimal required fields filled.
-    /// Used when no dedicated SeoInfo record exists and a default one must be returned.
+    /// Creates a minimal fallback <see cref="SeoInfo"/> instance populated with the provided values.
+    /// Use this when no dedicated SeoInfo record exists and a default, synthetic SeoInfo must be returned to callers.
+    /// The returned instance contains only the fields necessary to identify a fallback result (SemanticUrl, Name, LanguageCode).
     /// </summary>
-    /// <param name="id">Semantic URL or identifier to use as fallback.</param>
-    /// <param name="name">Name to assign to the fallback SeoInfo.</param>
+    /// <param name="id">The semantic URL or identifier to use as the fallback value.</param>
+    /// <param name="name">The display name for the fallback SeoInfo.</param>
     /// <param name="cultureName">Language code to assign to the fallback SeoInfo.</param>
-    /// <returns>A new <see cref="SeoInfo"/> instance populated with provided values.</returns>
+    /// <returns>A new instance of <see cref="SeoInfo"/> initialized with the supplied values.</returns>
     public static SeoInfo GetFallbackSeoInfo(string id, string name, string cultureName)
     {
         var result = AbstractTypeFactory<SeoInfo>.TryCreateInstance();
@@ -78,14 +45,14 @@ public static class SeoExtensions
     }
 
     /// <summary>
-    /// Finds the best matching <see cref="SeoInfo"/> for the given <see cref="ISeoSupport"/> source.
-    /// This overload delegates to the enumerable-based implementation using the <see cref="ISeoSupport.SeoInfos"/> collection.
+    /// Convenience overload that finds the best matching <see cref="SeoInfo"/> for an <see cref="ISeoSupport"/> entity.
+    /// Delegates to the enumerable-based resolver using the entity's <see cref="ISeoSupport.SeoInfos"/> collection.
     /// </summary>
-    /// <param name="seoSupport">Entity that contains SEO information.</param>
-    /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns>The best matching <see cref="SeoInfo"/>, or <c>null</c> if none matches.</returns>
+    /// <param name="seoSupport">Entity that contains SEO information (maybe null).</param>
+    /// <param name="storeId">Requested store identifier (used for scoping).</param>
+    /// <param name="storeDefaultLanguage">Default language of the store (used as a language fallback).</param>
+    /// <param name="language">Requested language code (maybe null).</param>
+    /// <returns>The best matching <see cref="SeoInfo"/>, or <c>null</c> if no candidate matches.</returns>
     public static SeoInfo GetBestMatchingSeoInfo(this ISeoSupport seoSupport,
         string storeId,
         string storeDefaultLanguage,
@@ -95,226 +62,193 @@ public static class SeoExtensions
     }
 
     /// <summary>
-    /// Evaluates a collection of <see cref="SeoInfo"/> records and returns the one that best matches
-    /// the provided store and language parameters according to the scoring and priority rules.
+    /// Evaluate a collection of <see cref="SeoInfo"/> records and select the best match according to the
+    /// configured scoring rules and object-type priorities.
+    /// The selection pipeline typically performs: filtering by store/language → scoring → filtering by positive score → ordering → selecting first.
     /// </summary>
-    /// <param name="seoInfos">Enumerable of SeoInfo records to evaluate.</param>
+    /// <param name="seoInfos">Candidates to evaluate.</param>
     /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns>The best matching <see cref="SeoInfo"/>, or <c>null</c> if none match.</returns>
+    /// <param name="storeDefaultLanguage">Default language of the store - used when requested language is not available.</param>
+    /// <param name="language">Requested language code (maybe null).</param>
+    /// <returns>The best matching <see cref="SeoInfo"/>, or <c>null</c> when none matched.</returns>
     public static SeoInfo GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
         string storeId,
         string storeDefaultLanguage,
         string language)
     {
-        var results = seoInfos.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
+        var tuple = seoInfos.GetSeoInfoExplain(storeId, storeDefaultLanguage, language);
 
-        // Locate final stage and return the first non-null SeoInfo found there (or null)
-        var finalStage = results?.FirstOrDefault(x => x.Stage == PipelineStage.Final);
-
-        return finalStage?.SeoInfoResponses?
-            .Where(r => r?.SeoInfo != null)
-            .Select(r => r.SeoInfo)
-            .FirstOrDefault();
+        return tuple.SeoInfo;
     }
 
     /// <summary>
-    /// Runs the multi-stage evaluation pipeline over the provided SeoInfo collection and returns
-    /// a list of stage results. Each stage entry contains a snapshot of the evaluated responses
-    /// so the caller can inspect filtering, scoring and ordering steps for diagnostics or testing.
+    /// Executes the explainable evaluation pipeline over the provided <see cref="SeoInfo"/> collection.
+    /// Returns a tuple where <c>Results</c> is a list of explain results (snapshots of each stage) and
+    /// <c>SeoInfo</c> is the selected best matching SeoInfo (maybe null).
+    /// This method is intended to make the selection process introspectable for diagnostics and tests.
     /// </summary>
-    public static IList<SeoInfosResponse> GetSeoInfosResponses(this IEnumerable<SeoInfo> enumerable,
-        string storeId,
+    /// <param name="enumerable">Input collection of SeoInfo records to process.</param>
+    /// <param name="storeId">Requested store identifier.</param>
+    /// <param name="storeDefaultLanguage">Store default language used for fallback.</param>
+    /// <param name="language">Requested language code (maybe null).</param>
+    /// <param name="withExplain">When true, the returned Results list contains full snapshots for each pipeline stage.</param>
+    /// <returns>Tuple containing a list of <see cref="SeoInfoExplainResult"/> and the chosen <see cref="SeoInfo"/>.</returns>
+    public static (IList<SeoInfoExplainResult> Results, SeoInfo SeoInfo) GetSeoInfoExplain(this IEnumerable<SeoInfo> enumerable,
+          string storeId,
         string storeDefaultLanguage,
-        string language)
+        string language,
+        bool withExplain = false)
     {
         if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || enumerable == null)
         {
-            return null;
+            return (null, null);
         }
 
         var seoInfos = enumerable.ToList();
         if (seoInfos.Count == 0)
         {
-            return null;
+            return (null, null);
         }
 
-        var results = new List<SeoInfosResponse>();
+        // Prepare explain results container (filled only when withExplain==true)
+        var explainResults = new List<SeoInfoExplainResult>();
 
-        // Create initial responses
-        IList<SeoInfoResponse> current = seoInfos.Select(seoInfo => seoInfo.ToSeoInfoResponse()).ToList();
-        // store immutable snapshots for each stage
-        results.Add(new SeoInfosResponse(PipelineStage.Original, "Stage 1: Original found by SeoInfo.", current.ToList().AsReadOnly()));
+        // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
+        var stageOriginal = seoInfos
+            .Select(s => (SeoInfo: s, ObjectTypePriority: 0, Score: 0))
+            .ToList();
+        if (withExplain)
+        {
+            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Original, stageOriginal));
+        }
 
-        current = current.FilterCanBeFound(storeId, storeDefaultLanguage, language);
-        results.Add(new SeoInfosResponse(PipelineStage.Filtered, "Stage 2: Filtering is there seo.", current.ToList().AsReadOnly()));
+        // Stage 2: Filtered - keep only entries that match store and language criteria
+        var stageFiltered = stageOriginal
+            .Where(tuple => SeoCanBeFound(tuple.SeoInfo, storeId, storeDefaultLanguage, language))
+            .ToList();
+        if (withExplain)
+        {
+            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Filtered, stageFiltered));
+        }
 
-        current = current.CalculateScores(storeId, storeDefaultLanguage, language);
-        results.Add(new SeoInfosResponse(PipelineStage.Scored, "Stage 3: Calculate scores.", current.ToList().AsReadOnly()));
+        // Stage 3: Scored - compute object type priority and numeric score for each candidate
+        var stageScored = stageFiltered.CalculatePriorityAndScores(storeId, storeDefaultLanguage, language).ToList();
+        if (withExplain)
+        {
+            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Scored, stageScored));
+        }
 
-        current = current.FilterScoresGreaterThanZero();
-        results.Add(new SeoInfosResponse(PipelineStage.FilteredScore, "Stage 4: Filter score greater than 0.", current.ToList().AsReadOnly()));
+        // Stage 4: FilteredScore - remove entries with non-positive score
+        var stageFilteredScore = stageScored.Where(t => t.Score > 0).ToList();
+        if (withExplain)
+        {
+            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.FilteredScore, stageFilteredScore));
+        }
 
-        current = current.OrderScoresAndPriority();
-        results.Add(new SeoInfosResponse(PipelineStage.Ordered, "Stage 5: Order by score, then order by desc objectTypePriority.", current.ToList().AsReadOnly()));
+        // Stage 5: Ordered - order by score (desc) then by object type priority (desc)
+        var stageOrdered = stageFilteredScore
+            .OrderByDescending(t => t.Score)
+            .ThenByDescending(t => t.ObjectTypePriority)
+            .ToList();
+        if (withExplain)
+        {
+            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Ordered, stageOrdered));
+        }
 
-        // Only include non-null final candidate(s)
-        var finalList = current.Where(x => x != null).Take(1).ToList();
-        results.Add(new SeoInfosResponse(PipelineStage.Final, "Stage 6: Select first or default SeoInfo.", finalList.AsReadOnly()));
+        // Stage 6: Final - take first candidate (if any)
+        var stageFinal = stageOrdered.Where(t => t.SeoInfo != null).Take(1).ToList();
+        if (withExplain)
+        {
+            explainResults.Add(new SeoInfoExplainResult(PipelineExplainStage.Final, stageFinal));
+        }
+
+        var selectedSeoInfo = stageFinal.FirstOrDefault().SeoInfo; // safe: FirstOrDefault returns default tuple when empty
+
+        return (withExplain ? explainResults : explainResults, selectedSeoInfo);
+    }
+
+    /// <summary>
+    /// For each input tuple calculates object type priority (index in <see cref="OrderedObjectTypes"/>) and score.
+    /// If a tuple's SeoInfo is null it is preserved with a priority of -1 and score 0 to keep pipeline snapshots stable.
+    /// </summary>
+    /// <param name="tuples">Input list of tuples where each tuple contains a SeoInfo to evaluate.</param>
+    /// <param name="storeId">Requested store identifier.</param>
+    /// <param name="storeDefaultLanguage">Default language of the store.</param>
+    /// <param name="language">Requested language (maybe null).</param>
+    /// <returns>List of tuples with calculated ObjectTypePriority and Score values populated.</returns>
+    private static IList<(SeoInfo SeoInfo, int ObjectTypePriority, int Score)> CalculatePriorityAndScores(this IList<(SeoInfo SeoInfo, int ObjectTypePriority, int Score)> tuples,
+        string storeId,
+        string storeDefaultLanguage,
+        string language)
+    {
+        var results = new List<(SeoInfo SeoInfo, int ObjectTypePriority, int Score)>();
+
+        foreach (var tuple in tuples)
+        {
+            var seoInfo = tuple.SeoInfo;
+
+            if (seoInfo == null)
+            {
+                results.Add((null, -1, 0));
+                continue;
+            }
+
+            // Resolve object type priority using configured OrderedObjectTypes. If type not found, priority is -1.
+            var priority = Array.IndexOf(OrderedObjectTypes, seoInfo.ObjectType);
+            var score = seoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
+
+            results.Add((seoInfo, priority, score));
+        }
 
         return results;
     }
 
     /// <summary>
-    /// Converts <see cref="SeoInfo"/> to an evaluation response model.
+    /// Determines whether the provided SeoInfo matches the store and language filtering rules.
+    /// Treats null or empty values as wildcards (matches everything).
     /// </summary>
-    /// <param name="seoInfo">Source SeoInfo.</param>
-    /// <param name="objectTypePriority">Optional object type priority to set on the response.</param>
-    /// <param name="score">Optional score to set on the response.</param>
-    /// <returns>New <see cref="SeoInfoResponse"/> instance representing the SeoInfo in the pipeline.</returns>
-    private static SeoInfoResponse ToSeoInfoResponse(this SeoInfo seoInfo, int objectTypePriority = 0, int score = 0)
-    {
-        return new SeoInfoResponse(seoInfo, objectTypePriority, score);
-    }
-
-    /// <summary>
-    /// Filters out SeoInfoResponse entries that do not match the provided store and language criteria.
-    /// </summary>
-    /// <param name="seoInfoResponses">Collection of responses to filter.</param>
+    /// <param name="seoInfo">Candidate SeoInfo to test.</param>
     /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns>Filtered list of responses that can be used for scoring.</returns>
-    private static IList<SeoInfoResponse> FilterCanBeFound(this IList<SeoInfoResponse> seoInfoResponses, string storeId, string storeDefaultLanguage, string language)
-    {
-        return seoInfoResponses.Where(seoInfoResponse => SeoCanBeFound(seoInfoResponse.SeoInfo, storeId, storeDefaultLanguage, language)).ToList();
-    }
-
-    /// <summary>
-    /// Calculates object type priority and score for each response in the collection.
-    /// Object type priority is resolved from <see cref="OrderedObjectTypes"/> and score is computed
-    /// using <see cref="CalculateScore(SeoInfo,string,string,string)"/>.
-    /// </summary>
-    /// <param name="seoInfoResponses">Collection of responses to enrich with scores and priorities.</param>
-    /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns>New list of responses populated with priority and score values.</returns>
-    private static IList<SeoInfoResponse> CalculateScores(this IList<SeoInfoResponse> seoInfoResponses, string storeId, string storeDefaultLanguage, string language)
-    {
-        var map = _priorityMap; // snapshot to avoid races if OrderedObjectTypes changes concurrently
-
-        return seoInfoResponses.Select(seoInfoResponse =>
-        {
-            // handle null entries gracefully
-            var info = seoInfoResponse?.SeoInfo;
-            if (info == null)
-            {
-                return new SeoInfoResponse(null, -1, 0);
-            }
-
-            var objectTypeKey = info.ObjectType ?? string.Empty;
-            var priority = map != null && map.TryGetValue(objectTypeKey, out var idx) ? idx : -1;
-            var score = info.CalculateScore(storeId, storeDefaultLanguage, language);
-
-            return new SeoInfoResponse(info, priority, score);
-        }).ToList();
-    }
-
-    /// <summary>
-    /// Filters out responses with non-positive score.
-    /// </summary>
-    /// <param name="seoInfoResponses">Collection of responses to filter.</param>
-    /// <returns>Responses that have a score greater than zero.</returns>
-    private static IList<SeoInfoResponse> FilterScoresGreaterThanZero(this IList<SeoInfoResponse> seoInfoResponses)
-    {
-        return seoInfoResponses.Where(x => x.Score > 0).ToList();
-    }
-
-    /// <summary>
-    /// Orders responses first by score (descending) and then by object type priority (descending).
-    /// </summary>
-    /// <param name="seoInfoResponses">Collection of responses to order.</param>
-    /// <returns>Ordered list of responses.</returns>
-    private static IList<SeoInfoResponse> OrderScoresAndPriority(this IList<SeoInfoResponse> seoInfoResponses)
-    {
-        return seoInfoResponses
-            .OrderByDescending(x => x.Score)
-            .ThenByDescending(x => x.ObjectTypePriority)
-            .ToList();
-    }
-
-    /// <summary>
-    /// Checks whether a given SeoInfo can be considered for matching according to store and language criteria.
-    /// Note: empty or null store/language values are treated as wildcard matches.
-    /// </summary>
-    /// <param name="seoInfo">SeoInfo to check.</param>
-    /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns><c>true</c> if SeoInfo matches criteria; otherwise <c>false</c>.</returns>
-    private static bool SeoCanBeFound(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
+    /// <param name="storeDefaultLanguage">Default language of the store (for fallback matching).</param>
+    /// <param name="language">Requested language (maybe null).</param>
+    /// <returns><c>true</c> when the SeoInfo should be included for scoring; otherwise <c>false</c>.</returns>
+    private static bool SeoCanBeFound(
+        SeoInfo seoInfo,
+        string storeId,
+        string storeDefaultLanguage,
+        string language)
     {
         return seoInfo.StoreId.Matches(storeId) &&
                seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }
 
-    // Score bits as named flags for readability
-    [Flags]
-    private enum ScoreFactor
+    private static int CalculateScore(this SeoInfo seoInfo,
+        string storeId,
+        string storeDefaultLanguage,
+        string language)
     {
-        LanguageEmpty = 1 << 0,         // 1
-        LanguageStoreDefault = 1 << 1,  // 2
-        LanguageExact = 1 << 2,         // 4
-        StoreMatch = 1 << 3,            // 8
-        IsActive = 1 << 4,              // 16
-    }
+        // the order of this array is important
+        // the first element has the highest priority
+        // the array is reversed below using the .Reverse() method to prioritize elements correctly
+        var score = new[]
+            {
+                seoInfo.IsActive,
+                seoInfo.StoreId.EqualsIgnoreCase(storeId),
+                seoInfo.LanguageCode.EqualsIgnoreCase(language),
+                seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage),
+                seoInfo.LanguageCode.IsNullOrEmpty(),
+            }
+            .Reverse()
+            .Select((valid, index) => valid ? 1 << index : 0)
+            .Sum();
 
-    /// <summary>
-    /// Calculates integer score for a SeoInfo based on several boolean factors (active, store match, language match etc.).
-    /// The score is computed as a bit-encoded value where each condition contributes a named flag.
-    /// </summary>
-    /// <param name="seoInfo">SeoInfo to evaluate.</param>
-    /// <param name="storeId">Requested store identifier.</param>
-    /// <param name="storeDefaultLanguage">Default language of the store.</param>
-    /// <param name="language">Requested language (may be null).</param>
-    /// <returns>Integer score representing how well SeoInfo matches the requested parameters.</returns>
-    private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
-    {
-        var score = 0;
-
-        if (seoInfo.IsActive)
-        {
-            score |= (int)ScoreFactor.IsActive;
-        }
-
-        if (seoInfo.StoreId.EqualsIgnoreCase(storeId))
-        {
-            score |= (int)ScoreFactor.StoreMatch;
-        }
-
-        if (seoInfo.LanguageCode.EqualsIgnoreCase(language))
-        {
-            score |= (int)ScoreFactor.LanguageExact;
-        }
-
-        if (seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
-        {
-            score |= (int)ScoreFactor.LanguageStoreDefault;
-        }
-
-        if (seoInfo.LanguageCode.IsNullOrEmpty())
-        {
-            score |= (int)ScoreFactor.LanguageEmpty;
-        }
-
+        // Example: IsActive=true, StoreId match=true, Language not match, Store default not match, Language empty=true -> binary 10011 = 19
         return score;
     }
 
     /// <summary>
-    /// Returns <c>true</c> if string <paramref name="a"/> matches either <paramref name="b"/> or <paramref name="c"/>.
-    /// The comparison uses <see cref="Matches(string,string)"/>, which treats null/empty as wildcard matches.
+    /// Returns true if the left-hand string equals either of the two provided strings.
+    /// Uses <see cref="Matches(string,string)"/> semantics where null/empty act as wildcards.
     /// </summary>
     private static bool MatchesAny(this string a, string b, string c)
     {
@@ -322,8 +256,8 @@ public static class SeoExtensions
     }
 
     /// <summary>
-    /// Compares two strings using case-insensitive comparison, treating null or empty values as wildcards
-    /// (i.e. if either string is null/empty the method returns true).
+    /// Case-insensitive comparison that treats null or empty values as wildcards (matches anything).
+    /// Returns true when either operand is null or empty or when the strings are equal ignoring case.
     /// </summary>
     private static bool Matches(this string a, string b)
     {

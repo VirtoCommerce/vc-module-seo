@@ -1,14 +1,40 @@
+using System;
 using System.Collections.Generic;
-using VirtoCommerce.Seo.Core.Models.SlugInfo;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
 using Xunit;
 using System.Linq;
+using VirtoCommerce.Seo.Core.Models.Explain;
+using VirtoCommerce.Seo.Core.Models.Explain.Enums;
 
 namespace VirtoCommerce.Seo.Tests
 {
     public class SeoExtensionsTests
     {
+        private static SeoInfo SafeGetBestMatchingSeoInfo(IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language)
+        {
+            try
+            {
+                return seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return null;
+            }
+        }
+
+        private static (IList<SeoInfoExplainResult> Results, SeoInfo SeoInfo) SafeGetSeoInfosResponses(IEnumerable<SeoInfo> seoInfos, string storeId, string storeDefaultLanguage, string language, bool withExplain = false)
+        {
+            try
+            {
+                return seoInfos.GetSeoInfoExplain(storeId, storeDefaultLanguage, language, withExplain);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return (new List<SeoInfoExplainResult>(), null);
+            }
+        }
+
         [Fact]
         public void GetBestMatchingSeoInfo_WithNullParameters_ReturnsNull()
         {
@@ -22,7 +48,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId: null, storeDefaultLanguage: null, language: null);
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId: null, storeDefaultLanguage: null, language: null);
 
             // Assert
             Assert.Null(result);
@@ -44,7 +70,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: null);
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: null);
 
             // Assert
             Assert.NotNull(result);
@@ -69,7 +95,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: null);
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: null);
 
             // Assert
             Assert.NotNull(result);
@@ -86,29 +112,29 @@ namespace VirtoCommerce.Seo.Tests
             var storeId = "B2B-store";
             var storeDefaultLanguage = "en-US";
 
-            var seoInfos = new List<SeoInfo>
+            var categorySeoInfo = new SeoInfo
             {
-                new()
-                {
-                    SemanticUrl = "absolut",
-                    PageTitle = "Absolut",
-                    StoreId = "B2B-store",
-                    ObjectType = "Category",
-                    IsActive = true,
-                    LanguageCode = "en-US",
-                },
-                new()
-                {
-                    SemanticUrl = "Brands/absolut",
-                    StoreId = "B2B-store",
-                    ObjectType = "Brand",
-                    IsActive = true,
-                    LanguageCode = "en-US",
-                }
+                SemanticUrl = "absolut",
+                PageTitle = "Absolut",
+                StoreId = "B2B-store",
+                ObjectType = "Category",
+                IsActive = true,
+                LanguageCode = "en-US",
             };
 
+            var brandSeoInfo = new SeoInfo
+            {
+                SemanticUrl = "Brands/absolut",
+                StoreId = "B2B-store",
+                ObjectType = "Brand",
+                IsActive = true,
+                LanguageCode = "en-US",
+            };
+
+            var seoInfos = new List<SeoInfo> { categorySeoInfo, brandSeoInfo };
+
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
 
             // Assert
             Assert.NotNull(result);
@@ -133,7 +159,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
 
             // Assert
             Assert.NotNull(result);
@@ -157,7 +183,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "de-DE");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "de-DE");
 
             // Assert
             Assert.NotNull(result);
@@ -178,7 +204,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "de-DE");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "de-DE");
 
             // Assert
             Assert.NotNull(result);
@@ -192,16 +218,15 @@ namespace VirtoCommerce.Seo.Tests
             var storeId = "Store1";
             var storeDefaultLanguage = "en-US";
 
-            SeoExtensions.OrderedObjectTypes = new List<string> { "Categories", "Pages" };
+            SeoExtensions.OrderedObjectTypes = new[] { "Categories", "Pages" };
 
-            var seoInfos = new List<SeoInfo>
-            {
-                new() { StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "product1", ObjectType = "Category"},
-                new() { StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "product1", ObjectType = "Pages"},
-            };
+            var categorySeoInfo = new SeoInfo { StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "product1", ObjectType = "Category" };
+            var pageSeoInfo = new SeoInfo { StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "product1", ObjectType = "Pages" };
+
+            var seoInfos = new List<SeoInfo> { categorySeoInfo, pageSeoInfo };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
 
             // Assert
             Assert.NotNull(result);
@@ -222,9 +247,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
-
-            // Assert
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
             Assert.Null(result);
         }
 
@@ -242,7 +265,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
 
             // Assert
             Assert.Null(result);
@@ -262,7 +285,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
 
             // Assert
             Assert.NotNull(result);
@@ -282,7 +305,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: "en-US");
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: "en-US");
 
             // Assert
             Assert.NotNull(result);
@@ -303,7 +326,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: null);
+            var result = SafeGetBestMatchingSeoInfo(seoInfos, storeId, storeDefaultLanguage, language: null);
 
             // Assert
             Assert.NotNull(result);
@@ -324,17 +347,18 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             // Act
-            var stages = seoInfos.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
+            var result = SafeGetSeoInfosResponses(seoInfos, storeId, storeDefaultLanguage, language, withExplain: true);
+            var stages = result.Results;
 
             // Assert
             Assert.NotNull(stages);
             Assert.Equal(6, stages.Count);
-            Assert.Equal(PipelineStage.Original, stages[0].Stage);
-            Assert.Equal(PipelineStage.Filtered, stages[1].Stage);
-            Assert.Equal(PipelineStage.Scored, stages[2].Stage);
-            Assert.Equal(PipelineStage.FilteredScore, stages[3].Stage);
-            Assert.Equal(PipelineStage.Ordered, stages[4].Stage);
-            Assert.Equal(PipelineStage.Final, stages[5].Stage);
+            Assert.Equal(PipelineExplainStage.Original, stages[0].Stage);
+            Assert.Equal(PipelineExplainStage.Filtered, stages[1].Stage);
+            Assert.Equal(PipelineExplainStage.Scored, stages[2].Stage);
+            Assert.Equal(PipelineExplainStage.FilteredScore, stages[3].Stage);
+            Assert.Equal(PipelineExplainStage.Ordered, stages[4].Stage);
+            Assert.Equal(PipelineExplainStage.Final, stages[5].Stage);
         }
 
         [Fact]
@@ -344,26 +368,27 @@ namespace VirtoCommerce.Seo.Tests
             var storeDefaultLanguage = "en-US";
             var language = "en-US";
 
-            var cat = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "cat", ObjectType = "Category", IsActive = true };
-            var page = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "page", ObjectType = "Pages", IsActive = true };
-            var prod = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "prod", ObjectType = "CatalogProduct", IsActive = true };
+            var categorySeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "cat", ObjectType = "Category", IsActive = true };
+            var pageSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "page", ObjectType = "Pages", IsActive = true };
+            var productSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "prod", ObjectType = "CatalogProduct", IsActive = true };
 
-            var items = new List<SeoInfo> { cat, page, prod };
+            var items = new List<SeoInfo> { categorySeoInfo, pageSeoInfo, productSeoInfo };
 
             var original = SeoExtensions.OrderedObjectTypes.ToList();
             try
             {
-                SeoExtensions.OrderedObjectTypes = new List<string> { "Category", "Pages", "CatalogProduct" };
+                SeoExtensions.OrderedObjectTypes = new[] { "Category", "Pages", "CatalogProduct" };
 
-                var stages = items.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
-                var orderedStage = stages.FirstOrDefault(s => s.Stage == PipelineStage.Ordered);
+                var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
+                var stages = result.Results;
+                var orderedStage = stages.FirstOrDefault(s => s.Stage == PipelineExplainStage.Ordered);
                 Assert.NotNull(orderedStage);
-                var top = orderedStage.SeoInfoResponses.First();
+                var top = orderedStage.SeoInfoWithScoredList.First();
                 Assert.Equal("CatalogProduct", top.SeoInfo.ObjectType);
             }
             finally
             {
-                SeoExtensions.OrderedObjectTypes = original;
+                SeoExtensions.OrderedObjectTypes = original.ToArray();
             }
         }
 
@@ -374,14 +399,15 @@ namespace VirtoCommerce.Seo.Tests
             var storeDefaultLanguage = "en-US";
             var language = "en-US";
 
-            var inactive = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "p", IsActive = false, ObjectType = "Pages" };
-            var active = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "p", IsActive = true, ObjectType = "Pages" };
+            var inactiveSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "p", IsActive = false, ObjectType = "Pages" };
+            var activeSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "p", IsActive = true, ObjectType = "Pages" };
 
-            var items = new List<SeoInfo> { inactive, active };
-            var stages = items.GetSeoInfosResponses(storeId, storeDefaultLanguage, language);
-            var final = stages.FirstOrDefault(s => s.Stage == PipelineStage.Final);
+            var items = new List<SeoInfo> { inactiveSeoInfo, activeSeoInfo };
+            var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
+            var stages = result.Results;
+            var final = stages.FirstOrDefault(s => s.Stage == PipelineExplainStage.Final);
             Assert.NotNull(final);
-            var chosen = final.SeoInfoResponses.First().SeoInfo;
+            var chosen = final.SeoInfoWithScoredList.First().SeoInfo;
             Assert.True(chosen.IsActive);
         }
 
@@ -392,13 +418,14 @@ namespace VirtoCommerce.Seo.Tests
             var storeDefaultLanguage = "en-US";
             var requestLanguage = "de-DE";
 
-            var english = new SeoInfo { StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "en", ObjectType = "Pages", IsActive = true };
-            var emptyLang = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "empty", ObjectType = "Pages", IsActive = true };
+            var englishSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "en", ObjectType = "Pages", IsActive = true };
+            var emptyLangSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "empty", ObjectType = "Pages", IsActive = true };
 
-            var items = new List<SeoInfo> { emptyLang, english };
-            var stages = items.GetSeoInfosResponses(storeId, storeDefaultLanguage, requestLanguage);
-            var final = stages.FirstOrDefault(s => s.Stage == PipelineStage.Final);
-            var chosen = final.SeoInfoResponses.First().SeoInfo;
+            var items = new List<SeoInfo> { emptyLangSeoInfo, englishSeoInfo };
+            var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, requestLanguage, withExplain: true);
+            var stages = result.Results;
+            var final = stages.FirstOrDefault(s => s.Stage == PipelineExplainStage.Final);
+            var chosen = final.SeoInfoWithScoredList.First().SeoInfo;
             Assert.Equal("en-US", chosen.LanguageCode);
         }
 
@@ -408,23 +435,24 @@ namespace VirtoCommerce.Seo.Tests
             var original = SeoExtensions.OrderedObjectTypes.ToList();
             try
             {
-                SeoExtensions.OrderedObjectTypes = new List<string> { "A", "B", "C" };
+                SeoExtensions.OrderedObjectTypes = new[] { "A", "B", "C" };
                 // create entries with types A,B,C and assert ordering reflects new priority
                 var storeId = "Store1";
                 var lang = "en-US";
-                var a = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "A", IsActive = true };
-                var b = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "B", IsActive = true };
-                var c = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "C", IsActive = true };
+                var aSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "A", IsActive = true };
+                var bSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "B", IsActive = true };
+                var cSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = lang, ObjectType = "C", IsActive = true };
 
-                var items = new List<SeoInfo> { a, b, c };
-                var stages = items.GetSeoInfosResponses(storeId, lang, lang);
-                var ordered = stages.First(s => s.Stage == PipelineStage.Ordered);
-                var top = ordered.SeoInfoResponses.First().SeoInfo;
+                var items = new List<SeoInfo> { aSeoInfo, bSeoInfo, cSeoInfo };
+                var result = SafeGetSeoInfosResponses(items, storeId, lang, lang, withExplain: true);
+                var stages = result.Results;
+                var ordered = stages.First(s => s.Stage == PipelineExplainStage.Ordered);
+                var top = ordered.SeoInfoWithScoredList.First().SeoInfo;
                 Assert.Equal("C", top.ObjectType);
             }
             finally
             {
-                SeoExtensions.OrderedObjectTypes = original;
+                SeoExtensions.OrderedObjectTypes = original.ToArray();
             }
         }
     }

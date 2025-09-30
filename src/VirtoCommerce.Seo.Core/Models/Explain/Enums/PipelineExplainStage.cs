@@ -1,6 +1,6 @@
-namespace VirtoCommerce.Seo.Core.Models.SlugInfo;
+namespace VirtoCommerce.Seo.Core.Models.Explain.Enums;
 
-public enum PipelineStage
+public enum PipelineExplainStage
 {
     Unknown = 0,
     Original = 1,
