@@ -7,8 +7,23 @@ namespace VirtoCommerce.Seo.Core.Models.Explain;
 /// When <see cref="Results"/> is null it means no explain was produced (e.g. invalid input or no candidates found).
 /// </summary>
 public record SeoExplainResponse(
+    /// <summary>
+    /// Gets the store identifier.
+    /// </summary>
     string StoreId,
+
+    /// <summary>
+    /// Gets the language code.
+    /// </summary>
     string LanguageCode,
+
+    /// <summary>
+    /// Gets the permalink.
+    /// </summary>
     string Permalink,
+
+    /// <summary>
+    /// Gets the list of SEO explain results.
+    /// </summary>
     IList<SeoExplainResult> Results
 );

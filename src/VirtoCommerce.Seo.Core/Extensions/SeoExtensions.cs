@@ -76,7 +76,7 @@ public static class SeoExtensions
         string storeDefaultLanguage,
         string language)
     {
-        var explainResult = seoInfos.GetSeoInfoExplain(storeId, storeDefaultLanguage, language);
+        var explainResult = seoInfos.GetSeoExplain(storeId, storeDefaultLanguage, language);
 
         return explainResult.SeoInfo;
     }
@@ -93,8 +93,8 @@ public static class SeoExtensions
     /// <param name="language">Requested language code (may be null).</param>
     /// <param name="withExplain">When true, the returned Results list contains full snapshots for each pipeline stage.</param>
     /// <returns>Tuple containing a list of <see cref="SeoExplainResult"/> and the chosen <see cref="SeoInfo"/>.</returns>
-    public static (IList<SeoExplainResult> Results, SeoInfo SeoInfo) GetSeoInfoExplain(this IEnumerable<SeoInfo> enumerable,
-          string storeId,
+    public static (IList<SeoExplainResult> Results, SeoInfo SeoInfo) GetSeoExplain(this IEnumerable<SeoInfo> enumerable,
+        string storeId,
         string storeDefaultLanguage,
         string language,
         bool withExplain = false)
@@ -113,54 +113,46 @@ public static class SeoExtensions
         // Prepare explain results container (filled only when withExplain==true)
         var explainResults = new List<SeoExplainResult>();
 
+        // Local delegate to add explain snapshots only when requested. Consolidates repeated 'if (withExplain)' checks
+        // into a single conditional and reduces cyclomatic complexity of the method.
+        Action<SeoExplainPipelineStage, IList<(SeoInfo SeoInfo, int ObjectTypePriority, int Score)>> addExplain = (stage, list) =>
+        {
+            if (withExplain)
+            {
+                explainResults.Add(new SeoExplainResult(stage, list));
+            }
+        };
+
         // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
         var stageOriginal = seoInfos
             .Select(seoInfo => (SeoInfo: seoInfo, ObjectTypePriority: 0, Score: 0))
             .ToList();
-        if (withExplain)
-        {
-            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Original, stageOriginal));
-        }
+        addExplain(SeoExplainPipelineStage.Original, stageOriginal);
 
         // Stage 2: Filtered - keep only entries that match store and language criteria
         var stageFiltered = stageOriginal
             .Where(candidate => SeoCanBeFound(candidate.SeoInfo, storeId, storeDefaultLanguage, language))
             .ToList();
-        if (withExplain)
-        {
-            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Filtered, stageFiltered));
-        }
+        addExplain(SeoExplainPipelineStage.Filtered, stageFiltered);
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
         var stageScored = stageFiltered.CalculatePriorityAndScores(storeId, storeDefaultLanguage, language).ToList();
-        if (withExplain)
-        {
-            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Scored, stageScored));
-        }
+        addExplain(SeoExplainPipelineStage.Scored, stageScored);
 
         // Stage 4: FilteredScore - remove entries with non-positive score
         var stageFilteredScore = stageScored.Where(candidate => candidate.Score > 0).ToList();
-        if (withExplain)
-        {
-            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.FilteredScore, stageFilteredScore));
-        }
+        addExplain(SeoExplainPipelineStage.FilteredScore, stageFilteredScore);
 
         // Stage 5: Ordered - order by score (desc) then by object type priority (desc)
         var stageOrdered = stageFilteredScore
             .OrderByDescending(candidate => candidate.Score)
             .ThenByDescending(candidate => candidate.ObjectTypePriority)
             .ToList();
-        if (withExplain)
-        {
-            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Ordered, stageOrdered));
-        }
+        addExplain(SeoExplainPipelineStage.Ordered, stageOrdered);
 
         // Stage 6: Final - take first candidate (if any)
         var stageFinal = stageOrdered.Where(candidate => candidate.SeoInfo != null).Take(1).ToList();
-        if (withExplain)
-        {
-            explainResults.Add(new SeoExplainResult(SeoExplainPipelineStage.Final, stageFinal));
-        }
+        addExplain(SeoExplainPipelineStage.Final, stageFinal);
 
         var selectedSeoInfo = stageFinal.FirstOrDefault().SeoInfo; // safe: FirstOrDefault returns default tuple when empty
 
@@ -220,6 +212,13 @@ public static class SeoExtensions
         string storeDefaultLanguage,
         string language)
     {
+        // Protect against null entries in the input collection. Null candidates cannot be found and should be excluded
+        // during the filtering stage to avoid NullReferenceException when accessing properties below.
+        if (seoInfo == null)
+        {
+            return false;
+        }
+
         return seoInfo.StoreId.Matches(storeId) &&
                seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }

@@ -27,7 +27,7 @@ namespace VirtoCommerce.Seo.Tests
         {
             try
             {
-                return seoInfos.GetSeoInfoExplain(storeId, storeDefaultLanguage, language, withExplain);
+                return seoInfos.GetSeoExplain(storeId, storeDefaultLanguage, language, withExplain);
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -491,7 +491,7 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public void NullCandidate_IsPreservedWithNegativePriorityAndZeroScore()
+        public void NullCandidate_IsHandledAndFilteredOutBeforeScoring()
         {
             // Arrange
             var storeId = "Store1";
@@ -503,9 +503,20 @@ namespace VirtoCommerce.Seo.Tests
 
             var items = new List<SeoInfo> { nullSeoInfo, validSeoInfo };
 
-            // Act / Assert
-            // Current implementation will throw when encountering a null candidate during filtering
-            Assert.Throws<NullReferenceException>(() => SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true));
+            // Act
+            var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
+
+            // Assert: pipeline should handle null candidate gracefully
+            Assert.NotNull(result.Results);
+            var originalStage = result.Results.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Original);
+            Assert.NotNull(originalStage);
+            // Original stage should contain the null entry
+            Assert.Contains(originalStage.SeoInfoWithScoredList, t => t.SeoInfo == null);
+
+            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == SeoExplainPipelineStage.Scored);
+            Assert.NotNull(scoredStage);
+            // Scored stage should not contain null entries because nulls are filtered out before scoring
+            Assert.DoesNotContain(scoredStage.SeoInfoWithScoredList, t => t.SeoInfo == null);
         }
 
         [Fact]

@@ -275,7 +275,7 @@ namespace VirtoCommerce.Seo.Tests
             try
             {
                 // Instead of relying on service explain payload, verify ordering using extension method directly
-                var tuple = items.GetSeoInfoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
+                var tuple = items.GetSeoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
                 var stage5 = tuple.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 5"));
                 Assert.NotNull(stage5);
                 // highest priority should be the last element in OrderedObjectTypes -> CatalogProduct

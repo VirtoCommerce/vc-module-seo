@@ -8,7 +8,7 @@ namespace VirtoCommerce.Seo.Data.Services;
 
 /// <summary>
 /// Service that executes the explain pipeline for a given store/language/permalink combination.
-/// It relies on a composite resolver to fetch candidates and then delegates to <see cref="SeoExtensions.GetSeoInfoExplain"/>.
+/// It relies on a composite resolver to fetch candidates and then delegates to <see cref="SeoExtensions.GetSeoExplain"/>.
 /// </summary>
 public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
 {
@@ -38,7 +38,7 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         }
 
         // Request explain snapshots explicitly so the response contains pipeline stages
-        var tuple = seoInfosFromCompositeResolver.GetSeoInfoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
+        var tuple = seoInfosFromCompositeResolver.GetSeoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
 
         var response = new SeoExplainResponse(storeId, languageCode, permalink, tuple.Results);
 
