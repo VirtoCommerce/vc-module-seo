@@ -10,7 +10,7 @@ namespace VirtoCommerce.Seo.Web.Controllers.Api;
 
 [Authorize]
 [Route("api/seo/slug-info")]
-public class SlugInfoController(ISlugInfoService slugInfoService) : Controller
+public class SlugInfoController(ISlugExplainService slugExplainService) : Controller
 {
     /// <summary>
     /// Find all SEO records for test by StoreId, StoreDefaultLanguage, LanguageCode, Permalink
@@ -24,7 +24,7 @@ public class SlugInfoController(ISlugInfoService slugInfoService) : Controller
         [FromQuery] string languageCode,
         [FromQuery] string permalink)
     {
-        var response = await slugInfoService.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+        var response = await slugExplainService.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
         return Ok(response);
     }

@@ -6,7 +6,7 @@ using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
-public class SlugInfoService(ICompositeSeoResolver compositeSeoResolver) : ISlugInfoService
+public class SlugExplainService(ICompositeSeoResolver compositeSeoResolver) : ISlugExplainService
 {
     public async Task<SlugInfoResponse> GetExplainAsync(
         string storeId,

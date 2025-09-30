@@ -10,7 +10,7 @@ using Xunit;
 
 namespace VirtoCommerce.Seo.Tests
 {
-    public class SlugInfoServiceTests
+    public class SlugExplainServiceTests
     {
         private sealed class FakeCompositeSeoResolver : ICompositeSeoResolver
         {
@@ -44,7 +44,7 @@ namespace VirtoCommerce.Seo.Tests
             var permalink = "category/product";
 
             var fakeResolver = new FakeCompositeSeoResolver(null);
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -73,7 +73,7 @@ namespace VirtoCommerce.Seo.Tests
             var permalink = "category/product";
 
             var fakeResolver = new FakeCompositeSeoResolver(new List<SeoInfo>());
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -100,7 +100,7 @@ namespace VirtoCommerce.Seo.Tests
 
             var items = new List<SeoInfo> { a, b, c, d };
             var fakeResolver = new FakeCompositeSeoResolver(items);
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -130,7 +130,7 @@ namespace VirtoCommerce.Seo.Tests
             var g2 = new SeoInfo { StoreId = null, LanguageCode = null, SemanticUrl = "global2", ObjectType = "Category", IsActive = true };
 
             var fakeResolver = new FakeCompositeSeoResolver(new List<SeoInfo> { g1, g2 });
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -161,7 +161,7 @@ namespace VirtoCommerce.Seo.Tests
             };
 
             var fakeResolver = new FakeCompositeSeoResolver(items);
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
@@ -192,7 +192,7 @@ namespace VirtoCommerce.Seo.Tests
             var french = new SeoInfo { StoreId = storeId, LanguageCode = "fr-FR", SemanticUrl = "fr", ObjectType = "Brand", IsActive = true };
 
             var fakeResolver = new FakeCompositeSeoResolver(new List<SeoInfo> { english, emptyLang, french });
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
@@ -226,7 +226,7 @@ namespace VirtoCommerce.Seo.Tests
             SeoExtensions.OrderedObjectTypes = new List<string> { "Category", "Pages", "CatalogProduct" };
             try
             {
-                var service = new SlugInfoService(fakeResolver);
+                var service = new SlugExplainService(fakeResolver);
 
                 // Act
                 var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -255,7 +255,7 @@ namespace VirtoCommerce.Seo.Tests
 
             var seoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = permalink };
             var fakeResolver = new FakeCompositeSeoResolver(new List<SeoInfo> { seoInfo });
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -276,7 +276,7 @@ namespace VirtoCommerce.Seo.Tests
 
             var seoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = permalink };
             var fakeResolver = new FakeCompositeSeoResolver(new List<SeoInfo> { seoInfo });
-            var service = new SlugInfoService(fakeResolver);
+            var service = new SlugExplainService(fakeResolver);
 
             // Act
             var result = await service.GetExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
@@ -296,7 +296,7 @@ namespace VirtoCommerce.Seo.Tests
             var permalink = "category/product";
 
             var throwing = new ThrowingResolver();
-            var service = new SlugInfoService(throwing);
+            var service = new SlugExplainService(throwing);
 
             // Act / Assert
             await Assert.ThrowsAsync<System.InvalidOperationException>(async () =>

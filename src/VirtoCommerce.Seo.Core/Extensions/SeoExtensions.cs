@@ -112,7 +112,11 @@ public static class SeoExtensions
 
         // Locate final stage and return the first non-null SeoInfo found there (or null)
         var finalStage = results?.FirstOrDefault(x => x.Stage == PipelineStage.Final);
-        return finalStage?.SeoInfoResponses?.Where(r => r?.SeoInfo != null).Select(r => r.SeoInfo).FirstOrDefault();
+
+        return finalStage?.SeoInfoResponses?
+            .Where(r => r?.SeoInfo != null)
+            .Select(r => r.SeoInfo)
+            .FirstOrDefault();
     }
 
     /// <summary>

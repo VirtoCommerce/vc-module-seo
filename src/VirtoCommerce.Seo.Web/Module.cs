@@ -83,7 +83,7 @@ public class Module : IModule, IHasConfiguration, IExportSupport, IImportSupport
 
         serviceCollection.AddTransient<IRedirectRuleSearchService, RedirectRuleSearchService>();
         serviceCollection.AddTransient<IRedirectRuleService, RedirectRuleService>();
-        serviceCollection.AddTransient<ISlugInfoService, SlugInfoService>();
+        serviceCollection.AddTransient<ISlugExplainService, SlugExplainService>();
 
         serviceCollection.AddTransient<AbstractValidator<RedirectRule>, RedirectRuleValidator>();
 
