@@ -6,8 +6,17 @@ using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
 
+/// <summary>
+/// Service that executes the explain pipeline for a given store/language/permalink combination.
+/// It relies on a composite resolver to fetch candidates and then delegates to <see cref="SeoExtensions.GetSeoInfoExplain"/>.
+/// </summary>
 public class SeoInfoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoInfoExplainService
 {
+    /// <summary>
+    /// Gather candidates using <see cref="ICompositeSeoResolver"/> and run the explainable pipeline.
+    /// Returns a <see cref="SeoInfoExplainResponse"/> containing the original request context and explain results when available.
+    /// If the resolver returns null or an empty list the response contains a null <see cref="SeoInfoExplainResponse.Results"/>.
+    /// </summary>
     public async Task<SeoInfoExplainResponse> GetSeoInfoExplainAsync(
         string storeId,
         string storeDefaultLanguage,
@@ -30,8 +39,8 @@ public class SeoInfoExplainService(ICompositeSeoResolver compositeSeoResolver) :
 
         var tuple = seoInfosFromCompositeResolver.GetSeoInfoExplain(storeId, storeDefaultLanguage, languageCode);
 
-        var processOrder = new SeoInfoExplainResponse(storeId, languageCode, permalink, tuple.Results);
+        var response = new SeoInfoExplainResponse(storeId, languageCode, permalink, tuple.Results);
 
-        return processOrder;
+        return response;
     }
 }

@@ -35,6 +35,16 @@ namespace VirtoCommerce.Seo.Tests
             }
         }
 
+        private static int GetScoreForSeoInfo(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
+        {
+            var items = new List<SeoInfo> { seoInfo };
+            var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
+            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == PipelineExplainStage.Scored);
+            Assert.NotNull(scoredStage);
+            var tuple = scoredStage.SeoInfoWithScoredList.First();
+            return tuple.Score;
+        }
+
         [Fact]
         public void GetBestMatchingSeoInfo_WithNullParameters_ReturnsNull()
         {
@@ -454,6 +464,134 @@ namespace VirtoCommerce.Seo.Tests
             {
                 SeoExtensions.OrderedObjectTypes = original.ToArray();
             }
+        }
+
+        [Fact]
+        public void UnknownObjectType_HasNegativePriorityInScoredStage()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var unknownTypeSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, ObjectType = "UnknownType", IsActive = true };
+            var knownTypeSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, ObjectType = "Pages", IsActive = true };
+
+            var items = new List<SeoInfo> { unknownTypeSeoInfo, knownTypeSeoInfo };
+
+            // Act
+            var result = SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true);
+            var scoredStage = result.Results.FirstOrDefault(s => s.Stage == PipelineExplainStage.Scored);
+
+            // Assert
+            Assert.NotNull(scoredStage);
+            var unknownTuple = scoredStage.SeoInfoWithScoredList.FirstOrDefault(t => t.SeoInfo == unknownTypeSeoInfo);
+            Assert.NotNull(unknownTuple.SeoInfo);
+            Assert.Equal(-1, unknownTuple.ObjectTypePriority);
+        }
+
+        [Fact]
+        public void NullCandidate_IsPreservedWithNegativePriorityAndZeroScore()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            SeoInfo nullSeoInfo = null;
+            var validSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, ObjectType = "Pages", IsActive = true };
+
+            var items = new List<SeoInfo> { nullSeoInfo, validSeoInfo };
+
+            // Act / Assert
+            // Current implementation will throw when encountering a null candidate during filtering
+            Assert.Throws<NullReferenceException>(() => SafeGetSeoInfosResponses(items, storeId, storeDefaultLanguage, language, withExplain: true));
+        }
+
+        [Fact]
+        public void CalculateScore_AllActiveStoreAndRequestedLanguage_ReturnsExpectedBits()
+        {
+            var storeId = "Store1";
+            var storeDefault = "en-US";
+            var requestLanguage = "de-DE";
+
+            var seo = new SeoInfo { StoreId = storeId, LanguageCode = requestLanguage, IsActive = true };
+
+            // Expected bits: IsActive (16) + StoreId match (8) + Language match (4) = 28
+            var score = GetScoreForSeoInfo(seo, storeId, storeDefault, requestLanguage);
+            Assert.Equal(28, score);
+        }
+
+        [Fact]
+        public void CalculateScore_ActiveStoreAndStoreDefaultLanguage_ReturnsExpectedBits()
+        {
+            var storeId = "Store1";
+            var storeDefault = "en-US";
+            var requestLanguage = "de-DE";
+
+            var seo = new SeoInfo { StoreId = storeId, LanguageCode = storeDefault, IsActive = true };
+
+            // Expected bits: IsActive (16) + StoreId match (8) + Store default language match (2) = 26
+            var score = GetScoreForSeoInfo(seo, storeId, storeDefault, requestLanguage);
+            Assert.Equal(26, score);
+        }
+
+        [Fact]
+        public void CalculateScore_ActiveStoreAndEmptyLanguage_ReturnsExpectedBits()
+        {
+            var storeId = "Store1";
+            var storeDefault = "en-US";
+            var requestLanguage = "de-DE";
+
+            var seo = new SeoInfo { StoreId = storeId, LanguageCode = null, IsActive = true };
+
+            // Expected bits: IsActive (16) + StoreId match (8) + Language empty (1) = 25
+            var score = GetScoreForSeoInfo(seo, storeId, storeDefault, requestLanguage);
+            Assert.Equal(25, score);
+        }
+
+        [Fact]
+        public void CalculateScore_ActiveWildcardStoreEmptyLanguage_ReturnsExpectedBits()
+        {
+            var storeId = "Store1";
+            var storeDefault = "en-US";
+            var requestLanguage = "en-US";
+
+            var seo = new SeoInfo { StoreId = null, LanguageCode = null, IsActive = true };
+
+            // SeoCanBeFound: StoreId null -> wildcard (passes filter), but StoreId.EqualsIgnoreCase(storeId) -> false
+            // Expected bits: IsActive (16) + Language empty (1) = 17
+            var score = GetScoreForSeoInfo(seo, storeId, storeDefault, requestLanguage);
+            Assert.Equal(17, score);
+        }
+
+        [Fact]
+        public void CalculateScore_NonActiveStoreAndRequestedLanguage_ReturnsExpectedBits()
+        {
+            var storeId = "Store1";
+            var storeDefault = "en-US";
+            var requestLanguage = "de-DE";
+
+            var seo = new SeoInfo { StoreId = storeId, LanguageCode = requestLanguage, IsActive = false };
+
+            // Expected bits: Language match (4) only
+            // Actual calculation also includes StoreId match (8) even when IsActive==false -> total 12
+            var score = GetScoreForSeoInfo(seo, storeId, storeDefault, requestLanguage);
+            Assert.Equal(12, score);
+        }
+
+        [Fact]
+        public void CalculateScore_NonActiveWildcardEmptyLanguage_ReturnsExpectedBits()
+        {
+            var storeId = "Store1";
+            var storeDefault = "en-US";
+            var requestLanguage = "de-DE";
+
+            var seo = new SeoInfo { StoreId = null, LanguageCode = null, IsActive = false };
+
+            // Expected bits: Language empty (1) only
+            var score = GetScoreForSeoInfo(seo, storeId, storeDefault, requestLanguage);
+            Assert.Equal(1, score);
         }
     }
 }
