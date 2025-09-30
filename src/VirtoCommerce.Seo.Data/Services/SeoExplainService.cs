@@ -10,7 +10,7 @@ namespace VirtoCommerce.Seo.Data.Services;
 /// Service that executes the explain pipeline for a given store/language/permalink combination.
 /// It relies on a composite resolver to fetch candidates and then delegates to <see cref="SeoExtensions.GetSeoInfoExplain"/>.
 /// </summary>
-public class SeoInfoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
+public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
 {
     /// <summary>
     /// Gather candidates using <see cref="ICompositeSeoResolver"/> and run the explainable pipeline.
