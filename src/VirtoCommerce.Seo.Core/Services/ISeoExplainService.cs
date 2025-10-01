@@ -7,9 +7,8 @@ namespace VirtoCommerce.Seo.Core.Services;
 public interface ISeoExplainService
 {
     /// <summary>
-    /// Produce an explain response for the given store, default language, requested language and permalink.
-    /// The response contains the original request context and, when available, per-stage pipeline snapshots that
-    /// describe how the best matching <see cref="VirtoCommerce.Seo.Core.Models.SeoInfo"/> was selected.
+    /// Produces an explain response for the given store, default language, requested language and permalink.
+    /// The response is a list of per-stage snapshots that describe how the best matching <see cref="VirtoCommerce.Seo.Core.Models.SeoInfo"/> was selected.
     /// </summary>
     public Task<IList<SeoExplainResult>> ExplainAsync(string storeId, string storeDefaultLanguage, string languageCode, string permalink);
 }

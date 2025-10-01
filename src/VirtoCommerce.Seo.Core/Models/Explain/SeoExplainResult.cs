@@ -15,8 +15,8 @@ public class SeoExplainResult(SeoExplainStage stage, IList<SeoExplainItem> seoEx
         SeoExplainStage.FilteredScore => "Stage 4: FilteredScore - keep candidates with positive score.",
         SeoExplainStage.Ordered => "Stage 5: Ordered - order by score and object type priority.",
         SeoExplainStage.Final => "Stage 6: Final - select first candidate as the resolved SeoInfo.",
-        _ => string.Empty
+        _ => string.Empty,
     };
 
-    public IList<SeoExplainItem> SeoExplainItems { get; } = seoExplainItems ?? new List<SeoExplainItem>();
+    public IList<SeoExplainItem> SeoExplainItems { get; } = seoExplainItems ?? [];
 }

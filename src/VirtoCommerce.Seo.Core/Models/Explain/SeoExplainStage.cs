@@ -26,7 +26,7 @@ public enum SeoExplainStage
     Scored,
 
     /// <summary>
-    /// FilteredScore: candidates with non-positive scores have been removed.
+    /// FilteredScore: candidates with a positive score only.
     /// </summary>
     FilteredScore,
 

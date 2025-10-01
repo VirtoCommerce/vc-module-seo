@@ -41,7 +41,7 @@ public static class SeoExtensions
     }
 
     /// <summary>
-    /// Evaluate a collection of <see cref="SeoInfo"/> records and select the best match according to the
+    /// Evaluates a collection of <see cref="SeoInfo"/> records and selects the best match according to the
     /// configured scoring rules and object-type priorities.
     /// The selection  typically performs: filtering by store/language → scoring → filtering by positive score → ordering → selecting first.
     /// </summary>
@@ -50,30 +50,30 @@ public static class SeoExtensions
         string storeDefaultLanguage,
         string language)
     {
-        var explainResult = seoInfos.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, language);
+        var (seoInfo, _) = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, explain: false);
 
-        return explainResult.SeoInfo;
+        return seoInfo;
     }
 
     /// <summary>
     /// Executes the explainable evaluation  over the provided <see cref="SeoInfo"/> collection.
-    /// Returns a tuple where <c>Results</c> is a list of explain results (snapshots of each stage) and
+    /// Returns a tuple where <c>explainResults</c> is a list of explain results (snapshots of each stage) and
     /// <c>SeoInfo</c> is the selected best matching SeoInfo (can be null).
     /// This method is intended to make the selection process introspectable for diagnostics and tests.
     /// </summary>
-    public static (IList<SeoExplainResult> Results, SeoInfo SeoInfo) ExplainBestMatchingSeoInfo(this IEnumerable<SeoInfo> enumerable,
+    public static (SeoInfo, IList<SeoExplainResult>) GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
         string storeId,
         string storeDefaultLanguage,
         string language,
-        bool withExplain = false)
+        bool explain)
     {
-        if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || enumerable == null)
+        if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || seoInfos == null)
         {
             return (null, null);
         }
 
-        var seoInfos = enumerable.ToList();
-        if (seoInfos.Count == 0)
+        var seoInfoList = seoInfos as IList<SeoInfo> ?? seoInfos.ToList();
+        if (seoInfoList.Count == 0)
         {
             return (null, null);
         }
@@ -81,7 +81,7 @@ public static class SeoExtensions
         List<SeoExplainResult> explainResults = null;
 
         // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
-        var stageOriginal = seoInfos
+        var stageOriginal = seoInfoList
             .Select(seoInfo => new SeoExplainItem(seoInfo));
         stageOriginal = AddExplain(SeoExplainStage.Original, stageOriginal);
 
@@ -92,7 +92,7 @@ public static class SeoExtensions
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
         var stageScored = stageFiltered
-            .CalculatePriorityAndScores(storeId, storeDefaultLanguage, language);
+            .CalculatePriorityAndScores(storeId, storeDefaultLanguage, language, explain);
         stageScored = AddExplain(SeoExplainStage.Scored, stageScored);
 
         // Stage 4: FilteredScore - remove entries with non-positive score
@@ -113,14 +113,14 @@ public static class SeoExtensions
             .Take(1);
         stageFinal = AddExplain(SeoExplainStage.Final, stageFinal);
 
-        var selectedSeoInfo = stageFinal.FirstOrDefault()?.SeoInfo;
+        var bestMatchingSeoInfo = stageFinal.FirstOrDefault()?.SeoInfo;
 
-        // When explain is not requested, avoid allocating and returning the explainResults list to reduce memory usage.
-        return (withExplain ? explainResults : null, selectedSeoInfo);
+        return (bestMatchingSeoInfo, explainResults);
 
         IEnumerable<SeoExplainItem> AddExplain(SeoExplainStage stage, IEnumerable<SeoExplainItem> items)
         {
-            if (!withExplain)
+            // To reduce memory usage, avoid allocating and populating the explainResults list when an explanation is not requested.
+            if (!explain)
             {
                 return items;
             }
@@ -134,35 +134,30 @@ public static class SeoExtensions
     }
 
     /// <summary>
-    /// For each input tuple calculates object type priority (index in <see cref="OrderedObjectTypes"/>) and score.
-    /// If a <see cref="SeoExplainItem"/>'s SeoInfo is null it is preserved with a priority of -1 and score 0 to keep  snapshots stable.
+    /// For each input item calculates object type priority (index in <see cref="OrderedObjectTypes"/>) and score.
+    /// If a <see cref="SeoExplainItem"/>'s SeoInfo is null it is preserved with a priority of -1 and score 0 to keep snapshots stable.
     /// </summary>
     private static IEnumerable<SeoExplainItem> CalculatePriorityAndScores(this IEnumerable<SeoExplainItem> seoExplainItems,
         string storeId,
         string storeDefaultLanguage,
-        string language)
+        string language,
+        bool explain)
     {
-        var results = new List<SeoExplainItem>();
-
         foreach (var item in seoExplainItems)
         {
-            var seoInfo = item.SeoInfo;
+            var mutableItem = explain
+                ? new SeoExplainItem(item.SeoInfo)
+                : item;
 
-            if (seoInfo == null)
+            if (mutableItem.SeoInfo != null)
             {
-                // Preserve null candidates with explicit priority -1 and score 0
-                results.Add(new SeoExplainItem());
-                continue;
+                // Resolve object type priority using configured OrderedObjectTypes. If type is not found, priority is -1.
+                mutableItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, mutableItem.SeoInfo.ObjectType);
+                mutableItem.Score = mutableItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
             }
 
-            // Resolve object type priority using configured OrderedObjectTypes. If type not found, priority is -1.
-            var priority = Array.IndexOf(OrderedObjectTypes, seoInfo.ObjectType);
-            var score = seoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
-
-            results.Add(new SeoExplainItem(seoInfo, priority, score));
+            yield return mutableItem;
         }
-
-        return results;
     }
 
     /// <summary>
@@ -201,7 +196,7 @@ public static class SeoExtensions
                 seoInfo.LanguageCode.IsNullOrEmpty(),
             }
             .Reverse()
-            .Select((isValid, index) => isValid ? 1 << index : 0)
+            .Select((valid, index) => valid ? 1 << index : 0)
             .Sum();
 
         // the example of the score calculation:
