@@ -1,0 +1,107 @@
+{
+  "seo": {
+    "blades": {
+      "broken-link-list": {
+        "title": "Trasiga länkar",
+        "labels": {
+          "permalink": "Permalänk",
+          "status": "Status",
+          "hitCount": "Antal träffar"
+        },
+        "messages": {
+          "feature-disabled": "Detektion av trasiga länkar är för närvarande inaktiverad.<br/>Kontakta din administratör för att aktivera den via<br/><strong>Inställningar > SEO > Detektera trasiga länkar</strong>."
+        }
+      },
+      "broken-link-details": {
+        "labels": {
+          "permalink": "Permalänk",
+          "status": "Status",
+          "redirectUrl": "Omdirigerings-URL",
+          "hitCount": "Antal träffar",
+          "language": "Språk",
+          "createdDate": "Skapad datum",
+          "lastHitDate": "Senaste träffdatum"
+        },
+        "placeholders": {
+          "status": "Status",
+          "redirectUrl": "Omdirigerings-URL"
+        },
+        "statuses": {
+          "active": "Aktiv",
+          "resolved": "Löst",
+          "accepted": "Godkänd"
+        }
+      },
+      "redirect-rule-list": {
+        "title": "Omdirigeringsregler",
+        "labels": {
+          "inbound": "Inkommande",
+          "outbound": "Utgående"
+        }
+      },
+      "redirect-rule-details": {
+        "labels": {
+          "inbound": "Inkommande regel",
+          "outbound": "Utgående regel",
+          "is-active": "Är aktiv",
+          "redirect-rule-type": "Typ av omdirigeringsregel",
+          "priority": "Prioritet"
+        },
+        "placeholders": {
+          "inbound": "",
+          "outbound": "",
+          "redirect-rule-type": ""
+        }
+      }
+    },
+    "dialogs": {
+      "broken-link-delete": {
+        "title": "Bekräfta radering",
+        "message": "Är du säker på att du vill radera denna trasiga länk?",
+        "messagePlural": "Är du säker på att du vill radera de valda trasiga länkarna?"
+      },
+      "broken-link-save": {
+        "title": "Spara ändringar",
+        "message": "Denna entitet har ändrats. Vill du spara ändringarna?"
+      },
+      "redirect-rule-delete": {
+        "title": "Bekräfta radering",
+        "message": "Är du säker på att du vill radera denna omdirigeringsregel?",
+        "messagePlural": "Är du säker på att du vill radera de valda omdirigeringsreglerna?"
+      },
+      "redirect-rule-save": {
+        "title": "Spara ändringar",
+        "message": "Denna entitet har ändrats. Vill du spara ändringarna?"
+      }
+    },
+    "widgets": {
+      "broken-link-widget": {
+        "title": "Aktiva trasiga länkar"
+      },
+      "redirect-rule-widget": {
+        "title": "Aktiva regler"
+      }
+    }
+  },
+  "permissions": {
+    "seo:access": "Öppna SEO-menyn",
+    "seo:create": "Skapa SEO-relaterade data",
+    "seo:read": "Visa SEO-relaterade data",
+    "seo:update": "Uppdatera SEO-relaterade data",
+    "seo:delete": "Radera SEO-relaterade data"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO aktiverat",
+        "description": "Inställning för aktiverat SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "Detektera trasiga länkar",
+          "description": "Ska plattformen registrera förfrågningar till icke-existerande sidor?"
+        }
+      }
+    }
+  }
+}
