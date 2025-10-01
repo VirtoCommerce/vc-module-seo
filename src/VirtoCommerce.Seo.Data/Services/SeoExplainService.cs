@@ -36,6 +36,6 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         // Request explain snapshots explicitly so the response contains pipeline stages
         var explain = seoInfosFromCompositeResolver.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode, withExplain: true);
 
-        return explain.Results;
+        return explain.Results ?? new List<SeoExplainResult>();
     }
 }
