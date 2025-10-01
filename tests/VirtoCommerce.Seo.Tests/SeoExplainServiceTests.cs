@@ -6,6 +6,7 @@ using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
 using VirtoCommerce.Seo.Data.Services;
 using VirtoCommerce.Seo.Core.Extensions;
+using VirtoCommerce.Seo.Core.Models.Explain;
 using Xunit;
 
 namespace VirtoCommerce.Seo.Tests
@@ -29,7 +30,7 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public async Task GetExplainAsync_WhenResolverReturnsNull_ReturnsNullResultsAndPassesCriteria()
+        public async Task GetExplainAsync_WhenResolverReturnsNull_ReturnsEmptyListAndPassesCriteria()
         {
             // Arrange
             var storeId = "store-1";
@@ -41,15 +42,12 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(storeId, result.StoreId);
-            Assert.Equal(languageCode, result.LanguageCode);
-            Assert.Equal(permalink, result.Permalink);
-            // Current implementation returns null Results when resolver returns null
-            Assert.Null(result.Results);
+            // Current implementation returns empty list when resolver returns null or empty
+            Assert.Empty(result);
 
             // The resolver should still receive the criteria (if invoked)
             if (fakeResolver.LastCriteria != null)
@@ -61,7 +59,7 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public async Task GetExplainAsync_WhenResolverReturnsEmptyList_ReturnsNullResults()
+        public async Task GetExplainAsync_WhenResolverReturnsEmptyList_ReturnsEmptyList()
         {
             // Arrange
             var storeId = "store-1";
@@ -73,12 +71,11 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
             Assert.NotNull(result);
-            // Current implementation returns null Results when resolver returns empty list
-            Assert.Null(result.Results);
+            Assert.Empty(result);
         }
 
         [Fact]
@@ -90,31 +87,31 @@ namespace VirtoCommerce.Seo.Tests
             var languageCode = "en-US";
             var permalink = "category/product";
 
-            var seoInfoForCategory = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = permalink, ObjectType = "Category", IsActive = true };
-            var seoInfoForGlobalPage = new SeoInfo { StoreId = null, LanguageCode = languageCode, SemanticUrl = "global-page", ObjectType = "Pages", IsActive = true };
-            var seoInfoForProduct = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "prod1", ObjectType = "CatalogProduct", IsActive = true };
-            var seoInfoForBrandInactive = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "brand1", ObjectType = "Brand", IsActive = false };
+            var categorySeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = permalink, ObjectType = "Category", IsActive = true };
+            var globalPageSeoInfo = new SeoInfo { StoreId = null, LanguageCode = languageCode, SemanticUrl = "global-page", ObjectType = "Pages", IsActive = true };
+            var productSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "prod1", ObjectType = "CatalogProduct", IsActive = true };
+            var brandInactiveSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "brand1", ObjectType = "Brand", IsActive = false };
 
-            var items = new List<SeoInfo> { seoInfoForCategory, seoInfoForGlobalPage, seoInfoForProduct, seoInfoForBrandInactive };
+            var items = new List<SeoInfo> { categorySeoInfo, globalPageSeoInfo, productSeoInfo, brandInactiveSeoInfo };
             var fakeResolver = new FakeCompositeSeoResolver(items);
             var service = new SeoExplainService(fakeResolver);
 
             // Act
             try
             {
-                var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+                var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
                 // If the service returns explain Results, verify stage 6 contains expected best match
-                if (result.Results != null && result.Results.Count > 0)
+                if (result is { Count: > 0 })
                 {
-                    var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
+                    var stage6 = result.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
                     Assert.NotNull(stage6);
-                    var first = stage6.SeoInfoWithScoredList.First();
+                    var first = stage6.SeoExplainItems.First();
                     Assert.NotNull(first.SeoInfo);
-                    // 'a' should be best matching candidate for store1/en-US
-                    Assert.Equal(seoInfoForCategory.SemanticUrl, first.SeoInfo.SemanticUrl);
-                    Assert.Equal(seoInfoForCategory.StoreId, first.SeoInfo.StoreId);
-                    Assert.Equal(seoInfoForCategory.LanguageCode, first.SeoInfo.LanguageCode);
+                    // categorySeoInfo should be best matching candidate for store1/en-US
+                    Assert.Equal(categorySeoInfo.SemanticUrl, first.SeoInfo.SemanticUrl);
+                    Assert.Equal(categorySeoInfo.StoreId, first.SeoInfo.StoreId);
+                    Assert.Equal(categorySeoInfo.LanguageCode, first.SeoInfo.LanguageCode);
                 }
                 else
                 {
@@ -122,7 +119,7 @@ namespace VirtoCommerce.Seo.Tests
                     var chosen = items.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode);
                     if (chosen != null)
                     {
-                        Assert.Equal(seoInfoForCategory.SemanticUrl, chosen.SemanticUrl);
+                        Assert.Equal(categorySeoInfo.SemanticUrl, chosen.SemanticUrl);
                     }
                 }
             }
@@ -141,32 +138,32 @@ namespace VirtoCommerce.Seo.Tests
             var languageCode = "en-US";
             var permalink = "category/product";
 
-            var globalSeoInfo1 = new SeoInfo { StoreId = null, LanguageCode = languageCode, SemanticUrl = "global1", ObjectType = "Pages", IsActive = true };
-            var globalSeoInfo2 = new SeoInfo { StoreId = null, LanguageCode = null, SemanticUrl = "global2", ObjectType = "Category", IsActive = true };
+            var globalSeoInfoEnglish = new SeoInfo { StoreId = null, LanguageCode = languageCode, SemanticUrl = "global1", ObjectType = "Pages", IsActive = true };
+            var globalSeoInfoEmptyLanguage = new SeoInfo { StoreId = null, LanguageCode = null, SemanticUrl = "global2", ObjectType = "Category", IsActive = true };
 
-            var items = new List<SeoInfo> { globalSeoInfo1, globalSeoInfo2 };
+            var items = new List<SeoInfo> { globalSeoInfoEnglish, globalSeoInfoEmptyLanguage };
 
             var fakeResolver = new FakeCompositeSeoResolver(items);
             var service = new SeoExplainService(fakeResolver);
 
             try
             {
-                var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+                var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
-                if (result.Results != null && result.Results.Count > 0)
+                if (result is { Count: > 0 })
                 {
-                    var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
+                    var stage6 = result.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
                     Assert.NotNull(stage6);
-                    var first = stage6.SeoInfoWithScoredList.First();
+                    var first = stage6.SeoExplainItems.First();
                     Assert.NotNull(first.SeoInfo);
-                    Assert.Equal(globalSeoInfo1.SemanticUrl, first.SeoInfo.SemanticUrl);
+                    Assert.Equal(globalSeoInfoEnglish.SemanticUrl, first.SeoInfo.SemanticUrl);
                 }
                 else
                 {
                     var chosen = items.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode);
                     if (chosen != null)
                     {
-                        Assert.Equal(globalSeoInfo1.SemanticUrl, chosen.SemanticUrl);
+                        Assert.Equal(globalSeoInfoEnglish.SemanticUrl, chosen.SemanticUrl);
                     }
                 }
             }
@@ -197,17 +194,16 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
+            var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
 
             // Assert: with explain enabled the service returns pipeline stages, but filtered/ordered/final stages contain no candidates
             Assert.NotNull(result);
-            Assert.NotNull(result.Results);
-            var stage5 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 5") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.SeoExplainPipelineStage.Ordered);
-            var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6") || r.Stage == VirtoCommerce.Seo.Core.Models.Explain.Enums.SeoExplainPipelineStage.Final);
+            var stage5 = result.FirstOrDefault(r => r.Description.StartsWith("Stage 5") || r.Stage == SeoExplainStage.Ordered);
+            var stage6 = result.FirstOrDefault(r => r.Description.StartsWith("Stage 6") || r.Stage == SeoExplainStage.Final);
             Assert.NotNull(stage5);
             Assert.NotNull(stage6);
-            Assert.Empty(stage5.SeoInfoWithScoredList);
-            Assert.Empty(stage6.SeoInfoWithScoredList);
+            Assert.Empty(stage5.SeoExplainItems);
+            Assert.Empty(stage6.SeoExplainItems);
         }
 
         [Fact]
@@ -219,23 +215,23 @@ namespace VirtoCommerce.Seo.Tests
             var requestLanguage = "de-DE"; // not present
             var permalink = "category/product";
 
-            var seoInfoInEnglish = new SeoInfo { StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "en", ObjectType = "Pages", IsActive = true };
-            var seoInfoWithEmptyLanguage = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "empty", ObjectType = "Category", IsActive = true };
-            var seoInfoInFrench = new SeoInfo { StoreId = storeId, LanguageCode = "fr-FR", SemanticUrl = "fr", ObjectType = "Brand", IsActive = true };
+            var englishSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "en", ObjectType = "Pages", IsActive = true };
+            var emptyLanguageSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = null, SemanticUrl = "empty", ObjectType = "Category", IsActive = true };
+            var frenchSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = "fr-FR", SemanticUrl = "fr", ObjectType = "Brand", IsActive = true };
 
-            var items = new List<SeoInfo> { seoInfoInEnglish, seoInfoWithEmptyLanguage, seoInfoInFrench };
+            var items = new List<SeoInfo> { englishSeoInfo, emptyLanguageSeoInfo, frenchSeoInfo };
             var fakeResolver = new FakeCompositeSeoResolver(items);
             var service = new SeoExplainService(fakeResolver);
 
             try
             {
-                var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
+                var result = await service.ExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
 
-                if (result.Results != null && result.Results.Count > 0)
+                if (result is { Count: > 0 })
                 {
-                    var stage6 = result.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
+                    var stage6 = result.FirstOrDefault(r => r.Description.StartsWith("Stage 6"));
                     Assert.NotNull(stage6);
-                    var chosen = stage6.SeoInfoWithScoredList.First().SeoInfo;
+                    var chosen = stage6.SeoExplainItems.First().SeoInfo;
                     // Should pick the one with store default language (en-US)
                     Assert.Equal("en-US", chosen.LanguageCode);
                 }
@@ -262,24 +258,24 @@ namespace VirtoCommerce.Seo.Tests
             var storeDefaultLanguage = "en-US";
             var languageCode = "en-US";
 
-            var categorySeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "cat", ObjectType = "Category", IsActive = true };
-            var pageSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "page", ObjectType = "Pages", IsActive = true };
-            var productSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "prod", ObjectType = "CatalogProduct", IsActive = true };
+            var categorySeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "category-slug", ObjectType = "Category", IsActive = true };
+            var pageSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "page-slug", ObjectType = "Pages", IsActive = true };
+            var productSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = languageCode, SemanticUrl = "product-slug", ObjectType = "CatalogProduct", IsActive = true };
 
             var items = new List<SeoInfo> { categorySeoInfo, pageSeoInfo, productSeoInfo };
             var fakeResolver = new FakeCompositeSeoResolver(items);
 
             // Change priority order for test and restore after
             var original = SeoExtensions.OrderedObjectTypes;
-            SeoExtensions.OrderedObjectTypes = new[] { "Category", "Pages", "CatalogProduct" };
+            SeoExtensions.OrderedObjectTypes = ["Category", "Pages", "CatalogProduct"];
             try
             {
                 // Instead of relying on service explain payload, verify ordering using extension method directly
-                var tuple = items.GetSeoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
+                var tuple = items.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode, withExplain: true);
                 var stage5 = tuple.Results.FirstOrDefault(r => r.Description.StartsWith("Stage 5"));
                 Assert.NotNull(stage5);
                 // highest priority should be the last element in OrderedObjectTypes -> CatalogProduct
-                var top = stage5.SeoInfoWithScoredList.First();
+                var top = stage5.SeoExplainItems.First();
                 Assert.Equal("CatalogProduct", top.SeoInfo.ObjectType);
             }
             finally
@@ -291,7 +287,7 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public async Task GetExplainAsync_WhenStoreDefaultLanguageIsNull_ResultResultsIsNull()
+        public async Task GetExplainAsync_WhenStoreDefaultLanguageIsNull_ResultIsNull()
         {
             // Arrange
             var storeId = "store-1";
@@ -304,15 +300,14 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Null(result.Results);
+            Assert.Null(result);
         }
 
         [Fact]
-        public async Task GetExplainAsync_WhenStoreIdIsNull_ResultResultsIsNull()
+        public async Task GetExplainAsync_WhenStoreIdIsNull_ResultIsNull()
         {
             // Arrange
             string storeId = null;
@@ -325,11 +320,10 @@ namespace VirtoCommerce.Seo.Tests
             var service = new SeoExplainService(fakeResolver);
 
             // Act
-            var result = await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+            var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Null(result.Results);
+            Assert.Null(result);
         }
 
         [Fact]
@@ -346,7 +340,143 @@ namespace VirtoCommerce.Seo.Tests
 
             // Act / Assert
             await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await service.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink));
+                await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink));
+        }
+
+        // Additional tests covering SeoExtensions.ExplainBestMatchingSeoInfo directly
+
+        [Fact]
+        public void ExplainBestMatchingSeoInfo_WithExplainTrue_ReturnsStagesAndSeoInfo()
+        {
+            // Arrange
+            var storeId = "store-1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var categorySeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "s1", ObjectType = "Category", IsActive = true };
+            var items = new List<SeoInfo> { categorySeoInfo };
+
+            // Act
+            var tuple = items.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, withExplain: true);
+
+            // Assert
+            Assert.NotNull(tuple.Results);
+            Assert.Equal(6, tuple.Results.Count);
+            Assert.NotNull(tuple.SeoInfo);
+            Assert.Equal(categorySeoInfo.SemanticUrl, tuple.SeoInfo.SemanticUrl);
+        }
+
+        [Fact]
+        public void ExplainBestMatchingSeoInfo_WithExplainFalse_DoesNotReturnStagesButReturnsSeoInfo()
+        {
+            // Arrange
+            var storeId = "store-1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var categorySeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "s1", ObjectType = "Category", IsActive = true };
+            var items = new List<SeoInfo> { categorySeoInfo };
+
+            // Act
+            var tuple = items.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, withExplain: false);
+
+            // Assert
+            Assert.Null(tuple.Results);
+            Assert.NotNull(tuple.SeoInfo);
+            Assert.Equal(categorySeoInfo.SemanticUrl, tuple.SeoInfo.SemanticUrl);
+        }
+
+        [Fact]
+        public void ExplainBestMatchingSeoInfo_NullEnumerable_ReturnsNulls()
+        {
+            // Arrange
+            List<SeoInfo> items = null;
+
+            // Act
+            var tuple = items.ExplainBestMatchingSeoInfo("store", "en-US", "en-US", withExplain: true);
+
+            // Assert
+            Assert.Null(tuple.Results);
+            Assert.Null(tuple.SeoInfo);
+        }
+
+        [Fact]
+        public void ExplainBestMatchingSeoInfo_InactiveEntriesAreIgnored()
+        {
+            // Arrange
+            var storeId = "store-1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var inactiveSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "inactive", ObjectType = "Pages", IsActive = false };
+            var activeSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "active", ObjectType = "Pages", IsActive = true };
+
+            var items = new List<SeoInfo> { inactiveSeoInfo, activeSeoInfo };
+
+            // Act
+            var tuple = items.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, withExplain: true);
+
+            // Assert
+            Assert.NotNull(tuple.Results);
+            // Final selected SeoInfo should be the active one
+            Assert.NotNull(tuple.SeoInfo);
+            Assert.Equal(activeSeoInfo.SemanticUrl, tuple.SeoInfo.SemanticUrl);
+        }
+
+        [Fact]
+        public void ExplainBestMatchingSeoInfo_StoreSpecificWinsOverGlobal()
+        {
+            // Arrange
+            var storeId = "store-1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            var globalSeoInfo = new SeoInfo { StoreId = null, LanguageCode = language, SemanticUrl = "global", ObjectType = "Pages", IsActive = true };
+            var storeSpecificSeoInfo = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "store-specific", ObjectType = "Pages", IsActive = true };
+
+            var items = new List<SeoInfo> { globalSeoInfo, storeSpecificSeoInfo };
+
+            // Act
+            var tuple = items.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, withExplain: false);
+
+            // Assert
+            Assert.Null(tuple.Results);
+            Assert.NotNull(tuple.SeoInfo);
+            Assert.Equal(storeSpecificSeoInfo.SemanticUrl, tuple.SeoInfo.SemanticUrl);
+        }
+
+        [Fact]
+        public void ExplainBestMatchingSeoInfo_TieBreakByObjectTypePriority()
+        {
+            // Arrange
+            var storeId = "store-1";
+            var storeDefaultLanguage = "en-US";
+            var language = "en-US";
+
+            // Both entries have identical scoring properties to force tie on score
+            var seoInfoA = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "item-a", ObjectType = "Pages", IsActive = true };
+            var seoInfoB = new SeoInfo { StoreId = storeId, LanguageCode = language, SemanticUrl = "item-b", ObjectType = "CatalogProduct", IsActive = true };
+
+            var items = new List<SeoInfo> { seoInfoA, seoInfoB };
+
+            // Set priority so CatalogProduct has higher priority than Pages (last element highest priority)
+            var original = SeoExtensions.OrderedObjectTypes;
+            SeoExtensions.OrderedObjectTypes = ["Pages", "CatalogProduct"];
+            try
+            {
+                // Act
+                var tuple = items.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, withExplain: true);
+
+                // Assert
+                Assert.NotNull(tuple.Results);
+                // Final selected SeoInfo should be the one with higher object type priority -> CatalogProduct
+                Assert.NotNull(tuple.SeoInfo);
+                Assert.Equal("item-b", tuple.SeoInfo.SemanticUrl);
+            }
+            finally
+            {
+                SeoExtensions.OrderedObjectTypes = original;
+            }
         }
     }
 }

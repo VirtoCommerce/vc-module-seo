@@ -1,42 +1,42 @@
-namespace VirtoCommerce.Seo.Core.Models.Explain.Enums;
+namespace VirtoCommerce.Seo.Core.Models.Explain;
 
 /// <summary>
 /// Enumerates the stages of the SEO resolution pipeline used for producing explain information.
 /// </summary>
-public enum SeoExplainPipelineStage
+public enum SeoExplainStage
 {
     /// <summary>
-    /// Unknown or uninitialized stage.
+    /// Undefined or uninitialized stage.
     /// </summary>
-    Unknown = 0,
+    Undefined,
 
     /// <summary>
     /// Original: candidates returned by the resolver before any filtering or scoring.
     /// </summary>
-    Original = 1,
+    Original,
 
     /// <summary>
     /// Filtered: candidates that passed basic store/language filtering rules.
     /// </summary>
-    Filtered = 2,
+    Filtered,
 
     /// <summary>
     /// Scored: numeric scoring and object type priorities have been calculated.
     /// </summary>
-    Scored = 3,
+    Scored,
 
     /// <summary>
     /// FilteredScore: candidates with non-positive scores have been removed.
     /// </summary>
-    FilteredScore = 4,
+    FilteredScore,
 
     /// <summary>
     /// Ordered: candidates ordered by score and object type priority.
     /// </summary>
-    Ordered = 5,
+    Ordered,
 
     /// <summary>
     /// Final: a single best candidate (or none) selected from the ordered list.
     /// </summary>
-    Final = 6,
+    Final,
 }

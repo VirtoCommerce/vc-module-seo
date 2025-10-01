@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +18,8 @@ namespace VirtoCommerce.Seo.Web.Controllers.Api;
 [Route("api/seoinfos")]
 public class SeoController(
     ISeoDuplicatesDetector seoDuplicatesDetector,
-    ICompositeSeoResolver compositeSeoResolver
+    ICompositeSeoResolver compositeSeoResolver,
+    ISeoExplainService seoExplainService
     ) : Controller
 {
     /// <summary>
@@ -86,15 +88,13 @@ public class SeoController(
     /// </summary>
     [HttpGet("explain")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    [ProducesResponseType(typeof(SeoExplainResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<SeoExplainResponse>> GetExplainAsync(
-        [FromServices] ISeoExplainService seoExplainService,
+    public async Task<ActionResult<IList<SeoExplainResult>>> GetExplainAsync(
         [FromQuery] string storeId,
         [FromQuery] string storeDefaultLanguage,
         [FromQuery] string languageCode,
         [FromQuery] string permalink)
     {
-        var response = await seoExplainService.GetSeoExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+        var response = await seoExplainService.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
         return Ok(response);
     }

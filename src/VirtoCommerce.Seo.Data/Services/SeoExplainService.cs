@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
@@ -8,16 +9,11 @@ namespace VirtoCommerce.Seo.Data.Services;
 
 /// <summary>
 /// Service that executes the explain pipeline for a given store/language/permalink combination.
-/// It relies on a composite resolver to fetch candidates and then delegates to <see cref="SeoExtensions.GetSeoExplain"/>.
+/// It relies on a composite resolver to fetch candidates and then delegates to <see cref="SeoExtensions.ExplainBestMatchingSeoInfo"/>.
 /// </summary>
 public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
 {
-    /// <summary>
-    /// Gather candidates using <see cref="ICompositeSeoResolver"/> and run the explainable pipeline.
-    /// Returns a <see cref="SeoExplainResponse"/> containing the original request context and explain results when available.
-    /// If the resolver returns null or an empty list the response contains a null <see cref="SeoExplainResponse.Results"/>.
-    /// </summary>
-    public async Task<SeoExplainResponse> GetSeoExplainAsync(
+    public async Task<IList<SeoExplainResult>> ExplainAsync(
         string storeId,
         string storeDefaultLanguage,
         string languageCode,
@@ -34,14 +30,12 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
 
         if (seoInfosFromCompositeResolver == null || seoInfosFromCompositeResolver.Count == 0)
         {
-            return new SeoExplainResponse(storeId, languageCode, permalink, null);
+            return new List<SeoExplainResult>();
         }
 
         // Request explain snapshots explicitly so the response contains pipeline stages
-        var tuple = seoInfosFromCompositeResolver.GetSeoExplain(storeId, storeDefaultLanguage, languageCode, withExplain: true);
+        var explain = seoInfosFromCompositeResolver.ExplainBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode, withExplain: true);
 
-        var response = new SeoExplainResponse(storeId, languageCode, permalink, tuple.Results);
-
-        return response;
+        return explain.Results;
     }
 }
