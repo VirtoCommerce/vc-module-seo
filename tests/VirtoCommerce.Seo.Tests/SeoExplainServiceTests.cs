@@ -303,7 +303,7 @@ namespace VirtoCommerce.Seo.Tests
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
-            Assert.Null(result);
+            Assert.Equal(new List<SeoExplainResult>(), result);
         }
 
         [Fact]
@@ -323,7 +323,7 @@ namespace VirtoCommerce.Seo.Tests
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
             // Assert
-            Assert.Null(result);
+            Assert.Equal(new List<SeoExplainResult>(), result);
         }
 
         [Fact]
