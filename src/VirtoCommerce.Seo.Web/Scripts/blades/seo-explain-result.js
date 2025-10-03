@@ -1,35 +1,57 @@
 angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoExplainResultController', [
-        '$scope', 'virtoCommerce.seo.explainApi',
-        function ($scope, explainApi) {
+        '$scope',
+        'virtoCommerce.seo.explainApi',
+        'platformWebApp.bladeNavigationService',
+        function ($scope, explainApi, bladeNavigationService) {
             var blade = $scope.blade;
             blade.headIcon = 'fa fa-list';
             blade.isLoading = true;
 
-            // Always initialize gridOptions with empty data
-            $scope.gridOptions = {
-                rowTemplate: 'seo-explain.row.html',
-                columnDefs: [
-                    { name: 'stage', displayName: 'Stage' },
-                    { name: 'description', displayName: 'Description' },
-                    { name: 'seoExplainItems[0].seoInfo.name', displayName: 'Name' },
-                    { name: 'seoExplainItems[0].seoInfo.semanticUrl', displayName: 'Semantic URL' },
-                    { name: 'seoExplainItems[0].seoInfo.pageTitle', displayName: 'Page Title' },
-                    { name: 'seoExplainItems[0].seoInfo.languageCode', displayName: 'Language' },
-                    { name: 'seoExplainItems[0].score', displayName: 'Score' }
-                ],
-                data: [] // must always exist
+            $scope.openStageDetails = function(stage) {
+                var newBlade = {
+                    id: 'seoExplainItems',
+                    subtitle: stage.description,
+                    controller: 'virtoCommerce.seo.seoExplainItemsController',
+                    template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-items.html',
+                    data: stage.seoExplainItems
+                };
+                bladeNavigationService.showBlade(newBlade, blade);
             };
 
-            // Call API
+            $scope.stageGridOptions = {
+                appScopeProvider: $scope,
+                enableColumnMenus: false,
+                enableSorting: false,
+                rowHeight: 36,
+                columnDefs: [
+                    {
+                        name: 'stage',
+                        displayName: 'Stage',
+                        width: 220,
+                        cellTemplate:
+                            '<div class="ui-grid-cell-contents" ' +
+                            '     ng-click="grid.appScope.openStageDetails(row.entity)" ' +
+                            '     style="cursor:pointer;">' +
+                            '<strong>{{row.entity.stage}}</strong> ({{row.entity.itemsCount}})' +
+                            '</div>',
+                        headerTooltip: true
+                    },
+                    { name: 'description', displayName: 'Description', headerTooltip: true }
+                ],
+                data: []
+            };
+
             explainApi.getExplain(blade.data)
                 .then(function (data) {
-                    // If API returns nothing, keep empty array
-                    $scope.gridOptions.data = Array.isArray(data) ? data : [];
-                })
-                .catch(function () {
-                    // In case of error, still keep empty grid
-                    $scope.gridOptions.data = [];
+                    (data || []).forEach(function (stage) {
+                        stage.description = stage.description || '';
+                        stage.itemsCount = (stage.seoExplainItems || []).length;
+                    });
+
+                    $scope.stageGridOptions.data = (data || []).filter(function (s) {
+                        return s.itemsCount > 0;
+                    });
                 })
                 .finally(function () {
                     blade.isLoading = false;

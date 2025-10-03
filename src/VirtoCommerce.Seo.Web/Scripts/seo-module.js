@@ -5,7 +5,7 @@ if (AppDependencies !== undefined) {
     AppDependencies.push(moduleName);
 }
 
-angular.module(moduleName, ['platformWebApp', 'virtoCommerce.storeModule'])
+angular.module(moduleName, ['platformWebApp', 'virtoCommerce.storeModule', 'ui.grid.expandable'])
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider.state('workspace.seoExplain', {
             url: '/seo/explain',

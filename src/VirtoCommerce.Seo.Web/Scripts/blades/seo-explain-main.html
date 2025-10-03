@@ -24,17 +24,17 @@
             <div class="form-group">
               <label class="form-label">Default language</label>
               <div class="form-input">
-                <ui-select ng-model="blade.currentEntity.storeDefaultLanguage" required>
-                  <ui-select-match placeholder="Select default language">{{$select.selected}}</ui-select-match>
-                  <ui-select-choices repeat="l in languages | filter: $select.search">
-                    <span ng-bind-html="l | highlight: $select.search"></span>
-                  </ui-select-choices>
-                </ui-select>
+                <input type="text"
+                       class="form-control"
+                       ng-model="blade.currentEntity.storeDefaultLanguage"
+                       readonly />
               </div>
             </div>
           </div>
+        </div>
 
           <!-- Language code -->
+        <div class="form-group clearfix">
           <div class="column">
             <div class="form-group">
               <label class="form-label">Language code</label>
