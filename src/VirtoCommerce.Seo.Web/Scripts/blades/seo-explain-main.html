@@ -1,0 +1,83 @@
+<div class="blade-content __medium-wide">
+  <div class="blade-inner">
+    <div class="inner-block">
+      <form class="form" name="seoExplainForm">
+        <div class="form-group clearfix" ng-init="setForm(seoExplainForm)">
+          <!-- Store selection -->
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">Store</label>
+              <div class="form-input">
+                <select class="form-control"
+                        ng-model="blade.currentEntity.storeId"
+                        ng-options="s.id as (s.name || s.id) for s in stores"
+                        ng-change="onStoreChange()">
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default language -->
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">Default language</label>
+              <div class="form-input">
+                <ui-select ng-model="blade.currentEntity.storeDefaultLanguage" required>
+                  <ui-select-match placeholder="Select default language">{{$select.selected}}</ui-select-match>
+                  <ui-select-choices repeat="l in languages | filter: $select.search">
+                    <span ng-bind-html="l | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Language code -->
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">Language code</label>
+              <div class="form-input">
+                <ui-select ng-model="blade.currentEntity.languageCode" required>
+                  <ui-select-match placeholder="Select language">{{$select.selected}}</ui-select-match>
+                  <ui-select-choices repeat="l in languages | filter: $select.search">
+                    <span ng-bind-html="l | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Permalink -->
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">Permalink</label>
+              <div class="form-input">
+                <input type="text" class="form-control" ng-model="blade.currentEntity.permalink" placeholder="/path/to/page" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action button -->
+        <div class="form-group">
+          <button type="button"
+                  class="btn btn-primary"
+                  ng-click="explain()"
+                  ng-disabled="!blade.currentEntity.storeId || !blade.currentEntity.languageCode || !blade.currentEntity.permalink || blade.isLoading">
+            Explain
+          </button>
+        </div>
+      </form>
+
+      <!-- Result -->
+      <div ng-if="blade.explainResult" class="mt-2">
+        <h4>Result</h4>
+        <pre>{{ blade.explainResult | json }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
