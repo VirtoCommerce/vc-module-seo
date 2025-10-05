@@ -11,6 +11,7 @@ angular.module('virtoCommerce.seo')
             $scope.openStageDetails = function(stage) {
                 var newBlade = {
                     id: 'seoExplainItems',
+                    title: 'SEO Explain Items',
                     subtitle: stage.description,
                     controller: 'virtoCommerce.seo.seoExplainItemsController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-items.html',
@@ -30,14 +31,17 @@ angular.module('virtoCommerce.seo')
                         displayName: 'Stage',
                         width: 220,
                         cellTemplate:
-                            '<div class="ui-grid-cell-contents" ' +
-                            '     ng-click="grid.appScope.openStageDetails(row.entity)" ' +
-                            '     style="cursor:pointer;">' +
+                            '<div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">' +
                             '<strong>{{row.entity.stage}}</strong> ({{row.entity.itemsCount}})' +
                             '</div>',
                         headerTooltip: true
                     },
-                    { name: 'description', displayName: 'Description', headerTooltip: true }
+                    {
+                        name: 'description',
+                        displayName: 'Description',
+                        headerTooltip: true,
+                        cellTemplate: '<div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">{{COL_FIELD}}</div>'
+                    }
                 ],
                 data: []
             };

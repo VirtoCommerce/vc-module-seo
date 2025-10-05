@@ -5,13 +5,12 @@
       <div class="list __items" ng-if="blade.title || blade.subtitle">
         <div class="list-item">
           <div class="list-tile">
-            <div class="list-tile__title">{{blade.title}}</div>
             <div class="list-tile__subtitle" ng-if="blade.subtitle">{{blade.subtitle}}</div>
           </div>
         </div>
       </div>
 
-      <div class="table-wrapper" ng-init="setGridOptions('seo-explain-items-grid', gridOptions)">
+      <div class="table-wrapper">
         <div ui-grid="gridOptions"
              ui-grid-auto-resize
              ui-grid-resize-columns

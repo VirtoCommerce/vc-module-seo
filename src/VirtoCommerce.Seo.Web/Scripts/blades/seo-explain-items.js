@@ -1,15 +1,11 @@
 ﻿angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoExplainItemsController', [
-        '$scope',
-        function ($scope) {
+        '$scope', '$timeout',
+        function ($scope, $timeout) {
 
             var blade = $scope.blade;
             blade.headIcon = 'fa fa-table';
-
-            var items = (blade.data || []).map(function (item) {
-                item.seoInfo = item.seoInfo || {};
-                return item;
-            });
+            blade.isLoading = true;
 
             $scope.gridOptions = {
                 enableColumnMenus: false,
@@ -24,7 +20,16 @@
                     { name: 'score', displayName: 'Score', type: 'number', headerTooltip: true },
                     { name: 'objectTypePriority', displayName: 'Priority', type: 'number', headerTooltip: true }
                 ],
-                data: items
+                data: []
             };
+
+            $timeout(function () {
+                var items = (blade.data || []).map(function (item) {
+                    item.seoInfo = item.seoInfo || {};
+                    return item;
+                });
+                $scope.gridOptions.data = items;
+                blade.isLoading = false;
+            });
         }
     ]);
