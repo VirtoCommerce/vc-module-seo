@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Felsök SEO-länkar",
+        "labels": {
+          "store": "Butik",
+          "default-language": "Standardspråk",
+          "language-code": "Språkkod",
+          "permalink": "Permalänk",
+          "result": "Resultat"
+        },
+        "placeholders": {
+          "select-language": "Välj språk",
+          "permalink": "/sökväg/till/sida"
+        },
+        "buttons": {
+          "explain": "Felsök"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Felsökningssteg för SEO-länkar",
+        "labels": {
+          "stage": "Steg",
+          "description": "Beskrivning",
+          "no-data": "Inga data tillgängliga"
+        },
+        "descriptions": {
+          "original": "Steg 1: Original - SEO-objekt som hittats av resolvern.",
+          "filtered": "Steg 2: Filtrerad - SEO-objekt som matchar butiks- och språkregler.",
+          "scored": "Steg 3: Poängsatt - beräkna numeriska poäng och objekttyp-prioriteringar.",
+          "filtered-score": "Steg 4: Filtrerad poäng - behåll SEO-objekt med positiv poäng.",
+          "ordered": "Steg 5: Sorterad - sortera SEO efter poäng och objekttyp-prioritet.",
+          "final": "Steg 6: Slutlig - välj första som den lösta Seo."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Felsökningsobjekt för SEO-länkar",
+        "labels": {
+          "page-title": "Sidrubrik",
+          "semantic-url": "Semantisk URL",
+          "object-type": "Objekttyp",
+          "language": "Språk",
+          "store": "Butik",
+          "score": "Poäng",
+          "priority": "Prioritet"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "Aktiva regler"
+      },
+      "seo-explain-widget": {
+        "title": "Felsök SEO-länkar"
       }
     }
   },

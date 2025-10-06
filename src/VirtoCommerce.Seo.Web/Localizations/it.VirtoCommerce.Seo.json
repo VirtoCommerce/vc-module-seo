@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Debug dei link SEO",
+        "labels": {
+          "store": "Negozio",
+          "default-language": "Lingua predefinita",
+          "language-code": "Codice lingua",
+          "permalink": "Permalink",
+          "result": "Risultato"
+        },
+        "placeholders": {
+          "select-language": "Seleziona lingua",
+          "permalink": "/percorso/pagina"
+        },
+        "buttons": {
+          "explain": "Debug"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Fasi di debug dei link SEO",
+        "labels": {
+          "stage": "Fase",
+          "description": "Descrizione",
+          "no-data": "Nessun dato disponibile"
+        },
+        "descriptions": {
+          "original": "Fase 1: Originale - Elementi SEO trovati dal resolver.",
+          "filtered": "Fase 2: Filtrato - Elementi SEO che corrispondono alle regole del negozio e della lingua.",
+          "scored": "Fase 3: Punteggiato - Calcolo dei punteggi numerici e delle priorità del tipo di oggetto.",
+          "filtered-score": "Fase 4: Punteggio filtrato - Mantenere gli elementi SEO con punteggio positivo.",
+          "ordered": "Fase 5: Ordinato - Ordinare il SEO per punteggio e priorità del tipo di oggetto.",
+          "final": "Fase 6: Finale - Selezionare il primo come Seo risolto."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Elementi di debug dei link SEO",
+        "labels": {
+          "page-title": "Titolo della pagina",
+          "semantic-url": "URL semantico",
+          "object-type": "Tipo di oggetto",
+          "language": "Lingua",
+          "store": "Negozio",
+          "score": "Punteggio",
+          "priority": "Priorità"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "Regole attive"
+      },
+      "seo-explain-widget": {
+        "title": "Debug dei link SEO"
       }
     }
   },

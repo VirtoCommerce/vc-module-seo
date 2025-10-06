@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "调试SEO链接",
+        "labels": {
+          "store": "店铺",
+          "default-language": "默认语言",
+          "language-code": "语言代码",
+          "permalink": "永久链接",
+          "result": "结果"
+        },
+        "placeholders": {
+          "select-language": "选择语言",
+          "permalink": "/路径/到/页面"
+        },
+        "buttons": {
+          "explain": "调试"
+        }
+      },
+      "seo-explain-result": {
+        "title": "调试SEO链接阶段",
+        "labels": {
+          "stage": "阶段",
+          "description": "描述",
+          "no-data": "无可用数据"
+        },
+        "descriptions": {
+          "original": "阶段 1: 原始 - 由解析器找到的SEO项目。",
+          "filtered": "阶段 2: 已过滤 - 匹配商店和语言规则的SEO项目。",
+          "scored": "阶段 3: 已评分 - 计算数字分数和对象类型优先级。",
+          "filtered-score": "阶段 4: 已过滤分数 - 保留分数为正的SEO项目。",
+          "ordered": "阶段 5: 已排序 - 按分数和对象类型优先级对SEO进行排序。",
+          "final": "阶段 6: 最终 - 选择第一个作为已解析的Seo。"
+        }
+      },
+      "seo-explain-items": {
+        "title": "调试SEO链接项目",
+        "labels": {
+          "page-title": "页面标题",
+          "semantic-url": "语义化URL",
+          "object-type": "对象类型",
+          "language": "语言",
+          "store": "店铺",
+          "score": "分数",
+          "priority": "优先级"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "活跃规则"
+      },
+      "seo-explain-widget": {
+        "title": "调试SEO链接"
       }
     }
   },

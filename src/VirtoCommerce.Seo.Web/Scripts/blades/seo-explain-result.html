@@ -2,16 +2,15 @@
   <div class="blade-inner">
     <div class="inner-block">
 
-      <div class="table-wrapper" ng-init="setGridOptions('seo-explain-stage-grid', stageGridOptions)">
+      <div class="table-wrapper">
         <div ui-grid="stageGridOptions"
              ui-grid-auto-resize
-             ui-grid-save-state
              style="height:auto;">
         </div>
       </div>
 
       <div ng-if="!blade.isLoading && (!stageGridOptions.data || stageGridOptions.data.length === 0)" class="mt-2">
-        <em>No data available</em>
+        <em>{{ 'seo.blades.seo-explain-result.labels.no-data' | translate }}</em>
       </div>
 
     </div>

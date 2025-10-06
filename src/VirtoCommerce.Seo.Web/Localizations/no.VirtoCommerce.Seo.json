@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Feilsøk SEO-lenker",
+        "labels": {
+          "store": "Butikk",
+          "default-language": "Standard språk",
+          "language-code": "Språkkode",
+          "permalink": "Permalenke",
+          "result": "Resultat"
+        },
+        "placeholders": {
+          "select-language": "Velg språk",
+          "permalink": "/sti/til/side"
+        },
+        "buttons": {
+          "explain": "Feilsøk"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Feilsøkingstrinn for SEO-lenker",
+        "labels": {
+          "stage": "Stadium",
+          "description": "Beskrivelse",
+          "no-data": "Ingen data tilgjengelig"
+        },
+        "descriptions": {
+          "original": "Trinn 1: Original - SEO-elementer funnet av resolveren.",
+          "filtered": "Trinn 2: Filtrert - SEO-elementer som samsvarer med butikk- og språkregler.",
+          "scored": "Trinn 3: Poengsatt - beregn numeriske poengsummer og objekttypeprioriteter.",
+          "filtered-score": "Trinn 4: Filtrert poengsum - behold SEO-elementer med positiv poengsum.",
+          "ordered": "Trinn 5: Sortert - sorter SEO etter poengsum og objekttypeprioritet.",
+          "final": "Trinn 6: Endelig - velg første som den løste Seo."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Feilsøkingselementer for SEO-lenker",
+        "labels": {
+          "page-title": "Sidetittel",
+          "semantic-url": "Semantisk URL",
+          "object-type": "Objekttype",
+          "language": "Språk",
+          "store": "Butikk",
+          "score": "Poengsum",
+          "priority": "Prioritet"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "Aktive regler"
+      },
+      "seo-explain-widget": {
+        "title": "Feilsøk SEO-lenker"
       }
     }
   },

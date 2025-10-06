@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "SEOリンクのデバッグ",
+        "labels": {
+          "store": "店舗",
+          "default-language": "デフォルト言語",
+          "language-code": "言語コード",
+          "permalink": "パーマリンク",
+          "result": "結果"
+        },
+        "placeholders": {
+          "select-language": "言語を選択",
+          "permalink": "/ページへのパス"
+        },
+        "buttons": {
+          "explain": "デバッグ"
+        }
+      },
+      "seo-explain-result": {
+        "title": "SEOリンクのデバッグステージ",
+        "labels": {
+          "stage": "ステージ",
+          "description": "説明",
+          "no-data": "データがありません"
+        },
+        "descriptions": {
+          "original": "ステージ1：オリジナル - リゾルバーによって見つけられたSEO項目。",
+          "filtered": "ステージ2：フィルタ済み - ストアと言語のルールに一致するSEO項目。",
+          "scored": "ステージ3：スコア付け - 数値スコアとオブジェクトタイプの優先度を計算。",
+          "filtered-score": "ステージ4：フィルタ済みスコア - 正のスコアを持つSEO項目を保持。",
+          "ordered": "ステージ5：順序付け - スコアとオブジェクトタイプの優先度でSEOを並べ替え。",
+          "final": "ステージ6：最終 - 解決済みのSeoとして最初のものを選択。"
+        }
+      },
+      "seo-explain-items": {
+        "title": "SEOリンクのデバッグ項目",
+        "labels": {
+          "page-title": "ページタイトル",
+          "semantic-url": "セマンティックURL",
+          "object-type": "オブジェクトタイプ",
+          "language": "言語",
+          "store": "店舗",
+          "score": "スコア",
+          "priority": "優先度"
+        }
       }
     },
     "dialogs": {
@@ -71,7 +116,7 @@
       },
       "redirect-rule-save": {
         "title": "変更の保存",
-        "message": "このエンティティが変更されました。変更を保存しますか？"
+        "message": "このエンティтиが変更されました。変更を保存しますか？"
       }
     },
     "widgets": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "アクティブなルール"
+      },
+      "seo-explain-widget": {
+        "title": "SEOリンクのデバッグ"
       }
     }
   },

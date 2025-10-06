@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Debugowanie linków SEO",
+        "labels": {
+          "store": "Sklep",
+          "default-language": "Język domyślny",
+          "language-code": "Kod języka",
+          "permalink": "Link stały",
+          "result": "Wynik"
+        },
+        "placeholders": {
+          "select-language": "Wybierz język",
+          "permalink": "/sciezka/do/strony"
+        },
+        "buttons": {
+          "explain": "Debuguj"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Etapy debugowania linków SEO",
+        "labels": {
+          "stage": "Etap",
+          "description": "Opis",
+          "no-data": "Brak danych"
+        },
+        "descriptions": {
+          "original": "Etap 1: Oryginalny - elementy SEO znalezione przez resolver.",
+          "filtered": "Etap 2: Filtrowany - elementy SEO pasujące do reguł sklepu i języka.",
+          "scored": "Etap 3: Oceniony - obliczanie ocen numerycznych i priorytetów typów obiektów.",
+          "filtered-score": "Etap 4: Filtrowana ocena - zachowanie elementów SEO z pozytywną oceną.",
+          "ordered": "Etap 5: Uporządkowany - sortowanie SEO według oceny i priorytetu typu obiektu.",
+          "final": "Etap 6: Finał - wybór pierwszego jako rozwiązanego Seo."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Elementy debugowania linków SEO",
+        "labels": {
+          "page-title": "Tytuł strony",
+          "semantic-url": "Semantyczny URL",
+          "object-type": "Typ obiektu",
+          "language": "Język",
+          "store": "Sklep",
+          "score": "Wynik",
+          "priority": "Priorytet"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "Aktywne reguły"
+      },
+      "seo-explain-widget": {
+        "title": "Debugowanie linków SEO"
       }
     }
   },

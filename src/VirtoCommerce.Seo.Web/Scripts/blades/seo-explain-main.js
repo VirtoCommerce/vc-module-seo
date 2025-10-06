@@ -6,7 +6,7 @@ angular.module('virtoCommerce.seo')
         'virtoCommerce.storeModule.stores',
         function ($scope, $http, bladeNavigationService, stores) {
             var blade = $scope.blade;
-            blade.title = 'SEO Explain';
+            // blade.title is now set by the widget that opens this blade.
             blade.headIcon = 'fa fa-search';
             blade.isLoading = false;
 
@@ -17,14 +17,6 @@ angular.module('virtoCommerce.seo')
                 languageCode: null,
                 permalink: ''
             };
-
-            // Load stores
-            $scope.stores = [];
-            $scope.languages = [];
-
-            stores.query({}, function (data) {
-                $scope.stores = data || [];
-            });
 
             // Update languages when store changes
             $scope.onStoreChange = function () {
@@ -44,6 +36,14 @@ angular.module('virtoCommerce.seo')
                 }
             };
 
+            // Load stores and pre-select if passed from widget
+            stores.query({}, function (data) {
+                $scope.stores = data || [];
+                if (blade.storeId) {
+                    blade.currentEntity.storeId = blade.storeId;
+                    $scope.onStoreChange();
+                }
+            });
 
             // Call backend SeoController.explain
             $scope.explain = function () {
@@ -51,7 +51,7 @@ angular.module('virtoCommerce.seo')
 
                 var resultBlade = {
                     id: 'seoExplainResultBlade',
-                    title: 'SEO Explain Result',
+                    title: 'seo.blades.seo-explain-result.title',
                     controller: 'virtoCommerce.seo.seoExplainResultController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result.html',
                     isClosingDisabled: false,

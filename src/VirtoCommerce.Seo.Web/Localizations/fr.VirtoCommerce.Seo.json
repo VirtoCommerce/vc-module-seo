@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Déboguer les liens SEO",
+        "labels": {
+          "store": "Boutique",
+          "default-language": "Langue par défaut",
+          "language-code": "Code de langue",
+          "permalink": "Permalien",
+          "result": "Résultat"
+        },
+        "placeholders": {
+          "select-language": "Sélectionner la langue",
+          "permalink": "/chemin/vers/page"
+        },
+        "buttons": {
+          "explain": "Déboguer"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Étapes de débogage des liens SEO",
+        "labels": {
+          "stage": "Étape",
+          "description": "Description",
+          "no-data": "Aucune donnée disponible"
+        },
+        "descriptions": {
+          "original": "Étape 1: Original - Éléments SEO trouvés par le résolveur.",
+          "filtered": "Étape 2: Filtré - Éléments SEO correspondant aux règles de la boutique et de la langue.",
+          "scored": "Étape 3: Noté - Calcul des scores numériques et des priorités de type d'objet.",
+          "filtered-score": "Étape 4: Score filtré - Conserver les éléments SEO avec un score positif.",
+          "ordered": "Étape 5: Ordonné - Trier le SEO par score et priorité de type d'objet.",
+          "final": "Étape 6: Final - Sélectionner le premier comme Seo résolu."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Éléments de débogage des liens SEO",
+        "labels": {
+          "page-title": "Titre de la page",
+          "semantic-url": "URL sémantique",
+          "object-type": "Type d'objet",
+          "language": "Langue",
+          "store": "Boutique",
+          "score": "Score",
+          "priority": "Priorité"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "Règles actives"
+      },
+      "seo-explain-widget": {
+        "title": "Déboguer les liens SEO"
       }
     }
   },

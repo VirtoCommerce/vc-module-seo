@@ -6,7 +6,7 @@
           <!-- Store selection -->
           <div class="column">
             <div class="form-group">
-              <label class="form-label">Store</label>
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.store' | translate }}</label>
               <div class="form-input">
                 <select class="form-control"
                         ng-model="blade.currentEntity.storeId"
@@ -22,7 +22,7 @@
         <div class="form-group clearfix">
           <div class="column">
             <div class="form-group">
-              <label class="form-label">Default language</label>
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.default-language' | translate }}</label>
               <div class="form-input">
                 <input type="text"
                        class="form-control"
@@ -37,10 +37,10 @@
         <div class="form-group clearfix">
           <div class="column">
             <div class="form-group">
-              <label class="form-label">Language code</label>
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.language-code' | translate }}</label>
               <div class="form-input">
                 <ui-select ng-model="blade.currentEntity.languageCode" required>
-                  <ui-select-match placeholder="Select language">{{$select.selected}}</ui-select-match>
+                  <ui-select-match placeholder="{{ 'seo.blades.seo-explain-main.placeholders.select-language' | translate }}">{{$select.selected}}</ui-select-match>
                   <ui-select-choices repeat="l in languages | filter: $select.search">
                     <span ng-bind-html="l | highlight: $select.search"></span>
                   </ui-select-choices>
@@ -54,9 +54,9 @@
         <div class="form-group clearfix">
           <div class="column">
             <div class="form-group">
-              <label class="form-label">Permalink</label>
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.permalink' | translate }}</label>
               <div class="form-input">
-                <input type="text" class="form-control" ng-model="blade.currentEntity.permalink" placeholder="/path/to/page" required>
+                <input type="text" class="form-control" ng-model="blade.currentEntity.permalink" placeholder="{{ 'seo.blades.seo-explain-main.placeholders.permalink' | translate }}" required>
               </div>
             </div>
           </div>
@@ -68,14 +68,14 @@
                   class="btn btn-primary"
                   ng-click="explain()"
                   ng-disabled="!blade.currentEntity.storeId || !blade.currentEntity.languageCode || !blade.currentEntity.permalink || blade.isLoading">
-            Explain
+            {{ 'seo.blades.seo-explain-main.buttons.explain' | translate }}
           </button>
         </div>
       </form>
 
       <!-- Result -->
       <div ng-if="blade.explainResult" class="mt-2">
-        <h4>Result</h4>
+        <h4>{{ 'seo.blades.seo-explain-main.labels.result' | translate }}</h4>
         <pre>{{ blade.explainResult | json }}</pre>
       </div>
     </div>

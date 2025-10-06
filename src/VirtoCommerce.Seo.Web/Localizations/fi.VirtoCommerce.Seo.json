@@ -52,6 +52,51 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "SEO-linkkien virheenkorjaus",
+        "labels": {
+          "store": "Kauppa",
+          "default-language": "Oletuskieli",
+          "language-code": "Kielikoodi",
+          "permalink": "Pysyvä linkki",
+          "result": "Tulos"
+        },
+        "placeholders": {
+          "select-language": "Valitse kieli",
+          "permalink": "/polku/sivulle"
+        },
+        "buttons": {
+          "explain": "Debuggaa"
+        }
+      },
+      "seo-explain-result": {
+        "title": "SEO-linkkien virheenkorjausvaiheet",
+        "labels": {
+          "stage": "Vaihe",
+          "description": "Kuvaus",
+          "no-data": "Ei tietoja saatavilla"
+        },
+        "descriptions": {
+          "original": "Vaihe 1: Alkuperäinen - resolverin löytämät SEO-kohteet.",
+          "filtered": "Vaihe 2: Suodatettu - kaupan ja kielen sääntöjä vastaavat SEO-kohteet.",
+          "scored": "Vaihe 3: Pisteitetty - numeeristen pisteiden ja objektityyppien prioriteettien laskenta.",
+          "filtered-score": "Vaihe 4: Suodatettu pistemäärä - pidetään SEO-kohteet, joilla on positiivinen pistemäärä.",
+          "ordered": "Vaihe 5: Järjestetty - järjestys SEO:n mukaan pistemäärän ja objektityypin prioriteetin mukaan.",
+          "final": "Vaihe 6: Lopullinen - valitaan ensimmäinen ratkaistuksi Seoksi."
+        }
+      },
+      "seo-explain-items": {
+        "title": "SEO-linkkien virheenkorjauskohteet",
+        "labels": {
+          "page-title": "Sivun otsikko",
+          "semantic-url": "Semanttinen URL",
+          "object-type": "Kohteen tyyppi",
+          "language": "Kieli",
+          "store": "Kauppa",
+          "score": "Pisteet",
+          "priority": "Prioriteetti"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +125,9 @@
       },
       "redirect-rule-widget": {
         "title": "Aktiiviset säännöt"
+      },
+      "seo-explain-widget": {
+        "title": "SEO-linkkien virheenkorjaus"
       }
     }
   },

@@ -6,29 +6,15 @@ if (AppDependencies !== undefined) {
 }
 
 angular.module(moduleName, ['platformWebApp', 'virtoCommerce.storeModule', 'ui.grid.expandable'])
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('workspace.seoExplain', {
-            url: '/seo/explain',
-            templateUrl: '$(Platform)/Scripts/common/templates/home.tpl.html',
-            controller: ['$scope', 'platformWebApp.bladeNavigationService',
-                function ($scope, bladeNavigationService) {
-                    var newBlade = {
-                        id: 'SeoExplainMainBlade',
-                        title: 'SEO Explain',
-                        controller: 'virtoCommerce.seo.seoExplainMainController',
-                        template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-main.html',
-                        isClosingDisabled: true
-                    };
-                    bladeNavigationService.showBlade(newBlade);
-                }]
-        });
-    }])
     .run([
         'platformWebApp.widgetService',
-        'platformWebApp.mainMenuService',
-        'platformWebApp.bladeNavigationService',
-        '$state',
-        function (widgetService, mainMenuService, bladeNavigationService, $state) {
+        function (widgetService) {
+
+            // Register SEO Explain widget
+            widgetService.registerWidget({
+                controller: 'virtoCommerce.seo.seoExplainWidgetController',
+                template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/seo-explain-widget.html'
+            }, 'storeDetail');
 
             // Existing widgets
             widgetService.registerWidget({
@@ -40,14 +26,5 @@ angular.module(moduleName, ['platformWebApp', 'virtoCommerce.storeModule', 'ui.g
                 controller: 'virtoCommerce.seo.redirectRulesWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/redirect-rules-widget.html'
             }, 'storeDetail');
-
-            mainMenuService.addMenuItem({
-                path: 'browse/seoExplain',
-                icon: 'fa fa-search',
-                title: 'SEO Explain',
-                priority: 100,
-                action: function () { $state.go('workspace.seoExplain'); },
-                permission: 'seo:access'
-            });
         }
     ]);
