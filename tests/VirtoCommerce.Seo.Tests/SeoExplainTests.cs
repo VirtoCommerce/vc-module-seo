@@ -47,7 +47,7 @@ public class SeoExplainTests
     }
 
     [Fact]
-    public void GetBestMatchingSeoInfo_NullEnumerable_ReturnsEmptyExplainResultsAndNullSeoInfo()
+    public void GetBestMatchingSeoInfo_NullEnumerable_ReturnsNullSeoInfo()
     {
         // Arrange
         List<SeoInfo> items = null;
@@ -56,8 +56,7 @@ public class SeoExplainTests
         var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo("store", "en-US", "en-US", explain: true);
 
         // Assert
-        Assert.NotNull(explainResults);
-        Assert.Empty(explainResults);
+        Assert.Null(explainResults);
         Assert.Null(seoInfo);
     }
 
