@@ -32,7 +32,10 @@ angular.module('virtoCommerce.seo')
                         displayName: 'seo.blades.seo-explain-result.labels.stage',
                         headerCellTemplate: '<div class="ui-grid-cell-contents">{{ col.displayName | translate }}</div>',
                         headerTooltip: true,
-                        cellTemplate: '<div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">{{row.entity.descriptionKey | translate}} ({{row.entity.itemsCount}})</div>'
+                        cellTemplate:
+                            '<div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">' +
+                            '{{row.entity.descriptionKey | translate}} ({{row.entity.itemsCount}})' +
+                            '</div>'
                     }
                 ],
                 data: []

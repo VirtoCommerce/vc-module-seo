@@ -20,7 +20,9 @@ angular.module('virtoCommerce.seo')
 
             // Update languages when store changes
             $scope.onStoreChange = function () {
-                var store = ($scope.stores || []).find(function (s) { return s.id === blade.currentEntity.storeId; });
+                var store = ($scope.stores || []).find(function (s) {
+                    return s.id === blade.currentEntity.storeId;
+                });
                 if (store) {
                     $scope.languages = store.languages || [];
                     blade.currentEntity.storeDefaultLanguage = store.defaultLanguage || null;
