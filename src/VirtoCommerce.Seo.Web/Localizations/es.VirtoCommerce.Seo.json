@@ -135,7 +135,7 @@
       "seo:create": "Crear datos relacionados con SEO",
       "seo:read": "Ver datos relacionados con SEO",
       "seo:update": "Actualizar datos relacionados con SEO",
-      "seo:delete": "Eliminar datos relacionados сon SEO"
+      "seo:delete": "Eliminar datos relacionados con SEO"
     },
     "settings": {
       "Seo": {
