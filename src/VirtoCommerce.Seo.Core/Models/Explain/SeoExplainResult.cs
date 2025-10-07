@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace VirtoCommerce.Seo.Core.Models.Explain;
 
-public class SeoExplainResult(SeoExplainStage stage, IList<SeoExplainItem> seoExplainItems)
+public class SeoExplainResult(SeoExplainStage stage, IList<SeoExplainItem> items)
 {
     public SeoExplainStage Stage { get; } = stage;
 
-    public IList<SeoExplainItem> SeoExplainItems { get; } = seoExplainItems ?? [];
+    public IList<SeoExplainItem> Items { get; } = items ?? [];
 }

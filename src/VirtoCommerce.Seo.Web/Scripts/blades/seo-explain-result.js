@@ -41,7 +41,7 @@ angular.module('virtoCommerce.seo')
             explainApi.explain(blade.data).$promise
                 .then(function (data) {
                     (data || []).forEach(function (stage) {
-                        stage.itemsCount = (stage.seoExplainItems || []).length;
+                        stage.itemsCount = (stage.items || []).length;
                         stage.descriptionKey = 'seo.blades.seo-explain-result.descriptions.' + stage.stage;
                         stage.translatedDescription = $filter('translate')(stage.descriptionKey);
                     });
