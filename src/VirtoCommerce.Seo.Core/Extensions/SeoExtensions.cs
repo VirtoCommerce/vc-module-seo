@@ -66,18 +66,18 @@ public static class SeoExtensions
         string language,
         bool explain)
     {
+        List<SeoExplainResult> explainResults = explain ? [] : null;
+
         if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || seoInfos == null)
         {
-            return (null, null);
+            return (null, explainResults);
         }
 
         var seoInfoList = seoInfos as IList<SeoInfo> ?? seoInfos.ToList();
         if (seoInfoList.Count == 0)
         {
-            return (null, null);
+            return (null, explainResults);
         }
-
-        List<SeoExplainResult> explainResults = null;
 
         // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
         var stageOriginal = seoInfoList
@@ -118,18 +118,44 @@ public static class SeoExtensions
 
         IEnumerable<SeoExplainItem> AddExplain(SeoExplainStage stage, IEnumerable<SeoExplainItem> items)
         {
-            // To reduce memory usage, avoid allocating and populating the explainResults list when an explanation is not requested.
-            if (!explain)
+            // To reduce memory usage, avoid populating the explainResults list when an explanation is not requested.
+            if (explainResults is null)
             {
                 return items;
             }
-
-            explainResults ??= [];
 
             var list = items.ToList();
             explainResults.Add(new SeoExplainResult(stage, list));
             return list;
         }
+    }
+
+    /// <summary>
+    /// Determines whether the provided SeoInfo matches the store and language filtering rules.
+    /// Treats null or empty values as wildcards (matches everything).
+    /// </summary>
+    private static bool MatchesStoreAndLanguage(this SeoInfo seoInfo,
+        string storeId,
+        string storeDefaultLanguage,
+        string language)
+    {
+        if (seoInfo == null)
+        {
+            return false;
+        }
+
+        return seoInfo.StoreId.Matches(storeId) &&
+               seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
+    }
+
+    private static bool MatchesAny(this string a, string b, string c)
+    {
+        return a.Matches(b) || a.Matches(c);
+    }
+
+    private static bool Matches(this string a, string b)
+    {
+        return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
     }
 
     /// <summary>
@@ -158,24 +184,6 @@ public static class SeoExtensions
         }
     }
 
-    /// <summary>
-    /// Determines whether the provided SeoInfo matches the store and language filtering rules.
-    /// Treats null or empty values as wildcards (matches everything).
-    /// </summary>
-    private static bool MatchesStoreAndLanguage(this SeoInfo seoInfo,
-        string storeId,
-        string storeDefaultLanguage,
-        string language)
-    {
-        if (seoInfo == null)
-        {
-            return false;
-        }
-
-        return seoInfo.StoreId.Matches(storeId) &&
-               seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
-    }
-
     private static int CalculateScore(this SeoInfo seoInfo,
         string storeId,
         string storeDefaultLanguage,
@@ -202,15 +210,5 @@ public static class SeoExtensions
         // result array is: [IsActive:true, StoreId:true, language:false, storeLanguage:false, seoLanguage:true]
         // it transforms into binary: 10011b = 19d
         return score;
-    }
-
-    private static bool MatchesAny(this string a, string b, string c)
-    {
-        return a.Matches(b) || a.Matches(c);
-    }
-
-    private static bool Matches(this string a, string b)
-    {
-        return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
     }
 }

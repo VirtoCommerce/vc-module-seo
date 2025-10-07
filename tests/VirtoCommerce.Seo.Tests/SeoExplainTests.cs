@@ -21,9 +21,9 @@ public class SeoExplainTests
         var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, explain: true);
 
         // Assert
+        Assert.NotNull(seoInfo);
         Assert.NotNull(explainResults);
         Assert.Equal(6, explainResults.Count);
-        Assert.NotNull(seoInfo);
         Assert.Equal(categorySeoInfo.SemanticUrl, seoInfo.SemanticUrl);
     }
 
@@ -41,13 +41,13 @@ public class SeoExplainTests
         var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, explain: false);
 
         // Assert
-        Assert.Null(explainResults);
         Assert.NotNull(seoInfo);
+        Assert.Null(explainResults);
         Assert.Equal(categorySeoInfo.SemanticUrl, seoInfo.SemanticUrl);
     }
 
     [Fact]
-    public void GetBestMatchingSeoInfo_NullEnumerable_ReturnsNullSeoInfo()
+    public void GetBestMatchingSeoInfo_WithExplainTrueAndNullEnumerable_ReturnsNullSeoInfoAndNotNullStages()
     {
         // Arrange
         List<SeoInfo> items = null;
@@ -56,8 +56,8 @@ public class SeoExplainTests
         var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo("store", "en-US", "en-US", explain: true);
 
         // Assert
-        Assert.Null(explainResults);
         Assert.Null(seoInfo);
+        Assert.NotNull(explainResults);
     }
 
     [Fact]
@@ -75,8 +75,8 @@ public class SeoExplainTests
         var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, explain: true);
 
         // Assert
-        Assert.NotNull(explainResults);
         Assert.NotNull(seoInfo);
+        Assert.NotNull(explainResults);
         Assert.Equal(activeSeoInfo.SemanticUrl, seoInfo.SemanticUrl);
     }
 
