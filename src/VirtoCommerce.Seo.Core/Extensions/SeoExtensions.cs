@@ -92,7 +92,7 @@ public static class SeoExtensions
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
         var stageScored = stageFiltered
-            .CalculatePriorityAndScores(storeId, storeDefaultLanguage, language, explain);
+            .CalculatePriorityAndScores(storeId, storeDefaultLanguage, language);
         stageScored = AddExplain(SeoExplainStage.Scored, stageScored);
 
         // Stage 4: FilteredScore - remove entries with non-positive score
@@ -140,16 +140,10 @@ public static class SeoExtensions
     private static IEnumerable<SeoExplainItem> CalculatePriorityAndScores(this IEnumerable<SeoExplainItem> seoExplainItems,
         string storeId,
         string storeDefaultLanguage,
-        string language,
-        bool explain)
+        string language)
     {
         foreach (var item in seoExplainItems)
         {
-            if (explain)
-            {
-                yield return item;
-            }
-
             var mutableItem = new SeoExplainItem(item.SeoInfo);
 
             if (mutableItem.SeoInfo != null)
