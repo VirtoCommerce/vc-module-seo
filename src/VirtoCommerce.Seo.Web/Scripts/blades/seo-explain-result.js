@@ -9,7 +9,7 @@ angular.module('virtoCommerce.seo')
             blade.headIcon = 'fa fa-list';
             blade.isLoading = true;
 
-            $scope.openStageDetails = function(stage) {
+            $scope.openStageDetails = function (stage) {
                 var newBlade = {
                     id: 'seoExplainItems',
                     title: 'seo.blades.seo-explain-items.title',

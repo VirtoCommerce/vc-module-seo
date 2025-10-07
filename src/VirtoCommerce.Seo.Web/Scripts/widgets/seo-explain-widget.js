@@ -1,4 +1,4 @@
-﻿angular.module('virtoCommerce.seo')
+angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoExplainWidgetController', [
         '$scope', 'platformWebApp.bladeNavigationService',
         function ($scope, bladeNavigationService) {

@@ -1,4 +1,4 @@
-﻿angular.module('virtoCommerce.seo')
+angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoExplainItemsController', [
         '$scope',
         function ($scope) {

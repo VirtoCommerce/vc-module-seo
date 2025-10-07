@@ -1,4 +1,4 @@
-﻿// Call this to register your module to main application
+// Call this to register your module to main application
 const moduleName = 'virtoCommerce.seo';
 
 if (AppDependencies !== undefined) {
