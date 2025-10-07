@@ -78,7 +78,7 @@ public static class SeoExtensions
             return (null, explain ? [] : null);
         }
 
-        List<SeoExplainResult> explainResults = null;
+        List<SeoExplainResult> explainResults = explain ? [] : null;
 
         // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
         var stageOriginal = seoInfoList
@@ -125,10 +125,8 @@ public static class SeoExtensions
                 return items;
             }
 
-            explainResults ??= [];
-
             var list = items.ToList();
-            explainResults.Add(new SeoExplainResult(stage, list));
+            explainResults!.Add(new SeoExplainResult(stage, list));
             return list;
         }
     }
@@ -142,19 +140,18 @@ public static class SeoExtensions
         string storeDefaultLanguage,
         string language)
     {
-        foreach (var item in seoExplainItems)
+        return seoExplainItems.Select(item =>
         {
-            var mutableItem = new SeoExplainItem(item.SeoInfo);
-
-            if (mutableItem.SeoInfo != null)
+            var newItem = new SeoExplainItem(item.SeoInfo);
+            if (newItem.SeoInfo == null)
             {
-                // Resolve object type priority using configured OrderedObjectTypes. If type is not found, priority is -1.
-                mutableItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, mutableItem.SeoInfo.ObjectType);
-                mutableItem.Score = mutableItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
+                return newItem;
             }
 
-            yield return mutableItem;
-        }
+            newItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, newItem.SeoInfo.ObjectType);
+            newItem.Score = newItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
+            return newItem;
+        });
     }
 
     /// <summary>
