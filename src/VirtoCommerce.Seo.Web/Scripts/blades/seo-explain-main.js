@@ -25,7 +25,6 @@ angular.module('virtoCommerce.seo')
                     $scope.languages = store.languages || [];
                     blade.currentEntity.storeDefaultLanguage = store.defaultLanguage || null;
 
-                    // если язык ещё не выбран, подставляем дефолтный
                     if (!blade.currentEntity.languageCode && store.defaultLanguage) {
                         blade.currentEntity.languageCode = store.defaultLanguage;
                     }

@@ -38,7 +38,7 @@ angular.module('virtoCommerce.seo')
                 data: []
             };
 
-            explainApi.getExplain(blade.data)
+            explainApi.explain(blade.data).$promise
                 .then(function (data) {
                     (data || []).forEach(function (stage) {
                         stage.itemsCount = (stage.seoExplainItems || []).length;

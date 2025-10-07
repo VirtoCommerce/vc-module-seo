@@ -66,9 +66,9 @@ namespace VirtoCommerce.Seo.Tests
 
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
-            var stage6 = result.First(x => x.Stage == SeoExplainStage.Final);
-            Assert.NotNull(stage6);
-            var first = stage6.SeoExplainItems.First();
+            var finalStage = result.First(x => x.Stage == SeoExplainStage.Final);
+            Assert.NotNull(finalStage);
+            var first = finalStage.SeoExplainItems.First();
             Assert.NotNull(first.SeoInfo);
             Assert.Equal(categorySeoInfo.SemanticUrl, first.SeoInfo.SemanticUrl);
             Assert.Equal(categorySeoInfo.StoreId, first.SeoInfo.StoreId);
@@ -76,7 +76,7 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public async Task ExplainAsync_OnlyGlobalEntries_ReturnsGlobalInStage6()
+        public async Task ExplainAsync_OnlyGlobalEntries_ReturnsGlobalInfinalStage()
         {
             var storeId = "store-1";
             var storeDefaultLanguage = "en-US";
@@ -98,7 +98,7 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public async Task ExplainAsync_NoMatchingStore_Stage5Empty_Stage6ContainsNull()
+        public async Task ExplainAsync_NoMatchingStore_orderedStageEmpty_finalStageContainsNull()
         {
             var storeId = "store-2";
             var storeDefaultLanguage = "en-US";
@@ -116,12 +116,12 @@ namespace VirtoCommerce.Seo.Tests
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, "perm");
 
             Assert.NotNull(result);
-            var stage5 = result.First(x => x.Stage == SeoExplainStage.Ordered);
-            var stage6 = result.First(x => x.Stage == SeoExplainStage.Final);
-            Assert.NotNull(stage5);
-            Assert.NotNull(stage6);
-            Assert.Empty(stage5.SeoExplainItems);
-            Assert.Empty(stage6.SeoExplainItems);
+            var orderedStage = result.First(x => x.Stage == SeoExplainStage.Ordered);
+            var finalStage = result.First(x => x.Stage == SeoExplainStage.Final);
+            Assert.NotNull(orderedStage);
+            Assert.NotNull(finalStage);
+            Assert.Empty(orderedStage.SeoExplainItems);
+            Assert.Empty(finalStage.SeoExplainItems);
         }
 
         [Fact]
@@ -140,9 +140,9 @@ namespace VirtoCommerce.Seo.Tests
 
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
 
-            var stage6 = result.First(x => x.Stage == SeoExplainStage.Final);
-            Assert.NotNull(stage6);
-            var chosen = stage6.SeoExplainItems.First().SeoInfo;
+            var finalStage = result.First(x => x.Stage == SeoExplainStage.Final);
+            Assert.NotNull(finalStage);
+            var chosen = finalStage.SeoExplainItems.First().SeoInfo;
             Assert.Equal("en-US", chosen.LanguageCode);
         }
 
@@ -161,9 +161,9 @@ namespace VirtoCommerce.Seo.Tests
 
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
 
-            var stage6 = result.First(x => x.Stage == SeoExplainStage.Final);
-            Assert.NotNull(stage6);
-            var chosen = stage6.SeoExplainItems.First().SeoInfo;
+            var finalStage = result.First(x => x.Stage == SeoExplainStage.Final);
+            Assert.NotNull(finalStage);
+            var chosen = finalStage.SeoExplainItems.First().SeoInfo;
             Assert.Null(chosen.LanguageCode);
             Assert.Equal("neutral", chosen.SemanticUrl);
         }
@@ -182,9 +182,9 @@ namespace VirtoCommerce.Seo.Tests
 
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
 
-            var stage6 = result.First(x => x.Stage == SeoExplainStage.Final);
-            Assert.NotNull(stage6);
-            var chosen = stage6.SeoExplainItems.First().SeoInfo;
+            var finalStage = result.First(x => x.Stage == SeoExplainStage.Final);
+            Assert.NotNull(finalStage);
+            var chosen = finalStage.SeoExplainItems.First().SeoInfo;
             Assert.NotNull(chosen);
             Assert.Equal(seoInfo.SemanticUrl, chosen.SemanticUrl);
         }
@@ -203,9 +203,9 @@ namespace VirtoCommerce.Seo.Tests
 
             var result = await service.ExplainAsync(storeId, storeDefaultLanguage, requestLanguage, permalink);
 
-            var stage6 = result.First(x => x.Stage == SeoExplainStage.Final);
-            Assert.NotNull(stage6);
-            var chosen = stage6.SeoExplainItems.First().SeoInfo;
+            var finalStage = result.First(x => x.Stage == SeoExplainStage.Final);
+            Assert.NotNull(finalStage);
+            var chosen = finalStage.SeoExplainItems.First().SeoInfo;
             Assert.NotNull(chosen);
             Assert.Equal("en-US", chosen.LanguageCode);
         }
@@ -225,9 +225,9 @@ namespace VirtoCommerce.Seo.Tests
             try
             {
                 var (_, explainResults) = items.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode, explain: true);
-                var stage5 = explainResults.First(x => x.Stage == SeoExplainStage.Ordered);
-                Assert.NotNull(stage5);
-                var top = stage5.SeoExplainItems.First();
+                var orderedStage = explainResults.First(x => x.Stage == SeoExplainStage.Ordered);
+                Assert.NotNull(orderedStage);
+                var top = orderedStage.SeoExplainItems.First();
                 Assert.Equal("CatalogProduct", top.SeoInfo.ObjectType);
             }
             finally

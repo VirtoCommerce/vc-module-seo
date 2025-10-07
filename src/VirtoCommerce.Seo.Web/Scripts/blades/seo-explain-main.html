@@ -8,11 +8,12 @@
             <div class="form-group">
               <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.store' | translate }}</label>
               <div class="form-input">
-                <select class="form-control"
-                        ng-model="blade.currentEntity.storeId"
-                        ng-options="s.id as (s.name || s.id) for s in stores"
-                        ng-change="onStoreChange()">
-                </select>
+                <ui-select ng-model="blade.currentEntity.storeId" on-select="onStoreChange()">
+                  <ui-select-match placeholder="{{ 'seo.blades.seo-explain-main.labels.store' | translate }}">{{$select.selected.name || $select.selected.id}}</ui-select-match>
+                  <ui-select-choices repeat="s.id as s in stores | filter: $select.search">
+                    <span ng-bind-html="(s.name || s.id) | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
               </div>
             </div>
           </div>
