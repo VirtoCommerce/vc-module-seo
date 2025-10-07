@@ -78,12 +78,12 @@
           "no-data": "No hay datos disponibles"
         },
         "descriptions": {
-          "original": "Etapa 1: Original - elementos SEO encontrados por el resolver.",
-          "filtered": "Etapa 2: Filtrado - elementos SEO que coinciden con las reglas de la tienda y el idioma.",
-          "scored": "Etapa 3: Puntuado - cálculo de puntuaciones numéricas y prioridades de tipo de objeto.",
-          "filtered-score": "Etapa 4: Puntuación filtrada - mantener elementos SEO con puntuación positiva.",
-          "ordered": "Etapa 5: Ordenado - ordenar SEO por puntuación y prioridad de tipo de objeto.",
-          "final": "Etapa 6: Final - seleccionar el primero como el Seo resuelto."
+          "Original": "Etapa 1: Original - elementos SEO encontrados por el resolver.",
+          "Filtered": "Etapa 2: Filtrado - elementos SEO que coinciden con las reglas de la tienda y el idioma.",
+          "Scored": "Etapa 3: Puntuado - cálculo de puntuaciones numéricas y prioridades de tipo de objeto.",
+          "FilteredScore": "Etapa 4: Puntuación filtrada - mantener elementos SEO con puntuación positiva.",
+          "Ordered": "Etapa 5: Ordenado - ordenar SEO por puntuación y prioridad de tipo de objeto.",
+          "Final": "Etapa 6: Final - seleccionar el primero como el Seo resuelto."
         }
       },
       "seo-explain-items": {
@@ -135,7 +135,7 @@
       "seo:create": "Crear datos relacionados con SEO",
       "seo:read": "Ver datos relacionados con SEO",
       "seo:update": "Actualizar datos relacionados con SEO",
-      "seo:delete": "Eliminar datos relacionados con SEO"
+      "seo:delete": "Eliminar datos relacionados сon SEO"
     },
     "settings": {
       "Seo": {

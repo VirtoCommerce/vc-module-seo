@@ -78,12 +78,12 @@
           "no-data": "Keine Daten verfügbar"
         },
         "descriptions": {
-          "original": "Stufe 1: Original - Vom Resolver gefundene SEO-Elemente.",
-          "filtered": "Stufe 2: Gefiltert - SEO-Elemente, die den Shop- und Sprachregeln entsprechen.",
-          "scored": "Stufe 3: Bewertet - Berechnung der numerischen Bewertungen und Objekttyp-Prioritäten.",
-          "filtered-score": "Stufe 4: Gefilterte Bewertung - Beibehaltung von SEO-Elementen mit positiver Bewertung.",
-          "ordered": "Stufe 5: Geordnet - Sortierung der SEO nach Bewertung und Objekttyp-Priorität.",
-          "final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
+          "Original": "Stufe 1: Original - Vom Resolver gefundene SEO-Elemente.",
+          "Filtered": "Stufe 2: Gefiltert - SEO-Elemente, die den Shop- und Sprachregeln entsprechen.",
+          "Scored": "Stufe 3: Bewertet - Berechnung der numerischen Bewertungen und Objekttyp-Prioritäten.",
+          "FilteredScore": "Stufe 4: Gefilterte Bewertung - Beibehaltung von SEO-Elementen mit positiver Bewertung.",
+          "Ordered": "Stufe 5: Geordnet - Sortierung der SEO nach Bewertung und Objekttyp-Priorität.",
+          "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
         }
       },
       "seo-explain-items": {

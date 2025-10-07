@@ -78,12 +78,12 @@
           "no-data": "Ei tietoja saatavilla"
         },
         "descriptions": {
-          "original": "Vaihe 1: Alkuperäinen - resolverin löytämät SEO-kohteet.",
-          "filtered": "Vaihe 2: Suodatettu - kaupan ja kielen sääntöjä vastaavat SEO-kohteet.",
-          "scored": "Vaihe 3: Pisteitetty - numeeristen pisteiden ja objektityyppien prioriteettien laskenta.",
-          "filtered-score": "Vaihe 4: Suodatettu pistemäärä - pidetään SEO-kohteet, joilla on positiivinen pistemäärä.",
-          "ordered": "Vaihe 5: Järjestetty - järjestys SEO:n mukaan pistemäärän ja objektityypin prioriteetin mukaan.",
-          "final": "Vaihe 6: Lopullinen - valitaan ensimmäinen ratkaistuksi Seoksi."
+          "Original": "Vaihe 1: Alkuperäinen - resolverin löytämät SEO-kohteet.",
+          "Filtered": "Vaihe 2: Suodatettu - kaupan ja kielen sääntöjä vastaavat SEO-kohteet.",
+          "Scored": "Vaihe 3: Pisteitetty - numeeristen pisteiden ja objektityyppien prioriteettien laskenta.",
+          "FilteredScore": "Vaihe 4: Suodatettu pistemäärä - pidetään SEO-kohteet, joilla on positiivinen pistemäärä.",
+          "Ordered": "Vaihe 5: Järjestetty - järjestys SEO:n mukaan pistemäärän ja objektityypin prioriteetin mukaan.",
+          "Final": "Vaihe 6: Lopullinen - valitaan ensimmäinen ratkaistuksi Seoksi."
         }
       },
       "seo-explain-items": {

@@ -78,12 +78,12 @@
           "no-data": "Aucune donnée disponible"
         },
         "descriptions": {
-          "original": "Étape 1: Original - Éléments SEO trouvés par le résolveur.",
-          "filtered": "Étape 2: Filtré - Éléments SEO correspondant aux règles de la boutique et de la langue.",
-          "scored": "Étape 3: Noté - Calcul des scores numériques et des priorités de type d'objet.",
-          "filtered-score": "Étape 4: Score filtré - Conserver les éléments SEO avec un score positif.",
-          "ordered": "Étape 5: Ordonné - Trier le SEO par score et priorité de type d'objet.",
-          "final": "Étape 6: Final - Sélectionner le premier comme Seo résolu."
+          "Original": "Étape 1: Original - Éléments SEO trouvés par le résolveur.",
+          "Filtered": "Étape 2: Filtré - Éléments SEO correspondant aux règles de la boutique et de la langue.",
+          "Scored": "Étape 3: Noté - Calcul des scores numériques et des priorités de type d'objet.",
+          "FilteredScore": "Étape 4: Score filtré - Conserver les éléments SEO avec un score positif.",
+          "Ordered": "Étape 5: Ordonné - Trier le SEO par score et priorité de type d'objet.",
+          "Final": "Étape 6: Final - Sélectionner le premier comme Seo résolu."
         }
       },
       "seo-explain-items": {

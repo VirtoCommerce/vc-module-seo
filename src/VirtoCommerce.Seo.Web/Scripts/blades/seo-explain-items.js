@@ -1,7 +1,7 @@
 ﻿angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoExplainItemsController', [
-        '$scope', '$timeout',
-        function ($scope, $timeout) {
+        '$scope',
+        function ($scope) {
 
             var blade = $scope.blade;
             blade.headIcon = 'fa fa-table';
@@ -62,13 +62,11 @@
                 data: []
             };
 
-            $timeout(function () {
-                var items = (blade.data || []).map(function (item) {
-                    item.seoInfo = item.seoInfo || {};
-                    return item;
-                });
-                $scope.gridOptions.data = items;
-                blade.isLoading = false;
+            var items = (blade.data || []).map(function (item) {
+                item.seoInfo = item.seoInfo || {};
+                return item;
             });
+            $scope.gridOptions.data = items;
+            blade.isLoading = false;
         }
     ]);

@@ -78,12 +78,12 @@
           "no-data": "Brak danych"
         },
         "descriptions": {
-          "original": "Etap 1: Oryginalny - elementy SEO znalezione przez resolver.",
-          "filtered": "Etap 2: Filtrowany - elementy SEO pasujące do reguł sklepu i języka.",
-          "scored": "Etap 3: Oceniony - obliczanie ocen numerycznych i priorytetów typów obiektów.",
-          "filtered-score": "Etap 4: Filtrowana ocena - zachowanie elementów SEO z pozytywną oceną.",
-          "ordered": "Etap 5: Uporządkowany - sortowanie SEO według oceny i priorytetu typu obiektu.",
-          "final": "Etap 6: Finał - wybór pierwszego jako rozwiązanego Seo."
+          "Original": "Etap 1: Oryginalny - elementy SEO znalezione przez resolver.",
+          "Filtered": "Etap 2: Filtrowany - elementy SEO pasujące do reguł sklepu i języka.",
+          "Scored": "Etap 3: Oceniony - obliczanie ocen numerycznych i priorytetów typów obiektów.",
+          "FilteredScore": "Etap 4: Filtrowana ocena - zachowanie elementów SEO z pozytywną oceną.",
+          "Ordered": "Etap 5: Uporządkowany - sortowanie SEO według oceny i priorytetu typu obiektu.",
+          "Final": "Etap 6: Finał - wybór pierwszego jako rozwiązanego Seo."
         }
       },
       "seo-explain-items": {

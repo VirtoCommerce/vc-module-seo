@@ -13,7 +13,7 @@ angular.module('virtoCommerce.seo')
                 var newBlade = {
                     id: 'seoExplainItems',
                     title: 'seo.blades.seo-explain-items.title',
-                    subtitle: $filter('translate')(stage.descriptionKey),
+                    subtitle: stage.translatedDescription,
                     controller: 'virtoCommerce.seo.seoExplainItemsController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-items.html',
                     data: stage.seoExplainItems
@@ -30,12 +30,9 @@ angular.module('virtoCommerce.seo')
                     {
                         name: 'stage',
                         displayName: 'seo.blades.seo-explain-result.labels.stage',
-                        headerCellTemplate: '<div class="ui-grid-cell-contents">{{ col.displayName | translate }}</div>',
+                        headerCellTemplate: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result-header.html',
                         headerTooltip: true,
-                        cellTemplate:
-                            '<div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">' +
-                            '{{row.entity.descriptionKey | translate}} ({{row.entity.itemsCount}})' +
-                            '</div>'
+                        cellTemplate: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result-cell.html'
                     }
                 ],
                 data: []
@@ -45,13 +42,8 @@ angular.module('virtoCommerce.seo')
                 .then(function (data) {
                     (data || []).forEach(function (stage) {
                         stage.itemsCount = (stage.seoExplainItems || []).length;
-                        var stageKey = stage.stage;
-                        if (stageKey === 'FilteredScore') {
-                            stageKey = 'filtered-score';
-                        } else {
-                            stageKey = stageKey.toLowerCase();
-                        }
-                        stage.descriptionKey = 'seo.blades.seo-explain-result.descriptions.' + stageKey;
+                        stage.descriptionKey = 'seo.blades.seo-explain-result.descriptions.' + stage.stage;
+                        stage.translatedDescription = $filter('translate')(stage.descriptionKey);
                     });
 
                     $scope.stageGridOptions.data = (data || []).filter(function (s) {

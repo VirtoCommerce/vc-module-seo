@@ -10,13 +10,11 @@ angular.module(moduleName, ['platformWebApp', 'virtoCommerce.storeModule', 'ui.g
         'platformWebApp.widgetService',
         function (widgetService) {
 
-            // Register SEO Explain widget
             widgetService.registerWidget({
                 controller: 'virtoCommerce.seo.seoExplainWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/seo-explain-widget.html'
             }, 'storeDetail');
 
-            // Existing widgets
             widgetService.registerWidget({
                 controller: 'virtoCommerce.seo.brokenLinksWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/broken-links-widget.html'

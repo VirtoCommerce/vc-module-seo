@@ -92,7 +92,7 @@ public static class SeoExtensions
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
         var stageScored = stageFiltered
-            .CalculatePriorityAndScores(storeId, storeDefaultLanguage, language);
+            .CalculatePriorityAndScores(storeId, storeDefaultLanguage, language, explain);
         stageScored = AddExplain(SeoExplainStage.Scored, stageScored);
 
         // Stage 4: FilteredScore - remove entries with non-positive score
@@ -119,14 +119,13 @@ public static class SeoExtensions
 
         IEnumerable<SeoExplainItem> AddExplain(SeoExplainStage stage, IEnumerable<SeoExplainItem> items)
         {
-            // To reduce memory usage, avoid allocating and populating the explainResults list when an explanation is not requested.
             if (!explain)
             {
                 return items;
             }
 
             var list = items.ToList();
-            explainResults!.Add(new SeoExplainResult(stage, list));
+            explainResults.Add(new SeoExplainResult(stage, list));
             return list;
         }
     }
@@ -138,20 +137,23 @@ public static class SeoExtensions
     private static IEnumerable<SeoExplainItem> CalculatePriorityAndScores(this IEnumerable<SeoExplainItem> seoExplainItems,
         string storeId,
         string storeDefaultLanguage,
-        string language)
+        string language,
+        bool explain)
     {
-        return seoExplainItems.Select(item =>
+        foreach (var item in seoExplainItems)
         {
-            var newItem = new SeoExplainItem(item.SeoInfo);
-            if (newItem.SeoInfo == null)
+            var mutableItem = explain
+                ? new SeoExplainItem(item.SeoInfo)
+                : item;
+
+            if (mutableItem.SeoInfo != null)
             {
-                return newItem;
+                mutableItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, mutableItem.SeoInfo.ObjectType);
+                mutableItem.Score = mutableItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
             }
 
-            newItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, newItem.SeoInfo.ObjectType);
-            newItem.Score = newItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
-            return newItem;
-        });
+            yield return mutableItem;
+        }
     }
 
     /// <summary>

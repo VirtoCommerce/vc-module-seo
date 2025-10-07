@@ -78,12 +78,12 @@
           "no-data": "No data available"
         },
         "descriptions": {
-          "original": "Stage 1: Original - SEO items found by the resolver.",
-          "filtered": "Stage 2: Filtered - SEO items matching store and language rules.",
-          "scored": "Stage 3: Scored - calculate numeric scores and object type priorities.",
-          "filtered-score": "Stage 4: FilteredScore - keep SEO items with positive score.",
-          "ordered": "Stage 5: Ordered - order SEO by score and object type priority.",
-          "final": "Stage 6: Final - select first as the resolved Seo."
+          "Original": "Stage 1: Original - SEO items found by the resolver.",
+          "Filtered": "Stage 2: Filtered - SEO items matching store and language rules.",
+          "Scored": "Stage 3: Scored - calculate numeric scores and object type priorities.",
+          "FilteredScore": "Stage 4: FilteredScore - keep SEO items with positive score.",
+          "Ordered": "Stage 5: Ordered - order SEO by score and object type priority.",
+          "Final": "Stage 6: Final - select first as the resolved Seo."
         }
       },
       "seo-explain-items": {

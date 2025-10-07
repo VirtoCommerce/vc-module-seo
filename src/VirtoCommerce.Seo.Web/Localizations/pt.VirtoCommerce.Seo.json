@@ -78,12 +78,12 @@
           "no-data": "Nenhum dado disponível"
         },
         "descriptions": {
-          "original": "Fase 1: Original - Itens de SEO encontrados pelo resolvedor.",
-          "filtered": "Fase 2: Filtrado - Itens de SEO que correspondem às regras da loja e do idioma.",
-          "scored": "Fase 3: Pontuado - Calcular pontuações numéricas e prioridades de tipo de objeto.",
-          "filtered-score": "Fase 4: Pontuação filtrada - Manter itens de SEO com pontuação positiva.",
-          "ordered": "Fase 5: Ordenado - Ordenar SEO por pontuação e prioridade de tipo de objeto.",
-          "final": "Fase 6: Final - Selecionar o primeiro como o Seo resolvido."
+          "Original": "Fase 1: Original - Itens de SEO encontrados pelo resolvedor.",
+          "Filtered": "Fase 2: Filtrado - Itens de SEO que correspondem às regras da loja e do idioma.",
+          "Scored": "Fase 3: Pontuado - Calcular pontuações numéricas e prioridades de tipo de objeto.",
+          "FilteredScore": "Fase 4: Pontuação filtrada - Manter itens de SEO com pontuação positiva.",
+          "Ordered": "Fase 5: Ordenado - Ordenar SEO por pontuação e prioridade de tipo de objeto.",
+          "Final": "Fase 6: Final - Selecionar o primeiro como o Seo resolvido."
         }
       },
       "seo-explain-items": {
