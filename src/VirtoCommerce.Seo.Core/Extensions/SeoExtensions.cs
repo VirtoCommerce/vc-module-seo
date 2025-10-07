@@ -69,13 +69,13 @@ public static class SeoExtensions
     {
         if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || seoInfos == null)
         {
-            return (null, null);
+            return (null, explain ? [] : null);
         }
 
         var seoInfoList = seoInfos as IList<SeoInfo> ?? seoInfos.ToList();
         if (seoInfoList.Count == 0)
         {
-            return (null, null);
+            return (null, explain ? [] : null);
         }
 
         List<SeoExplainResult> explainResults = null;

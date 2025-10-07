@@ -315,13 +315,14 @@ namespace VirtoCommerce.Seo.Tests
         }
 
         [Fact]
-        public void ExplainBestMatchingSeoInfo_NullEnumerable_ReturnsNulls()
+        public void ExplainBestMatchingSeoInfo_NullEnumerable_ReturnsEmptyExplainResultsAndNullSeoInfo()
         {
             List<SeoInfo> items = null;
 
             var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo("store", "en-US", "en-US", explain: true);
 
-            Assert.Null(explainResults);
+            Assert.NotNull(explainResults);
+            Assert.Empty(explainResults);
             Assert.Null(seoInfo);
         }
 
