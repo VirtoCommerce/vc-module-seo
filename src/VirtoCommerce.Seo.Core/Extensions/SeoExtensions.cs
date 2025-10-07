@@ -145,9 +145,7 @@ public static class SeoExtensions
     {
         foreach (var item in seoExplainItems)
         {
-            var mutableItem = explain
-                ? new SeoExplainItem(item.SeoInfo)
-                : item;
+            var mutableItem = new SeoExplainItem(item.SeoInfo);
 
             if (mutableItem.SeoInfo != null)
             {
