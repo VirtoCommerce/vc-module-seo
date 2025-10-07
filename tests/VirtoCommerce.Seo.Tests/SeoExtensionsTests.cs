@@ -190,6 +190,8 @@ namespace VirtoCommerce.Seo.Tests
             var storeId = "Store1";
             var storeDefaultLanguage = "en-US";
 
+            var defaultTypes = SeoExtensions.OrderedObjectTypes;
+
             SeoExtensions.OrderedObjectTypes = ["Categories", "Pages"];
 
             var seoInfos = new List<SeoInfo>
@@ -204,6 +206,8 @@ namespace VirtoCommerce.Seo.Tests
             // Assert
             Assert.NotNull(result);
             Assert.Equal("Pages", result.ObjectType);
+
+            SeoExtensions.OrderedObjectTypes = defaultTypes;
         }
 
         [Fact]
