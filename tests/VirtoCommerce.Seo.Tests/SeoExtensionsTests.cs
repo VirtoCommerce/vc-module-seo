@@ -307,5 +307,47 @@ namespace VirtoCommerce.Seo.Tests
             Assert.NotNull(result);
             Assert.Equal("Store2", result.StoreId);
         }
+
+        [Fact]
+        public void GetBestMatchingInfo_Brands_WithStore()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new() { ObjectType = "Catalog", StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "brands"},
+                new() { ObjectType = "Brands", StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "brands"},
+            };
+
+            // Act
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Brands", result.ObjectType);
+        }
+
+        [Fact]
+        public void GetBestMatchingInfo_Brands_WithoutStore()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new() { ObjectType = "Catalog", StoreId = null, LanguageCode = "en-US", SemanticUrl = "brands"},
+                new() { ObjectType = "Brands", StoreId = "Store1", LanguageCode = "en-US", SemanticUrl = "brands"},
+            };
+
+            // Act
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Brands", result.ObjectType);
+        }
     }
 }
