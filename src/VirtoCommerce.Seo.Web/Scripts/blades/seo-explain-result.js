@@ -31,7 +31,6 @@ angular.module('virtoCommerce.seo')
                     {
                         name: 'stage',
                         displayName: 'seo.blades.seo-explain-result.labels.stage',
-                        headerCellTemplate: 'seo-explain-result-header-id',
                         headerTooltip: true,
                         cellTemplate: 'seo-explain-result-cell-id'
                     }
