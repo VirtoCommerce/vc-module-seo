@@ -6,17 +6,17 @@ angular.module('virtoCommerce.seo')
         'platformWebApp.bladeNavigationService',
         function ($scope, $filter, explainApi, bladeNavigationService) {
             var blade = $scope.blade;
+            blade.title = 'seo.blades.seo-explain-result.title';
             blade.headIcon = 'fa fa-list';
             blade.isLoading = true;
 
             $scope.openStageDetails = function (stage) {
                 var newBlade = {
                     id: 'seoExplainItems',
-                    title: 'seo.blades.seo-explain-items.title',
-                    subtitle: stage.translatedDescription,
                     controller: 'virtoCommerce.seo.seoExplainItemsController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-items.html',
-                    data: stage.seoExplainItems
+                    stageDescription: stage.translatedDescription,
+                    items: stage.items
                 };
                 bladeNavigationService.showBlade(newBlade, blade);
             };
@@ -25,28 +25,29 @@ angular.module('virtoCommerce.seo')
                 appScopeProvider: $scope,
                 enableColumnMenus: false,
                 enableSorting: false,
+
                 rowHeight: 36,
                 columnDefs: [
                     {
                         name: 'stage',
                         displayName: 'seo.blades.seo-explain-result.labels.stage',
-                        headerCellTemplate: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result-header.html',
+                        headerCellTemplate: 'seo-explain-result-header-id',
                         headerTooltip: true,
-                        cellTemplate: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result-cell.html'
+                        cellTemplate: 'seo-explain-result-cell-id'
                     }
                 ],
                 data: []
             };
 
             explainApi.explain(blade.data).$promise
-                .then(function (data) {
-                    (data || []).forEach(function (stage) {
+                .then(function (stages) {
+                    (stages || []).forEach(function (stage) {
                         stage.itemsCount = (stage.items || []).length;
                         stage.descriptionKey = 'seo.blades.seo-explain-result.descriptions.' + stage.stage;
                         stage.translatedDescription = $filter('translate')(stage.descriptionKey);
                     });
 
-                    $scope.stageGridOptions.data = (data || []).filter(function (s) {
+                    $scope.stageGridOptions.data = (stages || []).filter(function (s) {
                         return s.itemsCount > 0;
                     });
                 })

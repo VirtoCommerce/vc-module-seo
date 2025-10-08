@@ -1,11 +1,11 @@
-<div class="blade-content __large-wide">
+﻿<div class="blade-content __large-wide">
   <div class="blade-inner">
     <div class="inner-block">
 
-      <div class="list __items" ng-if="blade.title || blade.subtitle">
+      <div class="list __items" ng-if="blade.title || blade.stageDescription">
         <div class="list-item">
           <div class="list-tile">
-            <div class="list-tile__subtitle" ng-if="blade.subtitle">{{blade.subtitle}}</div>
+            <div class="list-tile__stageDescription" ng-if="blade.stageDescription">{{blade.stageDescription}}</div>
           </div>
         </div>
       </div>
@@ -22,3 +22,6 @@
     </div>
   </div>
 </div>
+<script type="text/ng-template" id="item-header-cell-id">
+    <div class="ui-grid-cell-contents">{{ col.displayName | translate }}</div>
+</script>

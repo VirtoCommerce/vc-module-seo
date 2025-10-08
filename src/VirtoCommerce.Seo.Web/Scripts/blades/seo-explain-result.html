@@ -17,11 +17,11 @@
   </div>
 </div>
 
-<script type="text/ng-template" id="Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result-header.html">
+<script type="text/ng-template" id="seo-explain-result-header-id">
   <div class="ui-grid-cell-contents">{{ col.displayName | translate }}</div>
 </script>
 
-<script type="text/ng-template" id="Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result-cell.html">
+<script type="text/ng-template" id="seo-explain-result-cell-id">
   <div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">
     {{row.entity.translatedDescription}} ({{row.entity.itemsCount}})
   </div>

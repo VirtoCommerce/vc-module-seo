@@ -1,15 +1,13 @@
-// Call this to register your module to main application
+﻿// Call this to register your module to main application
 const moduleName = 'virtoCommerce.seo';
 
 if (AppDependencies !== undefined) {
     AppDependencies.push(moduleName);
 }
 
-angular.module(moduleName, ['platformWebApp', 'virtoCommerce.storeModule', 'ui.grid.expandable'])
-    .run([
-        'platformWebApp.widgetService',
+angular.module(moduleName, [])
+    .run(['platformWebApp.widgetService',
         function (widgetService) {
-
             widgetService.registerWidget({
                 controller: 'virtoCommerce.seo.seoExplainWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/seo-explain-widget.html'
