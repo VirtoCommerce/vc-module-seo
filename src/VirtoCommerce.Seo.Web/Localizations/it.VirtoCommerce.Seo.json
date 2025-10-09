@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Fase",
           "description": "Descrizione",
-          "no-data": "Nessun dato disponibile",
+          "no-data": "Nessun risultato per la tua richiesta",
           "items-count": "Numero di elementi"
         },
         "descriptions": {

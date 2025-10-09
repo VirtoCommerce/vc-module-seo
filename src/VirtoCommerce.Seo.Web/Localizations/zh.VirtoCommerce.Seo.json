@@ -75,7 +75,7 @@
         "labels": {
           "stage": "阶段",
           "description": "描述",
-          "no-data": "无可用数据",
+          "no-data": "未找到符合您请求的内容",
           "items-count": "项目数"
         },
         "descriptions": {

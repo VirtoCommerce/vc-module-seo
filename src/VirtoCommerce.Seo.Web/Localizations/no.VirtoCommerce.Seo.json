@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Stadium",
           "description": "Beskrivelse",
-          "no-data": "Ingen data tilgjengelig",
+          "no-data": "Ingenting funnet for din forespørsel",
           "items-count": "Antall elementer"
         },
         "descriptions": {

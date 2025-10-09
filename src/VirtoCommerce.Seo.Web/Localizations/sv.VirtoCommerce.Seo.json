@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Steg",
           "description": "Beskrivning",
-          "no-data": "Inga data tillgängliga",
+          "no-data": "Ingenting hittades för din förfrågan",
           "items-count": "Antal artiklar"
         },
         "descriptions": {

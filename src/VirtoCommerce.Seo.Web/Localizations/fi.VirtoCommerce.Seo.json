@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Vaihe",
           "description": "Kuvaus",
-          "no-data": "Ei tietoja saatavilla",
+          "no-data": "Hakua vastaavia tuloksia ei löytynyt",
           "items-count": "Kohteiden määrä"
         },
         "descriptions": {

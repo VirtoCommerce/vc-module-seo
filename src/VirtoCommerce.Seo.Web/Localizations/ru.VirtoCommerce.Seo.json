@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Этап",
           "description": "Описание",
-          "no-data": "Нет данных",
+          "no-data": "По вашему запросу ничего не найдено",
           "items-count": "Количество элементов"
         },
         "descriptions": {

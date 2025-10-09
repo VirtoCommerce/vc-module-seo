@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Estágio",
           "description": "Descrição",
-          "no-data": "Nenhum dado disponível",
+          "no-data": "Nada encontrado para a sua solicitação",
           "items-count": "Número de itens"
         },
         "descriptions": {

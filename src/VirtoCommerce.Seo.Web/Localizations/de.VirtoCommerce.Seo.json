@@ -75,7 +75,7 @@
         "labels": {
           "stage": "Stufe",
           "description": "Beschreibung",
-          "no-data": "Keine Daten verfügbar",
+          "no-data": "Für Ihre Anfrage wurde nichts gefunden",
           "items-count": "Anzahl der Elemente"
         },
         "descriptions": {

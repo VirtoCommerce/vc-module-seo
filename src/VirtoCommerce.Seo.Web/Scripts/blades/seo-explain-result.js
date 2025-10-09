@@ -32,11 +32,7 @@ angular.module('virtoCommerce.seo')
 
             explainApi.explain(blade.data, function (stages) {
                 blade.isLoading = false;
-                $scope.gridStages = stages.filter(function(stage) {
-                    return stage.items.length > 0;
-                });
-            }, function () {
-                blade.isLoading = false;
+                $scope.gridStages = stages;
             });
         }
     ]);

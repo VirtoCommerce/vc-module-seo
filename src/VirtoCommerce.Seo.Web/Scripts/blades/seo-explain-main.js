@@ -23,13 +23,13 @@ angular.module('virtoCommerce.seo')
             $scope.explain = function () {
                 var params = angular.copy(blade.currentEntity);
 
-                var resultBlade = {
+                var newBlade = {
                     id: 'seoExplainResultBlade',
                     controller: 'virtoCommerce.seo.seoExplainResultController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result.html',
                     data: params
                 };
-                bladeNavigationService.showBlade(resultBlade, blade);
+                bladeNavigationService.showBlade(newBlade, blade);
             };
         }
     ]);

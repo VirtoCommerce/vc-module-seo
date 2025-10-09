@@ -75,7 +75,7 @@
         "labels": {
           "stage": "ステージ",
           "description": "説明",
-          "no-data": "データがありません",
+          "no-data": "ご要望に応じて何も見つかりませんでした",
           "items-count": "アイテム数"
         },
         "descriptions": {
