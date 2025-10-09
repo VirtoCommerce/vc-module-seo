@@ -10,12 +10,12 @@ angular.module('virtoCommerce.seo')
 
             var store = blade.store;
 
-            $scope.languages = store.languages || [];
+            $scope.languages = store.languages;
 
             blade.currentEntity = {
                 storeId: store.id,
                 storeName: store.name,
-                storeDefaultLanguage: store.defaultLanguage || null,
+                storeDefaultLanguage: store.defaultLanguage,
                 languageCode: store.defaultLanguage,
                 permalink: ''
             };
