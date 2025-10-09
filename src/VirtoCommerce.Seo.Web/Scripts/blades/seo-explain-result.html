@@ -1,15 +1,13 @@
 <div class="blade-content __large-wide">
   <div class="blade-inner">
-    <div class="inner-block">
+    <div class="inner-block" ng-init="stageGridOptions.columnDefs = [
+        { name: 'stage', displayName: 'seo.blades.seo-explain-result.labels.stage', headerTooltip: true, cellTemplate: 'seo-explain-result-cell' },
+        { name: 'itemsCount', displayName: 'seo.blades.seo-explain-result.labels.items-count', visible: false, headerTooltip: true }
+    ]">
 
-      <div class="table-wrapper">
-        <div ui-grid="stageGridOptions"
-             ui-grid-auto-resize
-             style="height:auto;">
-        </div>
-      </div>
+      <div class="table-wrapper" ui-grid="stageGridOptions" ui-grid-auto-resize></div>
 
-      <div ng-if="!blade.isLoading && (!stageGridOptions.data || stageGridOptions.data.length === 0)" class="mt-2">
+      <div ng-if="!blade.isLoading && (!gridStages || gridStages.length === 0)" class="mt-2">
         <em>{{ 'seo.blades.seo-explain-result.labels.no-data' | translate }}</em>
       </div>
 
@@ -17,8 +15,8 @@
   </div>
 </div>
 
-<script type="text/ng-template" id="seo-explain-result-cell-id">
+<script type="text/ng-template" id="seo-explain-result-cell">
   <div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">
-    {{row.entity.translatedDescription}} ({{row.entity.itemsCount}})
+    {{ 'seo.blades.seo-explain-result.descriptions.' + row.entity.stage | translate }}
   </div>
 </script>

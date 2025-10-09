@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Vaihe",
           "description": "Kuvaus",
-          "no-data": "Ei tietoja saatavilla"
+          "no-data": "Ei tietoja saatavilla",
+          "items-count": "Kohteiden määrä"
         },
         "descriptions": {
           "Original": "Vaihe 1: Alkuperäinen - resolverin löytämät SEO-kohteet.",

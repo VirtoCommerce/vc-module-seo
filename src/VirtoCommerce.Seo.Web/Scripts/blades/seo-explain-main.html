@@ -8,10 +8,7 @@
             <div class="form-group">
               <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.store' | translate }}</label>
               <div class="form-input">
-                <input type="text"
-                       class="form-control"
-                       ng-model="blade.currentEntity.storeName"
-                       readonly />
+                <input type="text" class="form-control" ng-model="blade.currentEntity.storeName" readonly />
               </div>
             </div>
           </div>
@@ -23,10 +20,7 @@
             <div class="form-group">
               <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.default-language' | translate }}</label>
               <div class="form-input">
-                <input type="text"
-                       class="form-control"
-                       ng-model="blade.currentEntity.storeDefaultLanguage"
-                       readonly />
+                <input type="text" class="form-control" ng-model="blade.currentEntity.storeDefaultLanguage" readonly />
               </div>
             </div>
           </div>
@@ -40,8 +34,8 @@
               <div class="form-input">
                 <ui-select ng-model="blade.currentEntity.languageCode" required>
                   <ui-select-match placeholder="{{ 'seo.blades.seo-explain-main.placeholders.select-language' | translate }}">{{$select.selected}}</ui-select-match>
-                  <ui-select-choices repeat="l in languages | filter: $select.search">
-                    <span ng-bind-html="l | highlight: $select.search"></span>
+                  <ui-select-choices repeat="language in languages | filter: $select.search">
+                    <span ng-bind-html="language | highlight: $select.search"></span>
                   </ui-select-choices>
                 </ui-select>
               </div>

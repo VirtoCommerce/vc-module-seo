@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Estágio",
           "description": "Descrição",
-          "no-data": "Nenhum dado disponível"
+          "no-data": "Nenhum dado disponível",
+          "items-count": "Número de itens"
         },
         "descriptions": {
           "Original": "Fase 1: Original - Itens de SEO encontrados pelo resolvedor.",

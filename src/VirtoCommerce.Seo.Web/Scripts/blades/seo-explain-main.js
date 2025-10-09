@@ -27,7 +27,6 @@ angular.module('virtoCommerce.seo')
                     id: 'seoExplainResultBlade',
                     controller: 'virtoCommerce.seo.seoExplainResultController',
                     template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-result.html',
-                    isClosingDisabled: false,
                     data: params
                 };
                 bladeNavigationService.showBlade(resultBlade, blade);

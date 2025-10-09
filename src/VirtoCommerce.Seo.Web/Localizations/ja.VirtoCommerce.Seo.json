@@ -75,7 +75,8 @@
         "labels": {
           "stage": "ステージ",
           "description": "説明",
-          "no-data": "データがありません"
+          "no-data": "データがありません",
+          "items-count": "アイテム数"
         },
         "descriptions": {
           "Original": "ステージ1：オリジナル - リゾルバーによって見つけられたSEO項目。",

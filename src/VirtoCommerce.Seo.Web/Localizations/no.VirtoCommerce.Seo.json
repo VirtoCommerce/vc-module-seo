@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Stadium",
           "description": "Beskrivelse",
-          "no-data": "Ingen data tilgjengelig"
+          "no-data": "Ingen data tilgjengelig",
+          "items-count": "Antall elementer"
         },
         "descriptions": {
           "Original": "Trinn 1: Original - SEO-elementer funnet av resolveren.",

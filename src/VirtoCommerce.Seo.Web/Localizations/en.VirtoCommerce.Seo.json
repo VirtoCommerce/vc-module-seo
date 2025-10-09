@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Stage",
           "description": "Description",
-          "no-data": "No data available"
+          "no-data": "No data available",
+          "items-count": "Items Count"
         },
         "descriptions": {
           "Original": "Stage 1: Original - SEO items found by the resolver.",

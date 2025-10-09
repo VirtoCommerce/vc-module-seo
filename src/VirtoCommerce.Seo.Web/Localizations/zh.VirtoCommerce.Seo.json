@@ -75,7 +75,8 @@
         "labels": {
           "stage": "阶段",
           "description": "描述",
-          "no-data": "无可用数据"
+          "no-data": "无可用数据",
+          "items-count": "项目数"
         },
         "descriptions": {
           "Original": "阶段 1: 原始 - 由解析器找到的SEO项目。",

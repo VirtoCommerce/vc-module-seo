@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Fase",
           "description": "Descrizione",
-          "no-data": "Nessun dato disponibile"
+          "no-data": "Nessun dato disponibile",
+          "items-count": "Numero di elementi"
         },
         "descriptions": {
           "Original": "Fase 1: Originale - Elementi SEO trovati dal resolver.",

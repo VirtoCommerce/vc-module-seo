@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Steg",
           "description": "Beskrivning",
-          "no-data": "Inga data tillgängliga"
+          "no-data": "Inga data tillgängliga",
+          "items-count": "Antal artiklar"
         },
         "descriptions": {
           "Original": "Steg 1: Original - SEO-objekt som hittats av resolvern.",

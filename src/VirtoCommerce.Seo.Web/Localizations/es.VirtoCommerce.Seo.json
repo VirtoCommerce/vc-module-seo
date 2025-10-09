@@ -75,7 +75,8 @@
         "labels": {
           "stage": "Etapa",
           "description": "Descripción",
-          "no-data": "No hay datos disponibles"
+          "no-data": "No hay datos disponibles",
+          "items-count": "Número de elementos"
         },
         "descriptions": {
           "Original": "Etapa 1: Original - elementos SEO encontrados por el resolver.",
