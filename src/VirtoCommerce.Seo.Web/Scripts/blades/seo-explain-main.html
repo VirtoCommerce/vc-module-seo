@@ -1,0 +1,61 @@
+<div class="blade-content __medium-wide">
+  <div class="blade-inner">
+    <div class="inner-block">
+      <form class="form" name="seoExplainForm">
+        <div class="form-group clearfix" ng-init="setForm(seoExplainForm)">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.store' | translate }}</label>
+              <div class="form-input">
+                <input type="text" class="form-control" ng-model="blade.currentEntity.storeName" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.default-language' | translate }}</label>
+              <div class="form-input">
+                <input type="text" class="form-control" ng-model="blade.currentEntity.storeDefaultLanguage" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.language-code' | translate }}</label>
+              <div class="form-input">
+                <ui-select ng-model="blade.currentEntity.languageCode" required>
+                  <ui-select-match placeholder="{{ 'seo.blades.seo-explain-main.placeholders.select-language' | translate }}">{{$select.selected}}</ui-select-match>
+                  <ui-select-choices repeat="language in languages | filter: $select.search">
+                    <span ng-bind-html="language | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.permalink' | translate }}</label>
+              <div class="form-input">
+                <input type="text" class="form-control" ng-model="blade.currentEntity.permalink" placeholder="{{ 'seo.blades.seo-explain-main.placeholders.permalink' | translate }}" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button"
+                  class="btn btn-primary"
+                  ng-click="explain()"
+                  ng-disabled="!blade.currentEntity.storeId || !blade.currentEntity.languageCode || !blade.currentEntity.permalink || blade.isLoading">
+            {{ 'seo.blades.seo-explain-main.buttons.explain' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

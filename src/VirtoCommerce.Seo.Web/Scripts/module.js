@@ -9,6 +9,11 @@ angular.module(moduleName, [])
     .run(['platformWebApp.widgetService',
         function (widgetService) {
             widgetService.registerWidget({
+                controller: 'virtoCommerce.seo.seoExplainWidgetController',
+                template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/seo-explain-widget.html'
+            }, 'storeDetail');
+
+            widgetService.registerWidget({
                 controller: 'virtoCommerce.seo.brokenLinksWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/broken-links-widget.html'
             }, 'storeDetail');
@@ -17,5 +22,5 @@ angular.module(moduleName, [])
                 controller: 'virtoCommerce.seo.redirectRulesWidgetController',
                 template: 'Modules/$(VirtoCommerce.Seo)/Scripts/widgets/redirect-rules-widget.html'
             }, 'storeDetail');
-        }]
-    );
+        }
+    ]);

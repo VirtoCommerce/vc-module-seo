@@ -52,6 +52,52 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Depurar links de SEO",
+        "labels": {
+          "store": "Loja",
+          "default-language": "Idioma padrão",
+          "language-code": "Código do idioma",
+          "permalink": "Link permanente",
+          "result": "Resultado"
+        },
+        "placeholders": {
+          "select-language": "Selecionar idioma",
+          "permalink": "/caminho/para/pagina"
+        },
+        "buttons": {
+          "explain": "Depurar"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Estágios de depuração de links de SEO",
+        "labels": {
+          "stage": "Estágio",
+          "description": "Descrição",
+          "no-data": "Nada encontrado para a sua solicitação",
+          "items-count": "Número de itens"
+        },
+        "descriptions": {
+          "Original": "Fase 1: Original - Itens de SEO encontrados pelo resolvedor.",
+          "Filtered": "Fase 2: Filtrado - Itens de SEO que correspondem às regras da loja e do idioma.",
+          "Scored": "Fase 3: Pontuado - Calcular pontuações numéricas e prioridades de tipo de objeto.",
+          "FilteredScore": "Fase 4: Pontuação filtrada - Manter itens de SEO com pontuação positiva.",
+          "Ordered": "Fase 5: Ordenado - Ordenar SEO por pontuação e prioridade de tipo de objeto.",
+          "Final": "Fase 6: Final - Selecionar o primeiro como o Seo resolvido."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Itens de depuração de links de SEO",
+        "labels": {
+          "page-title": "Título da Página",
+          "semantic-url": "URL Semântico",
+          "object-type": "Tipo de Objeto",
+          "language": "Idioma",
+          "store": "Loja",
+          "score": "Pontuação",
+          "priority": "Prioridade"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +126,9 @@
       },
       "redirect-rule-widget": {
         "title": "Regras ativas"
+      },
+      "seo-explain-widget": {
+        "title": "Depurar links de SEO"
       }
     }
   },

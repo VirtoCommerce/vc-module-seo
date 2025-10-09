@@ -52,6 +52,52 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "SEO-Links debuggen",
+        "labels": {
+          "store": "Geschäft",
+          "default-language": "Standardsprache",
+          "language-code": "Sprachcode",
+          "permalink": "Permalink",
+          "result": "Ergebnis"
+        },
+        "placeholders": {
+          "select-language": "Sprache auswählen",
+          "permalink": "/pfad/zur/seite"
+        },
+        "buttons": {
+          "explain": "Debuggen"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Phasen des SEO-Link-Debuggings",
+        "labels": {
+          "stage": "Stufe",
+          "description": "Beschreibung",
+          "no-data": "Für Ihre Anfrage wurde nichts gefunden",
+          "items-count": "Anzahl der Elemente"
+        },
+        "descriptions": {
+          "Original": "Stufe 1: Original - Vom Resolver gefundene SEO-Elemente.",
+          "Filtered": "Stufe 2: Gefiltert - SEO-Elemente, die den Shop- und Sprachregeln entsprechen.",
+          "Scored": "Stufe 3: Bewertet - Berechnung der numerischen Bewertungen und Objekttyp-Prioritäten.",
+          "FilteredScore": "Stufe 4: Gefilterte Bewertung - Beibehaltung von SEO-Elementen mit positiver Bewertung.",
+          "Ordered": "Stufe 5: Geordnet - Sortierung der SEO nach Bewertung und Objekttyp-Priorität.",
+          "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Elemente des SEO-Link-Debuggings",
+        "labels": {
+          "page-title": "Seitentitel",
+          "semantic-url": "Semantische URL",
+          "object-type": "Objekttyp",
+          "language": "Sprache",
+          "store": "Geschäft",
+          "score": "Punktzahl",
+          "priority": "Priorität"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +126,9 @@
       },
       "redirect-rule-widget": {
         "title": "Aktive Regeln"
+      },
+      "seo-explain-widget": {
+        "title": "SEO-Links debuggen"
       }
     }
   },

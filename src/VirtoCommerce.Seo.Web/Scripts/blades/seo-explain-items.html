@@ -1,0 +1,23 @@
+<div class="blade-content __large-wide">
+  <div class="blade-inner">
+    <div class="inner-block" ng-init="gridOptions.columnDefs = [
+        { name: 'seoInfo.pageTitle', displayName: 'seo.blades.seo-explain-items.labels.page-title', headerTooltip: true },
+        { name: 'seoInfo.semanticUrl', displayName: 'seo.blades.seo-explain-items.labels.semantic-url', headerTooltip: true },
+        { name: 'seoInfo.objectType', displayName: 'seo.blades.seo-explain-items.labels.object-type', headerTooltip: true },
+        { name: 'seoInfo.languageCode', displayName: 'seo.blades.seo-explain-items.labels.language', headerTooltip: true },
+        { name: 'seoInfo.storeId', displayName: 'seo.blades.seo-explain-items.labels.store', headerTooltip: true },
+        { name: 'score', displayName: 'seo.blades.seo-explain-items.labels.score', type: 'number', headerTooltip: true },
+        { name: 'objectTypePriority', displayName: 'seo.blades.seo-explain-items.labels.priority', type: 'number', headerTooltip: true }
+    ]">
+
+      <div class="table-wrapper">
+        <div ui-grid="gridOptions" ui-grid-auto-resize></div>
+      </div>
+
+      <div ng-if="!blade.isLoading && (!blade.items || blade.items.length === 0)" class="mt-2">
+        <em>{{ 'seo.blades.seo-explain-result.labels.no-data' | translate }}</em>
+      </div>
+
+    </div>
+  </div>
+</div>

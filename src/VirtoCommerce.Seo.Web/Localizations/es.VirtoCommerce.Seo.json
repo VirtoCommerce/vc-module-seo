@@ -52,6 +52,52 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Depurar enlaces SEO",
+        "labels": {
+          "store": "Tienda",
+          "default-language": "Idioma predeterminado",
+          "language-code": "Código de idioma",
+          "permalink": "Enlace permanente",
+          "result": "Resultado"
+        },
+        "placeholders": {
+          "select-language": "Seleccionar idioma",
+          "permalink": "/ruta/a/pagina"
+        },
+        "buttons": {
+          "explain": "Depurar"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Etapas de depuración de enlaces SEO",
+        "labels": {
+          "stage": "Etapa",
+          "description": "Descripción",
+          "no-data": "No se ha encontrado nada para su solicitud",
+          "items-count": "Número de elementos"
+        },
+        "descriptions": {
+          "Original": "Etapa 1: Original - elementos SEO encontrados por el resolver.",
+          "Filtered": "Etapa 2: Filtrado - elementos SEO que coinciden con las reglas de la tienda y el idioma.",
+          "Scored": "Etapa 3: Puntuado - cálculo de puntuaciones numéricas y prioridades de tipo de objeto.",
+          "FilteredScore": "Etapa 4: Puntuación filtrada - mantener elementos SEO con puntuación positiva.",
+          "Ordered": "Etapa 5: Ordenado - ordenar SEO por puntuación y prioridad de tipo de objeto.",
+          "Final": "Etapa 6: Final - seleccionar el primero como el Seo resuelto."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Elementos de depuración de enlaces SEO",
+        "labels": {
+          "page-title": "Título de la página",
+          "semantic-url": "URL semántica",
+          "object-type": "Tipo de objeto",
+          "language": "Idioma",
+          "store": "Tienda",
+          "score": "Puntuación",
+          "priority": "Prioridad"
+        }
       }
     },
     "dialogs": {
@@ -80,26 +126,29 @@
       },
       "redirect-rule-widget": {
         "title": "Reglas activas"
-      }
-    }
-  },
-  "permissions": {
-    "seo:access": "Abrir el menú de SEO",
-    "seo:create": "Crear datos relacionados con SEO",
-    "seo:read": "Ver datos relacionados con SEO",
-    "seo:update": "Actualizar datos relacionados con SEO",
-    "seo:delete": "Eliminar datos relacionados con SEO"
-  },
-  "settings": {
-    "Seo": {
-      "Enabled": {
-        "title": "SEO habilitado",
-        "description": "Configuración de SEO habilitado"
       },
-      "BrokenLinkDetection": {
+      "seo-explain-widget": {
+        "title": "Depurar enlaces SEO"
+      }
+    },
+    "permissions": {
+      "seo:access": "Abrir el menú de SEO",
+      "seo:create": "Crear datos relacionados con SEO",
+      "seo:read": "Ver datos relacionados con SEO",
+      "seo:update": "Actualizar datos relacionados con SEO",
+      "seo:delete": "Eliminar datos relacionados con SEO"
+    },
+    "settings": {
+      "Seo": {
         "Enabled": {
-          "title": "Detectar enlaces rotos",
-          "description": "¿Debería la plataforma registrar solicitudes a páginas inexistentes?"
+          "title": "SEO habilitado",
+          "description": "Configuración de SEO habilitado"
+        },
+        "BrokenLinkDetection": {
+          "Enabled": {
+            "title": "Detectar enlaces rotos",
+            "description": "¿Debería la plataforma registrar solicitudes a páginas inexistentes?"
+          }
         }
       }
     }

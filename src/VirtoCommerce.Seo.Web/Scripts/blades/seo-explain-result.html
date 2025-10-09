@@ -1,0 +1,25 @@
+<div class="blade-content __large-wide">
+  <div class="blade-inner">
+    <div class="inner-block" ng-init="stageGridOptions.columnDefs = [
+        { name: 'stage', displayName: 'seo.blades.seo-explain-result.labels.stage', headerTooltip: true, cellTemplate: 'grid-column-stage' },
+        { name: 'itemsCount', displayName: 'seo.blades.seo-explain-result.labels.items-count', visible: false, headerTooltip: true, cellTemplate: 'grid-column-items-count', width: 100  }
+    ]">
+      <div class="table-wrapper" ui-grid="stageGridOptions" ui-grid-auto-resize></div>
+      <div ng-if="!blade.isLoading && (!gridStages || gridStages.length === 0)" class="mt-2">
+        <em>{{ 'seo.blades.seo-explain-result.labels.no-data' | translate }}</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="grid-column-stage">
+  <div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">
+    {{ 'seo.blades.seo-explain-result.descriptions.' + row.entity.stage | translate }}
+  </div>
+</script>
+
+<script type="text/ng-template" id="grid-column-items-count">
+  <div class="ui-grid-cell-contents" ng-click="grid.appScope.openStageDetails(row.entity)" style="cursor:pointer;">
+    {{ row.entity.items.length }}
+  </div>
+</script>

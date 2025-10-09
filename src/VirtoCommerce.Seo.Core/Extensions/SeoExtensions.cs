@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Models;
+using VirtoCommerce.Seo.Core.Models.Explain;
 
 namespace VirtoCommerce.Seo.Core.Extensions;
 
@@ -40,43 +41,154 @@ public static class SeoExtensions
         return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language);
     }
 
-    /// <summary>   
-    /// Returns SEO record with the highest score
+    /// <summary>
+    /// Evaluates a collection of <see cref="SeoInfo"/> records and selects the best match according to the
+    /// configured scoring rules and object-type priorities.
     /// </summary>
     public static SeoInfo GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
         string storeId,
         string storeDefaultLanguage,
         string language)
     {
-        // this is impossible situation
-        if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty())
-        {
-            return null;
-        }
+        var (seoInfo, _) = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language, explain: false);
 
-        return seoInfos
-            ?.Where(x => SeoCanBeFound(x, storeId, storeDefaultLanguage, language))
-            .Select(seoInfo => new
-            {
-                SeoRecord = seoInfo,
-                ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, seoInfo.ObjectType),
-                Score = seoInfo.CalculateScore(storeId, storeDefaultLanguage, language),
-            })
-            .Where(x => x.Score > 0)
-            .OrderByDescending(x => x.Score)
-            .ThenByDescending(x => x.ObjectTypePriority)
-            .Select(x => x.SeoRecord)
-            .FirstOrDefault();
+        return seoInfo;
     }
 
-    private static bool SeoCanBeFound(SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
+    /// <summary>
+    /// Executes the explainable evaluation  over the provided collection of <see cref="SeoInfo"/> records.
+    /// Returns a tuple where <c>SeoInfo</c> is the selected best matching SeoInfo (can be null)
+    /// and <c>explainResults</c> is a list of explain results (snapshots of each stage).
+    /// This method is intended to make the selection process introspectable for diagnostics and tests.
+    /// </summary>
+    public static (SeoInfo, IList<SeoExplainResult>) GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
+        string storeId,
+        string storeDefaultLanguage,
+        string language,
+        bool explain)
     {
-        // some conditions should be checked before calculating the score
+        List<SeoExplainResult> explainResults = explain ? [] : null;
+
+        if (storeId.IsNullOrEmpty() || storeDefaultLanguage.IsNullOrEmpty() || seoInfos == null)
+        {
+            return (null, explainResults);
+        }
+
+        var seoInfoList = seoInfos as IList<SeoInfo> ?? seoInfos.ToList();
+        if (seoInfoList.Count == 0)
+        {
+            return (null, explainResults);
+        }
+
+        // Stage 1: Original - snapshot of found SeoInfo records (no scores or priorities yet)
+        var stageOriginal = seoInfoList
+            .Select(seoInfo => new SeoExplainItem(seoInfo));
+        stageOriginal = AddExplain(SeoExplainStage.Original, stageOriginal);
+
+        // Stage 2: Filtered - keep only entries that match store and language criteria
+        var stageFiltered = stageOriginal
+            .Where(candidate => candidate.SeoInfo.MatchesStoreAndLanguage(storeId, storeDefaultLanguage, language));
+        stageFiltered = AddExplain(SeoExplainStage.Filtered, stageFiltered);
+
+        // Stage 3: Scored - compute object type priority and numeric score for each candidate
+        var stageScored = stageFiltered
+            .CalculatePriorityAndScore(storeId, storeDefaultLanguage, language, explain);
+        stageScored = AddExplain(SeoExplainStage.Scored, stageScored);
+
+        // Stage 4: FilteredScore - remove entries with non-positive score
+        var stageFilteredScore = stageScored
+            .Where(candidate => candidate.Score > 0);
+        stageFilteredScore = AddExplain(SeoExplainStage.FilteredScore, stageFilteredScore);
+
+        // Stage 5: Ordered - order by score (desc) then by object type priority (desc)
+        var stageOrdered = stageFilteredScore
+            .OrderByDescending(candidate => candidate.Score)
+            .ThenByDescending(candidate => candidate.ObjectTypePriority)
+            .AsEnumerable();
+        stageOrdered = AddExplain(SeoExplainStage.Ordered, stageOrdered);
+
+        // Stage 6: Final - take first candidate (if any)
+        var stageFinal = stageOrdered
+            .Where(candidate => candidate.SeoInfo != null)
+            .Take(1);
+        stageFinal = AddExplain(SeoExplainStage.Final, stageFinal);
+
+        var bestMatchingSeoInfo = stageFinal.FirstOrDefault()?.SeoInfo;
+
+        return (bestMatchingSeoInfo, explainResults);
+
+        IEnumerable<SeoExplainItem> AddExplain(SeoExplainStage stage, IEnumerable<SeoExplainItem> items)
+        {
+            // To reduce memory usage, avoid populating the explainResults list when an explanation is not requested.
+            if (explainResults is null)
+            {
+                return items;
+            }
+
+            var list = items.ToList();
+            explainResults.Add(new SeoExplainResult(stage, list));
+            return list;
+        }
+    }
+
+    /// <summary>
+    /// Determines whether the provided SeoInfo matches the store and language filtering rules.
+    /// Treats null or empty values as wildcards (matches everything).
+    /// </summary>
+    private static bool MatchesStoreAndLanguage(this SeoInfo seoInfo,
+        string storeId,
+        string storeDefaultLanguage,
+        string language)
+    {
+        if (seoInfo == null)
+        {
+            return false;
+        }
+
         return seoInfo.StoreId.Matches(storeId) &&
                seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }
 
-    private static int CalculateScore(this SeoInfo seoInfo, string storeId, string storeDefaultLanguage, string language)
+    private static bool MatchesAny(this string a, string b, string c)
+    {
+        return a.Matches(b) || a.Matches(c);
+    }
+
+    private static bool Matches(this string a, string b)
+    {
+        return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
+    }
+
+    /// <summary>
+    /// For each input item calculates object type priority (index in <see cref="OrderedObjectTypes"/>) and score.
+    /// If a <see cref="SeoExplainItem"/>'s SeoInfo is null it is preserved with a priority of -1 and score 0 to keep snapshots stable.
+    /// </summary>
+    private static IEnumerable<SeoExplainItem> CalculatePriorityAndScore(this IEnumerable<SeoExplainItem> items,
+        string storeId,
+        string storeDefaultLanguage,
+        string language,
+        bool explain)
+    {
+        foreach (var item in items)
+        {
+            var mutableItem = explain
+                ? new SeoExplainItem(item.SeoInfo)
+                : item;
+
+            if (mutableItem.SeoInfo != null)
+            {
+                mutableItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, mutableItem.SeoInfo.ObjectType);
+                mutableItem.Score = mutableItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
+            }
+
+            yield return mutableItem;
+        }
+    }
+
+    private static int CalculateScore(this SeoInfo seoInfo,
+        string storeId,
+        string storeDefaultLanguage,
+        string language)
     {
         // the order of this array is important
         // the first element has the highest priority
@@ -98,17 +210,6 @@ public static class SeoExtensions
         // method parameters are: storeId = "Store", storeDefaultLanguage = "en-US", language = "en-US"
         // result array is: [IsActive:true, StoreId:true, language:false, storeLanguage:false, seoLanguage:true]
         // it transforms into binary: 10011b = 19d
-
         return score;
-    }
-
-    private static bool MatchesAny(this string a, string b, string c)
-    {
-        return a.Matches(b) || a.Matches(c);
-    }
-
-    private static bool Matches(this string a, string b)
-    {
-        return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
     }
 }

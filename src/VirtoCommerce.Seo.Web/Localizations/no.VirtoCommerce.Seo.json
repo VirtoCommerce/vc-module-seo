@@ -52,6 +52,52 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
+      },
+      "seo-explain-main": {
+        "title": "Feilsøk SEO-lenker",
+        "labels": {
+          "store": "Butikk",
+          "default-language": "Standard språk",
+          "language-code": "Språkkode",
+          "permalink": "Permalenke",
+          "result": "Resultat"
+        },
+        "placeholders": {
+          "select-language": "Velg språk",
+          "permalink": "/sti/til/side"
+        },
+        "buttons": {
+          "explain": "Feilsøk"
+        }
+      },
+      "seo-explain-result": {
+        "title": "Feilsøkingstrinn for SEO-lenker",
+        "labels": {
+          "stage": "Stadium",
+          "description": "Beskrivelse",
+          "no-data": "Ingenting funnet for din forespørsel",
+          "items-count": "Antall elementer"
+        },
+        "descriptions": {
+          "Original": "Trinn 1: Original - SEO-elementer funnet av resolveren.",
+          "Filtered": "Trinn 2: Filtrert - SEO-elementer som samsvarer med butikk- og språkregler.",
+          "Scored": "Trinn 3: Poengsatt - beregn numeriske poengsummer og objekttypeprioriteter.",
+          "FilteredScore": "Trinn 4: Filtrert poengsum - behold SEO-elementer med positiv poengsum.",
+          "Ordered": "Trinn 5: Sortert - sorter SEO etter poengsum og objekttypeprioritet.",
+          "Final": "Trinn 6: Endelig - velg første som den løste Seo."
+        }
+      },
+      "seo-explain-items": {
+        "title": "Feilsøkingselementer for SEO-lenker",
+        "labels": {
+          "page-title": "Sidetittel",
+          "semantic-url": "Semantisk URL",
+          "object-type": "Objekttype",
+          "language": "Språk",
+          "store": "Butikk",
+          "score": "Poengsum",
+          "priority": "Prioritet"
+        }
       }
     },
     "dialogs": {
@@ -80,6 +126,9 @@
       },
       "redirect-rule-widget": {
         "title": "Aktive regler"
+      },
+      "seo-explain-widget": {
+        "title": "Feilsøk SEO-lenker"
       }
     }
   },
