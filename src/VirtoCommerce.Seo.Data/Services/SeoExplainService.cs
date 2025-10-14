@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VirtoCommerce.Platform.Core.Common;
@@ -20,6 +21,8 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         string languageCode,
         string permalink)
     {
+        ArgumentNullException.ThrowIfNull(permalink);
+
         var criteria = AbstractTypeFactory<SeoSearchCriteria>.TryCreateInstance();
         criteria.StoreId = storeId;
         criteria.LanguageCode = languageCode;
