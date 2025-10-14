@@ -23,7 +23,9 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         var criteria = AbstractTypeFactory<SeoSearchCriteria>.TryCreateInstance();
         criteria.StoreId = storeId;
         criteria.LanguageCode = languageCode;
-        criteria.Permalink = permalink;
+        criteria.Permalink = permalink.StartsWith("/")
+            ? permalink
+            : "/" + permalink;
 
         var seoInfos = await compositeSeoResolver.FindSeoAsync(criteria);
 

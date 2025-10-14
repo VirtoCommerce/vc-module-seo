@@ -26,6 +26,8 @@ angular.module('virtoCommerce.seo')
                 data: 'gridStages',
                 appScopeProvider: $scope,
                 enableColumnMenus: false,
+                enableColumnResizing: true,
+                enableColumnMoving: true,
                 enableSorting: false,
                 rowHeight: 40
             };

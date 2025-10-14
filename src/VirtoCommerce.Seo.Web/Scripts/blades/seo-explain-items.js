@@ -10,6 +10,8 @@ angular.module('virtoCommerce.seo')
             $scope.gridOptions = {
                 data: 'blade.items',
                 enableColumnMenus: false,
+                enableColumnResizing: true,
+                enableColumnMoving: true,
                 rowHeight: 40
             };
         }

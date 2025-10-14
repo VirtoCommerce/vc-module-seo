@@ -10,9 +10,7 @@
         { name: 'objectTypePriority', displayName: 'seo.blades.seo-explain-items.labels.priority', type: 'number', headerTooltip: true }
     ]">
 
-      <div class="table-wrapper">
-        <div ui-grid="gridOptions" ui-grid-auto-resize></div>
-      </div>
+      <div class="table-wrapper" ui-grid="gridOptions" ui-grid-auto-resize></div>
 
       <div ng-if="!blade.isLoading && (!blade.items || blade.items.length === 0)" class="mt-2">
         <em>{{ 'seo.blades.seo-explain-result.labels.no-data' | translate }}</em>
