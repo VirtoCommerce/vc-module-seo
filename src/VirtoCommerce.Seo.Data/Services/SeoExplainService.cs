@@ -15,15 +15,20 @@ namespace VirtoCommerce.Seo.Data.Services;
 /// </summary>
 public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
 {
-    public async Task<IList<SeoExplainResult>> ExplainAsync(
+    public Task<IList<SeoExplainResult>> ExplainAsync(
         string storeId,
         string storeDefaultLanguage,
         string languageCode,
         string permalink)
     {
         ArgumentNullException.ThrowIfNull(permalink);
+        return ExplainInternalAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+    }
 
+    private async Task<IList<SeoExplainResult>> ExplainInternalAsync(string storeId, string storeDefaultLanguage, string languageCode, string permalink)
+    {
         var criteria = AbstractTypeFactory<SeoSearchCriteria>.TryCreateInstance();
+
         criteria.StoreId = storeId;
         criteria.LanguageCode = languageCode;
         criteria.Permalink = permalink.StartsWith("/")
