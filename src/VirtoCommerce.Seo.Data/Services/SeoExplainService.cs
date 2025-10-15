@@ -32,8 +32,8 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         criteria.StoreId = storeId;
         criteria.LanguageCode = languageCode;
         criteria.Permalink = permalink.StartsWith("/")
-            ? permalink
-            : "/" + permalink;
+            ? permalink.Substring(1)
+            : permalink;
 
         var seoInfos = await compositeSeoResolver.FindSeoAsync(criteria);
 
