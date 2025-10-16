@@ -52,52 +52,6 @@
           "outbound": "",
           "redirect-rule-type": ""
         }
-      },
-      "seo-explain-main": {
-        "title": "Debug SEO links",
-        "labels": {
-          "store": "Store",
-          "default-language": "Default language",
-          "language-code": "Language code",
-          "permalink": "Permalink",
-          "result": "Result"
-        },
-        "placeholders": {
-          "select-language": "Select language",
-          "permalink": "/path/to/page"
-        },
-        "buttons": {
-          "explain": "Debug"
-        }
-      },
-      "seo-explain-result": {
-        "title": "Debug SEO links Stages",
-        "labels": {
-          "stage": "Stage",
-          "description": "Description",
-          "no-data": "Nothing found for your request",
-          "items-count": "Items Count"
-        },
-        "descriptions": {
-          "Original": "Stage 1: Original - SEO items found by the resolver.",
-          "Filtered": "Stage 2: Filtered - SEO items matching store and language rules.",
-          "Scored": "Stage 3: Scored - calculate numeric scores and object type priorities.",
-          "FilteredScore": "Stage 4: FilteredScore - keep SEO items with positive score.",
-          "Ordered": "Stage 5: Ordered - order SEO by score and object type priority.",
-          "Final": "Stage 6: Final - select first as the resolved Seo."
-        }
-      },
-      "seo-explain-items": {
-        "title": "Debug SEO links Items",
-        "labels": {
-          "page-title": "Page Title",
-          "semantic-url": "Semantic URL",
-          "object-type": "Object Type",
-          "language": "Language",
-          "store": "Store",
-          "score": "Score",
-          "priority": "Priority"
-        }
       }
     },
     "dialogs": {
@@ -126,9 +80,6 @@
       },
       "redirect-rule-widget": {
         "title": "Active rules"
-      },
-      "seo-explain-widget": {
-        "title": "Debug SEO links"
       }
     }
   },
@@ -142,13 +93,13 @@
   "settings": {
     "Seo": {
       "Enabled": {
-        "title": "SEO enabled",
-        "description": "SEO enabled setting"
+        "title": "SEO",
+        "description": "Enable/ disable SEO settings"
       },
       "BrokenLinkDetection": {
         "Enabled": {
-          "title": "Detect broken links",
-          "description": "Should the platform record requests to non-existent pages?"
+          "title": "Broken links detection",
+          "description": "Enable/ disable recording of requests to non-existent pages for analysis"
         }
       }
     }
