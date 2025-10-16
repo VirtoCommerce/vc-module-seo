@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VirtoCommerce.Platform.Core.Common;
@@ -14,16 +15,25 @@ namespace VirtoCommerce.Seo.Data.Services;
 /// </summary>
 public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
 {
-    public async Task<IList<SeoExplainResult>> ExplainAsync(
+    public Task<IList<SeoExplainResult>> ExplainAsync(
         string storeId,
         string storeDefaultLanguage,
         string languageCode,
         string permalink)
     {
+        ArgumentNullException.ThrowIfNull(permalink);
+        return ExplainInternalAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+    }
+
+    private async Task<IList<SeoExplainResult>> ExplainInternalAsync(string storeId, string storeDefaultLanguage, string languageCode, string permalink)
+    {
         var criteria = AbstractTypeFactory<SeoSearchCriteria>.TryCreateInstance();
+
         criteria.StoreId = storeId;
         criteria.LanguageCode = languageCode;
-        criteria.Permalink = permalink;
+        criteria.Permalink = permalink.StartsWith("/")
+            ? permalink.Substring(1)
+            : permalink;
 
         var seoInfos = await compositeSeoResolver.FindSeoAsync(criteria);
 

@@ -2,7 +2,7 @@
   <div class="blade-inner">
     <div class="inner-block" ng-init="stageGridOptions.columnDefs = [
         { name: 'stage', displayName: 'seo.blades.seo-explain-result.labels.stage', headerTooltip: true, cellTemplate: 'grid-column-stage' },
-        { name: 'itemsCount', displayName: 'seo.blades.seo-explain-result.labels.items-count', visible: false, headerTooltip: true, cellTemplate: 'grid-column-items-count', width: 100  }
+        { name: 'itemsCount', displayName: 'seo.blades.seo-explain-result.labels.items-count', headerTooltip: true, cellTemplate: 'grid-column-items-count', width: 100  }
     ]">
       <div class="table-wrapper" ui-grid="stageGridOptions" ui-grid-auto-resize></div>
       <div ng-if="!blade.isLoading && (!gridStages || gridStages.length === 0)" class="mt-2">
