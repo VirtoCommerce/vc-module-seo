@@ -19,7 +19,6 @@ angular.module('virtoCommerce.seo')
             if (organizationsApi) {
                 $scope.organizationsAvailable = true;
                 organizationsApi.search({}, function (data) {
-                    console.log(data);
                     $scope.organizations = data.results;
                 });
             }
