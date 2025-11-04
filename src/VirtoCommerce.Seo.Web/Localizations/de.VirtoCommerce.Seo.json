@@ -60,11 +60,13 @@
           "default-language": "Standardsprache",
           "language-code": "Sprachcode",
           "permalink": "Permalink",
-          "result": "Ergebnis"
+          "result": "Ergebnis",
+          "organization": "Organisationsname"
         },
         "placeholders": {
           "select-language": "Sprache auswählen",
-          "permalink": "/pfad/zur/seite"
+          "permalink": "/pfad/zur/seite",
+          "organization": "Organisationsname"
         },
         "buttons": {
           "explain": "Debuggen"
@@ -96,7 +98,8 @@
           "language": "Sprache",
           "store": "Geschäft",
           "score": "Punktzahl",
-          "priority": "Priorität"
+          "priority": "Priorität",
+          "organization": "Organisationsname"
         }
       }
     },

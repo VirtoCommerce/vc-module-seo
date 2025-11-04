@@ -60,11 +60,13 @@
           "default-language": "Langue par défaut",
           "language-code": "Code de langue",
           "permalink": "Permalien",
-          "result": "Résultat"
+          "result": "Résultat",
+          "organization": "Nom de l'organisation"
         },
         "placeholders": {
           "select-language": "Sélectionner la langue",
-          "permalink": "/chemin/vers/page"
+          "permalink": "/chemin/vers/page",
+          "organization": "Nom de l'organisation"
         },
         "buttons": {
           "explain": "Déboguer"
@@ -96,7 +98,8 @@
           "language": "Langue",
           "store": "Boutique",
           "score": "Score",
-          "priority": "Priorité"
+          "priority": "Priorité",
+          "organization": "Nom de l'organisation"
         }
       }
     },

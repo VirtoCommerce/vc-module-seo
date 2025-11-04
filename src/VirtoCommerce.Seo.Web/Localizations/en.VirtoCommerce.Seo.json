@@ -60,11 +60,13 @@
           "default-language": "Default language",
           "language-code": "Language code",
           "permalink": "Permalink",
-          "result": "Result"
+          "result": "Result",
+          "organization": "Organization"
         },
         "placeholders": {
           "select-language": "Select language",
-          "permalink": "/path/to/page"
+          "permalink": "/path/to/page",
+          "organization": "Organization name"
         },
         "buttons": {
           "explain": "Debug"
@@ -96,7 +98,8 @@
           "language": "Language",
           "store": "Store",
           "score": "Score",
-          "priority": "Priority"
+          "priority": "Priority",
+          "organization": "Organization"
         }
       }
     },

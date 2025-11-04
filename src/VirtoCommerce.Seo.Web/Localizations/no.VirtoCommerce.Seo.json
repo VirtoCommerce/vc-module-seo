@@ -60,11 +60,13 @@
           "default-language": "Standard språk",
           "language-code": "Språkkode",
           "permalink": "Permalenke",
-          "result": "Resultat"
+          "result": "Resultat",
+          "organization": "Organisasjon"
         },
         "placeholders": {
           "select-language": "Velg språk",
-          "permalink": "/sti/til/side"
+          "permalink": "/sti/til/side",
+          "organization": "Organisasjonsnavn"
         },
         "buttons": {
           "explain": "Feilsøk"
@@ -96,7 +98,8 @@
           "language": "Språk",
           "store": "Butikk",
           "score": "Poengsum",
-          "priority": "Prioritet"
+          "priority": "Prioritet",
+          "organization": "Organisasjon"
         }
       }
     },

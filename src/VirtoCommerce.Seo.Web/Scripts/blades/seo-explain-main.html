@@ -47,6 +47,21 @@
             </div>
           </div>
         </div>
+        <div class="form-group clearfix">
+          <div class="column">
+            <div class="form-group">
+              <label class="form-label">{{ 'seo.blades.seo-explain-main.labels.organization' | translate }}</label>
+              <div class="form-input">
+                <ui-select ng-disabled="{{!organizationsAvailable}}" ng-model="blade.currentEntity.organizationId">
+                  <ui-select-match placeholder="{{ 'seo.blades.seo-explain-main.placeholders.organization' | translate }}">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="organization in organizations | filter: $select.search">
+                    <span ng-bind-html="organization.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="form-group">
           <button type="button"
                   class="btn btn-primary"

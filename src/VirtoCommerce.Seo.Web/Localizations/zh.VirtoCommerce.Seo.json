@@ -60,11 +60,13 @@
           "default-language": "默认语言",
           "language-code": "语言代码",
           "permalink": "永久链接",
-          "result": "结果"
+          "result": "结果",
+          "organization": "組織"
         },
         "placeholders": {
           "select-language": "选择语言",
-          "permalink": "/路径/到/页面"
+          "permalink": "/路径/到/页面",
+          "organization": "组织名称"
         },
         "buttons": {
           "explain": "调试"
@@ -96,7 +98,8 @@
           "language": "语言",
           "store": "店铺",
           "score": "分数",
-          "priority": "优先级"
+          "priority": "优先级",
+          "organization": "組織"
         }
       }
     },

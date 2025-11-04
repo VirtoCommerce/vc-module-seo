@@ -60,11 +60,13 @@
           "default-language": "デフォルト言語",
           "language-code": "言語コード",
           "permalink": "パーマリンク",
-          "result": "結果"
+          "result": "結果",
+          "organization": "組織名"
         },
         "placeholders": {
           "select-language": "言語を選択",
-          "permalink": "/ページへのパス"
+          "permalink": "/ページへのパス",
+          "organization": "組織"
         },
         "buttons": {
           "explain": "デバッグ"
@@ -96,7 +98,8 @@
           "language": "言語",
           "store": "店舗",
           "score": "スコア",
-          "priority": "優先度"
+          "priority": "優先度",
+          "organization": "組織名"
         }
       }
     },

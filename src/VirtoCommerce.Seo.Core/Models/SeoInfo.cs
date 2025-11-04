@@ -1,10 +1,9 @@
 using System;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Domain;
 
 namespace VirtoCommerce.Seo.Core.Models;
 
-public class SeoInfo : AuditableEntity, IHasLanguage, ICloneable
+public class SeoInfo : AuditableEntity, IHasLanguageCode, ICloneable
 {
     public string Name { get; set; }
 
@@ -39,6 +38,11 @@ public class SeoInfo : AuditableEntity, IHasLanguage, ICloneable
     /// Tenant StoreId which SEO defined
     /// </summary>
     public string StoreId { get; set; }
+
+    /// <summary>
+    /// Organization id
+    /// </summary>
+    public string OrganizationId { get; set; }
 
     /// <summary>
     /// SEO related object id
