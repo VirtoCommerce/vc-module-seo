@@ -15,7 +15,12 @@ angular.module('virtoCommerce.seo')
             $scope.organizations = [];
 
             $scope.organizationsAvailable = false;
-            var organizationsApi = $injector.get('virtoCommerce.customerModule.organizations');
+
+            var organizationsApiName = 'virtoCommerce.customerModule.organizations';
+            var organizationsApi = $injector.has(organizationsApiName)
+                ? $injector.get(organizationsApiName)
+                : null;
+
             if (organizationsApi) {
                 $scope.organizationsAvailable = true;
                 organizationsApi.search({}, function (data) {
