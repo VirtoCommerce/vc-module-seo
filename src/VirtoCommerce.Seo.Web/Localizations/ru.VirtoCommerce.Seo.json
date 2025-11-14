@@ -60,11 +60,13 @@
           "default-language": "Язык по умолчанию",
           "language-code": "Код языка",
           "permalink": "Cсылка",
-          "result": "Результат"
+          "result": "Результат",
+          "organization": "Организация"
         },
         "placeholders": {
           "select-language": "Выберите язык",
-          "permalink": "/путь/к/странице"
+          "permalink": "/путь/к/странице",
+          "organization": "Выберите организацию"
         },
         "buttons": {
           "explain": "Отладить"
@@ -96,7 +98,8 @@
           "language": "Язык",
           "store": "Магазин",
           "score": "Оценка",
-          "priority": "Приоритет"
+          "priority": "Приоритет",
+          "organization": "Организация"
         }
       }
     },

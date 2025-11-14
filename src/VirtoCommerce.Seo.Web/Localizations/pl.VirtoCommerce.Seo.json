@@ -60,11 +60,13 @@
           "default-language": "Język domyślny",
           "language-code": "Kod języka",
           "permalink": "Link stały",
-          "result": "Wynik"
+          "result": "Wynik",
+          "organization": "Organizacja"
         },
         "placeholders": {
           "select-language": "Wybierz język",
-          "permalink": "/sciezka/do/strony"
+          "permalink": "/sciezka/do/strony",
+          "organization": "Wybierz organizację"
         },
         "buttons": {
           "explain": "Debuguj"
@@ -96,7 +98,8 @@
           "language": "Język",
           "store": "Sklep",
           "score": "Wynik",
-          "priority": "Priorytet"
+          "priority": "Priorytet",
+          "organization": "Organizacja"
         }
       }
     },

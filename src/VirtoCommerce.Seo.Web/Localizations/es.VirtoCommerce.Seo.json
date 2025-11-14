@@ -60,11 +60,13 @@
           "default-language": "Idioma predeterminado",
           "language-code": "Código de idioma",
           "permalink": "Enlace permanente",
-          "result": "Resultado"
+          "result": "Resultado",
+          "organization": "Organización"
         },
         "placeholders": {
           "select-language": "Seleccionar idioma",
-          "permalink": "/ruta/a/pagina"
+          "permalink": "/ruta/a/pagina",
+          "organization": "Seleccionar organización"
         },
         "buttons": {
           "explain": "Depurar"
@@ -96,7 +98,8 @@
           "language": "Idioma",
           "store": "Tienda",
           "score": "Puntuación",
-          "priority": "Prioridad"
+          "priority": "Prioridad",
+          "organization": "Organización"
         }
       }
     },

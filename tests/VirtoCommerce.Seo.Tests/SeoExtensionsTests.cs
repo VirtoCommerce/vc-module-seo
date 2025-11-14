@@ -353,5 +353,49 @@ namespace VirtoCommerce.Seo.Tests
             Assert.NotNull(result);
             Assert.Equal("Brands", result.ObjectType);
         }
+
+        [Fact]
+        public void GetBestMatchingInfo_Organization_WithoutOne()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var organization = "organization";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new() { ObjectType = "Pages", StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "page", OrganizationId = organization},
+                new() { ObjectType = "Pages", StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "page"},
+            };
+
+            // Act
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language: null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Null(result.OrganizationId);
+        }
+
+        [Fact]
+        public void GetBestMatchingInfo_Organization_WithOrganization()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var organization = "organization";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new() { ObjectType = "Pages", StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "page", OrganizationId = organization},
+                new() { ObjectType = "Pages", StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "page"},
+            };
+
+            // Act
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, organization, storeDefaultLanguage, language: null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(organization, result.OrganizationId);
+        }
     }
 }

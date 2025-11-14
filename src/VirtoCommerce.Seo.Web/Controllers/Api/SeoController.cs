@@ -89,11 +89,12 @@ public class SeoController(
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<IList<SeoExplainResult>>> GetExplainAsync(
         [FromQuery] string storeId,
+        [FromQuery] string organizationId,
         [FromQuery] string storeDefaultLanguage,
         [FromQuery] string languageCode,
         [FromQuery] string permalink)
     {
-        var response = await seoExplainService.ExplainAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+        var response = await seoExplainService.ExplainAsync(storeId, organizationId, storeDefaultLanguage, languageCode, permalink);
 
         return Ok(response);
     }

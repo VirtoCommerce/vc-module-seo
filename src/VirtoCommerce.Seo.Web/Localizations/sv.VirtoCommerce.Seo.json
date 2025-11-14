@@ -60,11 +60,13 @@
           "default-language": "Standardspråk",
           "language-code": "Språkkod",
           "permalink": "Permalänk",
-          "result": "Resultat"
+          "result": "Resultat",
+          "organization": "Organisation"
         },
         "placeholders": {
           "select-language": "Välj språk",
-          "permalink": "/sökväg/till/sida"
+          "permalink": "/sökväg/till/sida",
+          "organization": "Välj organisation"
         },
         "buttons": {
           "explain": "Felsök"
@@ -96,7 +98,8 @@
           "language": "Språk",
           "store": "Butik",
           "score": "Poäng",
-          "priority": "Prioritet"
+          "priority": "Prioritet",
+          "organization": "Organisation"
         }
       }
     },

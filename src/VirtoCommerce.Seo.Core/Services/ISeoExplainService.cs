@@ -10,5 +10,5 @@ public interface ISeoExplainService
     /// Produces an explain response for the given store, default language, requested language and permalink.
     /// The response is a list of per-stage snapshots that describe how the best matching <see cref="VirtoCommerce.Seo.Core.Models.SeoInfo"/> was selected.
     /// </summary>
-    public Task<IList<SeoExplainResult>> ExplainAsync(string storeId, string storeDefaultLanguage, string languageCode, string permalink);
+    public Task<IList<SeoExplainResult>> ExplainAsync(string storeId, string organizationId, string storeDefaultLanguage, string languageCode, string permalink);
 }
