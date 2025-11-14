@@ -61,12 +61,12 @@
           "language-code": "Código do idioma",
           "permalink": "Link permanente",
           "result": "Resultado",
-          "organization": "Nome da organização"
+          "organization": "Organização"
         },
         "placeholders": {
           "select-language": "Selecionar idioma",
           "permalink": "/caminho/para/pagina",
-          "organization": "Organização"
+          "organization": "Selecionar organização"
         },
         "buttons": {
           "explain": "Depurar"

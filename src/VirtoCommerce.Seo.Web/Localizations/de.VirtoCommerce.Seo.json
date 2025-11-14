@@ -61,12 +61,12 @@
           "language-code": "Sprachcode",
           "permalink": "Permalink",
           "result": "Ergebnis",
-          "organization": "Organisationsname"
+          "organization": "Organisation"
         },
         "placeholders": {
           "select-language": "Sprache auswählen",
           "permalink": "/pfad/zur/seite",
-          "organization": "Organisationsname"
+          "organization": "Organisation auswählen"
         },
         "buttons": {
           "explain": "Debuggen"
@@ -99,7 +99,7 @@
           "store": "Geschäft",
           "score": "Punktzahl",
           "priority": "Priorität",
-          "organization": "Organisationsname"
+          "organization": "Organisation"
         }
       }
     },

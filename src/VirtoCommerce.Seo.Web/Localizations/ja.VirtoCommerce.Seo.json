@@ -61,12 +61,12 @@
           "language-code": "言語コード",
           "permalink": "パーマリンク",
           "result": "結果",
-          "organization": "組織名"
+          "organization": "会社"
         },
         "placeholders": {
           "select-language": "言語を選択",
           "permalink": "/ページへのパス",
-          "organization": "組織"
+          "organization": "会社を選択"
         },
         "buttons": {
           "explain": "デバッグ"
@@ -99,7 +99,7 @@
           "store": "店舗",
           "score": "スコア",
           "priority": "優先度",
-          "organization": "組織名"
+          "organization": "会社"
         }
       }
     },

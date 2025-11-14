@@ -61,12 +61,12 @@
           "language-code": "Code de langue",
           "permalink": "Permalien",
           "result": "Résultat",
-          "organization": "Nom de l'organisation"
+          "organization": "Organisation"
         },
         "placeholders": {
           "select-language": "Sélectionner la langue",
           "permalink": "/chemin/vers/page",
-          "organization": "Nom de l'organisation"
+          "organization": "Sélectionner l'organisation"
         },
         "buttons": {
           "explain": "Déboguer"
@@ -99,7 +99,7 @@
           "store": "Boutique",
           "score": "Score",
           "priority": "Priorité",
-          "organization": "Nom de l'organisation"
+          "organization": "Organisation"
         }
       }
     },

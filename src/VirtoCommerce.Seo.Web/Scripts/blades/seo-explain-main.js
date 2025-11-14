@@ -11,9 +11,11 @@ angular.module('virtoCommerce.seo')
 
             var store = blade.store;
 
-            $scope.languages = store.languages;
-            $scope.organizations = [];
+            $scope.languages = store.languages || [];
 
+			// MVP approach. seo module should not know about the customer module
+			// will be changed in the future release
+            $scope.organizations = [];
             $scope.organizationsAvailable = false;
 
             var organizationsApiName = 'virtoCommerce.customerModule.organizations';

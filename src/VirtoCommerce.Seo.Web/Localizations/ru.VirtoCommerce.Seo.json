@@ -61,12 +61,12 @@
           "language-code": "Код языка",
           "permalink": "Cсылка",
           "result": "Результат",
-          "organization": "Название организации"
+          "organization": "Организация"
         },
         "placeholders": {
           "select-language": "Выберите язык",
           "permalink": "/путь/к/странице",
-          "organization": "Название организации"
+          "organization": "Выберите организацию"
         },
         "buttons": {
           "explain": "Отладить"
