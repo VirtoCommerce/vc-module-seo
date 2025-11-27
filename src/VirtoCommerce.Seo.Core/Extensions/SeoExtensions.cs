@@ -128,9 +128,9 @@ public static class SeoExtensions
             .Select(seoInfo => new SeoExplainItem(seoInfo));
         stageOriginal = AddExplain(SeoExplainStage.Original, stageOriginal);
 
-        // Stage 2: Filtered - keep only entries that match store and language criteria
+        // Stage 2: Filtered - keep only entries that match store, organizationId and language criteria
         var stageFiltered = stageOriginal
-            .Where(candidate => candidate.SeoInfo.MatchesStoreAndLanguage(storeId, storeDefaultLanguage, language));
+            .Where(candidate => candidate.SeoInfo.MatchesStoreAndLanguage(storeId, organizationId, storeDefaultLanguage, language));
         stageFiltered = AddExplain(SeoExplainStage.Filtered, stageFiltered);
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
@@ -180,6 +180,7 @@ public static class SeoExtensions
     /// </summary>
     private static bool MatchesStoreAndLanguage(this SeoInfo seoInfo,
         string storeId,
+        string organizationId,
         string storeDefaultLanguage,
         string language)
     {
@@ -189,6 +190,7 @@ public static class SeoExtensions
         }
 
         return seoInfo.StoreId.Matches(storeId) &&
+               seoInfo.OrganizationId.MatchesStrict(organizationId) &&
                seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }
 
@@ -200,6 +202,13 @@ public static class SeoExtensions
     private static bool Matches(this string a, string b)
     {
         return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
+    }
+
+    private static bool MatchesStrict(this string a, string b)
+    {
+        return a.IsNullOrEmpty()
+               || (a.IsNullOrEmpty() && b.IsNullOrEmpty())
+               || a.EqualsIgnoreCase(b);
     }
 
     /// <summary>
