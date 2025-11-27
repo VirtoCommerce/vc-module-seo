@@ -130,7 +130,7 @@ public static class SeoExtensions
 
         // Stage 2: Filtered - keep only entries that match store, organizationId and language criteria
         var stageFiltered = stageOriginal
-            .Where(candidate => candidate.SeoInfo.MatchesStoreAndLanguage(storeId, organizationId, storeDefaultLanguage, language));
+            .Where(candidate => candidate.SeoInfo.MatchesToParameters(storeId, organizationId, storeDefaultLanguage, language));
         stageFiltered = AddExplain(SeoExplainStage.Filtered, stageFiltered);
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
@@ -178,7 +178,7 @@ public static class SeoExtensions
     /// Determines whether the provided SeoInfo matches the store and language filtering rules.
     /// Treats null or empty values as wildcards (matches everything).
     /// </summary>
-    private static bool MatchesStoreAndLanguage(this SeoInfo seoInfo,
+    private static bool MatchesToParameters(this SeoInfo seoInfo,
         string storeId,
         string organizationId,
         string storeDefaultLanguage,
