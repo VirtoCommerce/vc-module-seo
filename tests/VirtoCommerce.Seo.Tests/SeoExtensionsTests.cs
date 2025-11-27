@@ -397,5 +397,25 @@ namespace VirtoCommerce.Seo.Tests
             Assert.NotNull(result);
             Assert.Equal(organization, result.OrganizationId);
         }
+
+        [Fact]
+        public void GetBestMatchingInfo_Organization_SinglePageWithOrganization()
+        {
+            // Arrange
+            var storeId = "Store1";
+            var storeDefaultLanguage = "en-US";
+            var organization = "organization";
+
+            var seoInfos = new List<SeoInfo>
+            {
+                new() { ObjectType = "Pages", StoreId = storeId, LanguageCode = "en-US", SemanticUrl = "page", OrganizationId = organization},
+            };
+
+            // Act
+            var result = seoInfos.GetBestMatchingSeoInfo(storeId, null, storeDefaultLanguage, language: null);
+
+            // Assert
+            Assert.Null(result);
+        }
     }
 }
