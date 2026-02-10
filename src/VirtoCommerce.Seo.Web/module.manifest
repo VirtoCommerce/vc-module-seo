@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
   <id>VirtoCommerce.Seo</id>
-  <version>3.813.0</version>
+  <version>3.1000.0</version>
   <version-tag></version-tag>
 
-  <platformVersion>3.917.0</platformVersion>
+  <platformVersion>3.1002.0</platformVersion>
   <dependencies>
   </dependencies>
 
   <title>SEO</title>
-  <description>VirtoCommerce SEO</description>
+  <description>Infrastructure for managing SEO metadata across the platform</description>
 
   <authors>
     <author>Basil Kotov</author>
@@ -26,7 +26,7 @@
   <moduleType>VirtoCommerce.Seo.Web.Module, VirtoCommerce.Seo.Web</moduleType>
 
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2025 Virto Commerce. All rights reserved</copyright>
+  <copyright>Copyright © 2025-2026 Virto Commerce. All rights reserved</copyright>
   <tags>extension module</tags>
   <groups>
     <group>commerce</group>
