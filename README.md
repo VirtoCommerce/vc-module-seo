@@ -1,89 +1,127 @@
-# SEO Module
+# VirtoCommerce SEO Module
 
-The **VirtoCommerce SEO Module** provides a flexible infrastructure for managing SEO-related data across the platform. It supports SEO metadata (e.g., slugs, titles, meta descriptions) for various entities such as catalogs, categories, products, and custom pages.
+[![CI status](https://github.com/VirtoCommerce/vc-module-seo/workflows/Module%20CI/badge.svg?branch=dev)](https://github.com/VirtoCommerce/vc-module-seo/actions?query=workflow%3A"Module+CI") [![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-seo&metric=alert_status&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-seo) [![Reliability rating](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-seo&metric=reliability_rating&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-seo) [![Security rating](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-seo&metric=security_rating&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-seo) [![Sqale rating](https://sonarcloud.io/api/project_badges/measure?project=VirtoCommerce_vc-module-seo&metric=sqale_rating&branch=dev)](https://sonarcloud.io/dashboard?id=VirtoCommerce_vc-module-seo)
+
+## Overview
+
+The VirtoCommerce SEO module provides centralized infrastructure for managing SEO metadata across the platform. It handles permalink resolution through a multi-stage scoring pipeline, URL redirect rules (static and regex-based), and automatic broken link detection via event-driven background jobs. The module supports multiple database providers and integrates into the Virto Commerce platform as a standalone extension with its own REST API, export/import capabilities, and Admin UI widgets.
 
 ## Key Features
 
-- **SEO Info Lookup**: Efficient retrieval of SEO records matching given criteria such as `permalink`, `storeId`, `language`, and others.
-- **Best Match Resolution**: Logic to determine the most relevant SEO entry when multiple matches are found.
-- **Duplicate Detection**: Extensible interface `ISeoDuplicatesDetector` for identifying and resolving conflicting SEO entries.
-- **Broken Links Detection and management** : Identify and report dead or misconfigured SEO links.
-- **Custom rewrite rules**: detect inbound requests by rules and return redirectUrl.
-- **Debug Seo links**: explain and troubleshoot permalink resolving using Debug SEO link widget.
+* **SEO Metadata Resolution** — Resolves SEO records (slugs, page titles, meta descriptions, keywords) per entity, store, language, and organization using a composite resolver that aggregates multiple `ISeoResolver` implementations.
+* **Best-Match Scoring Pipeline** — A 6-stage pipeline (Original, Filtered, Scored, FilteredScore, Ordered, Final) selects the most relevant SEO entry when multiple candidates match a permalink, with configurable object type priorities.
+* **Redirect Rules** — Static or regex-based URL rewrite rules with priority ordering and capture group substitution (`$1`, `$2`, etc.), validated via FluentValidation.
+* **Broken Link Detection** — Event-driven tracking of unresolved permalinks. When no SEO info is found, a `SeoInfoNotFoundEvent` triggers a Hangfire background job that records or updates the broken link with hit count and timestamp.
+* **SEO Duplicates Detection** — Extensible `ISeoDuplicatesDetector` interface for identifying conflicting SEO entries within an object's relationships (default implementation is a no-op).
+* **Explain / Debug Tool** — REST API endpoint and Admin UI widget that traces the full permalink resolution pipeline stage by stage for diagnostics.
+* **Export / Import** — Streaming JSON-based export and import of redirect rules and broken links with batch processing (100 items per batch) and progress reporting.
+* **Multi-Database Support** — EF Core providers for SQL Server, MySQL, and PostgreSQL with version-controlled migrations.
 
 ## Configuration
 
-Currently, the only configurable setting is the priority order for resolving SEO entries when multiple matches exist for a given permalink.
+### Application Settings
 
-Use the following configuration key:
-
-```
-Seo:SeoInfoResolver:ObjectTypePriority
-```
-
-### Default value:
-
-```
-"Pages", "ContentFile", "Catalog", "Category", "CatalogProduct"
-```
-
-This setting defines the precedence for resolving SEO entries. For example, if both a `Page` and a `Category` are associated with the same permalink, the system will prioritize and display the `Page` because it has higher priority in the list.
-
-## Important note
-
-The SEO module does not affect server-side routing or HTTP status codes (such as 301 redirects). In a storefrontless architecture, all incoming requests are handled the same way — the server always returns the initial page of the SPA frontend. Then, the frontend determines what to display using the getSlugInfo GraphQL query.
-
-The SEO module affects the result of getSlugInfo, meaning it informs the frontend which page type should be shown for a given URL and whether a client-side redirect should happen (e.g., from `/old-url` to `/new-url`). However, it does not affect what the server returns, and cannot trigger server-side HTTP 301/302 redirects on its own.
-
-If server-side redirects are required (with correct HTTP status codes), this currently needs to be handled at the frontend server level (e.g., via IIS, Nginx, or similar), or via edge middleware in the cloud (e.g., Azure Front Door, Cloudflare Workers, etc.).
-
-Here is some info about it:
-
-https://www.virtocommerce.org/t/virto-commerce-frontend-spa-architecture-for-seo-and-404-handling/793
-
-## Rewrite rules
-
-You can configure rewrite rules to intercept incoming requests and respond with a redirect to a new URL.
-
-![UI for rewrite rules](docs/images/rewrite-rules.png)
-
-These rules are evaluated in the `getSlugInfo` GraphQL query. They are checked **before** attempting to resolve a general SEO object. If a matching rule is found, the user will receive a response containing a `redirectUrl`.
-
-## Debug SEO link
-
-This feature provides Content managers, QA, and Support engineers with a visual tool to analyze, explain, and troubleshoot permalink resolving within a specific store and language context. It helps to understand how SEO links are selected and resolved step by step.
-
-Users can trace how the SEO resolver works internally, validate expected behavior, and identify issues related to:
-* Incorrect SEO item filtering.
-* Unexpected priority resolution.
-* Missing or duplicated permalinks.
-
-The Debug (Explain) Permalink Tool is implemented as either Store Widget or Rest API within the Virto Commerce Admin. It allows users to test permalink resolution for any store and understand the internal stages of the SEO link selection process.
-
-<img width="832" height="612" alt="image" src="https://github.com/user-attachments/assets/b6242a85-f3cb-4c49-ad6a-e54d861aff4e" />
-
-### Resolution Stages
-When the user clicks `Debug`, a new blade opens titled `Debug SEO Links Stages`. This blade displays the full step-by-step process of permalink resolution, including intermediate results and item counts at each stage.
-
-<img width="1084" height="426" alt="image" src="https://github.com/user-attachments/assets/6fe4e20f-1dc3-4401-81fd-beb051ed70bf" />
-
-Resolution Stages:
-
-|Stage|Name|Description|Output|
+| Setting | Type | Default | Description |
 |---|---|---|---|
-|1|Original|Retrieves all SEO items found by the resolver. No filtering applied.|	All SEO items from DB.|
-|2|Filtered|Filters SEO items by store and language rules.|	Items matching store & language.|
-|3|Scored|Calculates numeric scores and object type priorities for each item.|	Items with assigned scores.|
-|4|FilteredScore| Keeps only items with a positive score.|SEO items with score > 0.|
-|5|Ordered|Orders remaining items by score and object type priority.|	Sorted list by priority.|
-|6|Final|Selects the highest-priority SEO item as the resolved permalink.|	The final resolved SEO record.|
+| `Seo.Enabled` | Boolean | `true` | Enables or disables the SEO module globally |
+| `Seo.BrokenLinkDetection.Enabled` | Boolean | `true` | Enables or disables automatic broken link recording when SEO info is not found |
 
-Each stage row displays the number of SEO items processed.
-Clicking on a stage opens a detailed blade showing the items at that specific step.
+**Object Type Priority (appsettings.json):**
 
-## Future Enhancements
-- UI for managing SEO priorities
-- Integration with sitemap and robots.txt generation
+| Setting | Type | Default | Description |
+|---|---|---|---|
+| `Seo:SeoInfoResolver:ObjectTypePriority` | `string[]` | `["CatalogProduct", "Category", "Catalog", "Brand", "Brands", "ContentFile", "Pages"]` | Configures the priority order for resolving SEO entries when multiple object types match. The last element has the highest priority. |
+
+### Permissions
+
+| Permission | Description |
+|---|---|
+| `seo:access` | Access the SEO module |
+| `seo:create` | Create SEO records, broken links, and redirect rules |
+| `seo:read` | Read SEO records, broken links, redirect rules, and duplicates |
+| `seo:update` | Update SEO records, broken links, and redirect rules |
+| `seo:delete` | Delete broken links and redirect rules |
+
+## Architecture
+
+### Key Flow
+
+1. A client sends a request to resolve a permalink (e.g., via `POST /api/seoinfos/search` or a GraphQL query).
+2. `CompositeSeoResolver` fans out the search criteria to all registered `ISeoResolver` implementations in parallel and merges the results.
+3. If no SEO info is found, a `SeoInfoNotFoundEvent` is published.
+4. `SeoInfoNotFoundEventHandler` receives the event, checks the `BrokenLinkDetection.Enabled` setting, and enqueues a Hangfire background job to create or update a `BrokenLink` record (incrementing `HitCount` and updating `LastHitDate`).
+5. If SEO info records are found, the best-match scoring pipeline in `SeoExtensions.GetBestMatchingSeoInfo` is applied:
+   - **Stage 1 (Original):** Snapshot of all returned candidates.
+   - **Stage 2 (Filtered):** Filter by store, organization, and language.
+   - **Stage 3 (Scored):** Calculate numeric score based on IsActive, StoreId match, OrganizationId match, and language match; assign object type priority from the configured priority list.
+   - **Stage 4 (FilteredScore):** Remove candidates with non-positive scores.
+   - **Stage 5 (Ordered):** Sort by score descending, then by object type priority descending.
+   - **Stage 6 (Final):** Select the single best-match candidate.
+6. For redirect resolution, `RedirectResolver` searches active redirect rules by store, sorted by priority descending, and evaluates each rule (static exact match or regex match with group substitution).
+
+## Components
+
+### Projects
+
+| Project | Layer | Purpose |
+|---|---|---|
+| VirtoCommerce.Seo.Core | Core | Domain models, service interfaces, events, extensions, and module constants |
+| VirtoCommerce.Seo.Data | Data | Service implementations, EF Core repositories, DbContext, event handlers, validation, and export/import |
+| VirtoCommerce.Seo.Data.SqlServer | DB Provider | EF Core migrations and design-time factory for SQL Server |
+| VirtoCommerce.Seo.Data.MySql | DB Provider | EF Core migrations and design-time factory for MySQL |
+| VirtoCommerce.Seo.Data.PostgreSql | DB Provider | EF Core migrations and design-time factory for PostgreSQL |
+| VirtoCommerce.Seo.Web | Web | ASP.NET Core module entry point, REST API controllers, and localizations (de, en, es, fi, fr, it, ja, no, pl, pt, ru, sv, zh) |
+| VirtoCommerce.Seo.Tests | Tests | Unit tests |
+
+### Key Services
+
+| Service | Interface | Responsibility |
+|---|---|---|
+| `CompositeSeoResolver` | `ICompositeSeoResolver` | Aggregates multiple `ISeoResolver` implementations, merges results, and publishes `SeoInfoNotFoundEvent` when no records are found |
+| `RedirectResolver` | `IRedirectResolver` | Resolves URL redirects by evaluating active redirect rules (static or regex) sorted by priority |
+| `SeoExplainService` | `ISeoExplainService` | Produces stage-by-stage explain snapshots of the SEO resolution pipeline for diagnostics |
+| `BrokenLinkService` | `IBrokenLinkService` | CRUD operations for broken link records with platform memory caching and domain events |
+| `BrokenLinkSearchService` | `IBrokenLinkSearchService` | Search broken links by keyword, permalink, store, language, and status |
+| `RedirectRuleService` | `IRedirectRuleService` | CRUD operations for redirect rules with FluentValidation and domain events |
+| `RedirectRuleSearchService` | `IRedirectRuleSearchService` | Search redirect rules by keyword, store, and active status |
+| `NullSeoDuplicateDetector` | `ISeoDuplicatesDetector` | Default no-op implementation of duplicate detection (returns empty results) |
+| `SeoInfoNotFoundEventHandler` | `IEventHandler<SeoInfoNotFoundEvent>` | Handles broken link recording via Hangfire background job when SEO lookup returns no results |
+| `SeoExportImport` | — | Streaming JSON export/import of redirect rules and broken links with batch processing |
+| `RedirectRuleValidator` | `AbstractValidator<RedirectRule>` | Validates redirect rules: inbound regex correctness, outbound capture group consistency, and required StoreId |
+
+### REST API
+
+#### SEO Info — Base route: `api/seoinfos`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| PUT | `api/seoinfos/batchupdate` | Batch create or update SEO info records (not yet implemented) |
+| GET | `api/seoinfos/duplicates?objectId={objectId}&objectType={objectType}` | Detect SEO duplicates for a given object |
+| GET | `api/seoinfos/{slug}` | Find all SEO records matching a slug |
+| POST | `api/seoinfos/search` | Search SEO records by criteria (slug, storeId, permalink, organizationId) |
+| GET | `api/seoinfos/explain?storeId={storeId}&organizationId={organizationId}&storeDefaultLanguage={lang}&languageCode={lang}&permalink={permalink}` | Trace the full SEO resolution pipeline (explain/debug) |
+
+#### Broken Links — Base route: `api/seo/broken-links`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `api/seo/broken-links/{id}` | Get a broken link by ID |
+| POST | `api/seo/broken-links/search` | Search broken links by criteria (keyword, permalink, storeId, status) |
+| POST | `api/seo/broken-links` | Create a new broken link record |
+| PUT | `api/seo/broken-links` | Update an existing broken link record |
+| PATCH | `api/seo/broken-links/{id}` | Partially update a broken link via JSON Patch |
+| DELETE | `api/seo/broken-links?ids={id1}&ids={id2}` | Delete broken links by IDs |
+
+#### Redirect Rules — Base route: `api/seo/redirect-rules`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `api/seo/redirect-rules/{id}` | Get a redirect rule by ID |
+| POST | `api/seo/redirect-rules/search` | Search redirect rules by criteria (keyword, storeId, isActive) |
+| POST | `api/seo/redirect-rules` | Create a new redirect rule |
+| PUT | `api/seo/redirect-rules` | Update an existing redirect rule |
+| PATCH | `api/seo/redirect-rules/{id}` | Partially update a redirect rule via JSON Patch |
+| DELETE | `api/seo/redirect-rules?ids={id1}&ids={id2}` | Delete redirect rules by IDs |
 
 ## Documentation
 
@@ -93,6 +131,7 @@ Clicking on a stage opens a detailed blade showing the items at that specific st
 * [View on GitHub](https://github.com/VirtoCommerce/vc-module-seo/)
 
 ## References
+
 * [Deployment](https://docs.virtocommerce.org/platform/developer-guide/Tutorials-and-How-tos/Tutorials/deploy-module-from-source-code/)
 * [Installation](https://docs.virtocommerce.org/platform/user-guide/modules-installation/)
 * [Home](https://virtocommerce.com)
@@ -100,6 +139,7 @@ Clicking on a stage opens a detailed blade showing the items at that specific st
 * [Download latest release](https://github.com/VirtoCommerce/vc-module-seo/releases)
 
 ## License
+
 Copyright (c) Virto Solutions LTD.  All rights reserved.
 
 This software is licensed under the Virto Commerce Open Software License (the "License"); you
@@ -110,4 +150,3 @@ Unless required by the applicable law or agreed to in written form, the software
 distributed under the License is provided on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.
-
