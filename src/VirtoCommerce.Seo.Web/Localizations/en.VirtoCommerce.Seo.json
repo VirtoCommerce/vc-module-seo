@@ -129,9 +129,6 @@
       },
       "redirect-rule-widget": {
         "title": "Active rules"
-      },
-      "seo-explain-widget": {
-        "title": "Debug SEO links"
       }
     }
   },
@@ -145,13 +142,13 @@
   "settings": {
     "Seo": {
       "Enabled": {
-        "title": "SEO enabled",
-        "description": "SEO enabled setting"
+        "title": "SEO",
+        "description": "Enable/ disable SEO settings"
       },
       "BrokenLinkDetection": {
         "Enabled": {
-          "title": "Detect broken links",
-          "description": "Should the platform record requests to non-existent pages?"
+          "title": "Broken links detection",
+          "description": "Enable/ disable recording of requests to non-existent pages for analysis"
         }
       }
     }
