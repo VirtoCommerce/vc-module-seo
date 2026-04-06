@@ -17,20 +17,22 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
 {
     public Task<IList<SeoExplainResult>> ExplainAsync(
         string storeId,
+        string organizationId,
         string storeDefaultLanguage,
         string languageCode,
         string permalink)
     {
         ArgumentNullException.ThrowIfNull(permalink);
-        return ExplainInternalAsync(storeId, storeDefaultLanguage, languageCode, permalink);
+        return ExplainInternalAsync(storeId, organizationId, storeDefaultLanguage, languageCode, permalink);
     }
 
-    private async Task<IList<SeoExplainResult>> ExplainInternalAsync(string storeId, string storeDefaultLanguage, string languageCode, string permalink)
+    private async Task<IList<SeoExplainResult>> ExplainInternalAsync(string storeId, string organizationId, string storeDefaultLanguage, string languageCode, string permalink)
     {
         var criteria = AbstractTypeFactory<SeoSearchCriteria>.TryCreateInstance();
 
         criteria.StoreId = storeId;
         criteria.LanguageCode = languageCode;
+        criteria.OrganizationId = organizationId;
         criteria.Permalink = permalink.StartsWith("/")
             ? permalink.Substring(1)
             : permalink;
@@ -43,7 +45,7 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         }
 
         // Request explain snapshots explicitly so the response contains pipeline stages
-        var (_, explainResults) = seoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode, explain: true);
+        var (_, explainResults) = seoInfos.GetBestMatchingSeoInfo(storeId, organizationId, storeDefaultLanguage, languageCode, explain: true);
 
         return explainResults ?? [];
     }

@@ -38,7 +38,19 @@ public static class SeoExtensions
         string storeDefaultLanguage,
         string language)
     {
-        return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, language);
+        return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, organizationId: null, storeDefaultLanguage, language);
+    }
+
+    /// <summary>
+    /// Returns SEO record with the highest score
+    /// </summary>
+    public static SeoInfo GetBestMatchingSeoInfo(this ISeoSupport seoSupport,
+        string storeId,
+        string organizationId,
+        string storeDefaultLanguage,
+        string language)
+    {
+        return seoSupport?.SeoInfos?.GetBestMatchingSeoInfo(storeId, organizationId, storeDefaultLanguage, language);
     }
 
     /// <summary>
@@ -56,6 +68,21 @@ public static class SeoExtensions
     }
 
     /// <summary>
+    /// Evaluates a collection of <see cref="SeoInfo"/> records and selects the best match according to the
+    /// configured scoring rules and object-type priorities.
+    /// </summary>
+    public static SeoInfo GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
+        string storeId,
+        string organizationId,
+        string storeDefaultLanguage,
+        string language)
+    {
+        var (seoInfo, _) = seoInfos.GetBestMatchingSeoInfo(storeId, organizationId, storeDefaultLanguage, language, explain: false);
+
+        return seoInfo;
+    }
+
+    /// <summary>
     /// Executes the explainable evaluation  over the provided collection of <see cref="SeoInfo"/> records.
     /// Returns a tuple where <c>SeoInfo</c> is the selected best matching SeoInfo (can be null)
     /// and <c>explainResults</c> is a list of explain results (snapshots of each stage).
@@ -63,6 +90,22 @@ public static class SeoExtensions
     /// </summary>
     public static (SeoInfo, IList<SeoExplainResult>) GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
         string storeId,
+        string storeDefaultLanguage,
+        string language,
+        bool explain)
+    {
+        return seoInfos.GetBestMatchingSeoInfo(storeId, organizationId: null, storeDefaultLanguage, language, explain);
+    }
+
+    /// <summary>
+    /// Executes the explainable evaluation  over the provided collection of <see cref="SeoInfo"/> records.
+    /// Returns a tuple where <c>SeoInfo</c> is the selected best matching SeoInfo (can be null)
+    /// and <c>explainResults</c> is a list of explain results (snapshots of each stage).
+    /// This method is intended to make the selection process introspectable for diagnostics and tests.
+    /// </summary>
+    public static (SeoInfo, IList<SeoExplainResult>) GetBestMatchingSeoInfo(this IEnumerable<SeoInfo> seoInfos,
+        string storeId,
+        string organizationId,
         string storeDefaultLanguage,
         string language,
         bool explain)
@@ -85,14 +128,14 @@ public static class SeoExtensions
             .Select(seoInfo => new SeoExplainItem(seoInfo));
         stageOriginal = AddExplain(SeoExplainStage.Original, stageOriginal);
 
-        // Stage 2: Filtered - keep only entries that match store and language criteria
+        // Stage 2: Filtered - keep only entries that match store, organizationId and language criteria
         var stageFiltered = stageOriginal
-            .Where(candidate => candidate.SeoInfo.MatchesStoreAndLanguage(storeId, storeDefaultLanguage, language));
+            .Where(candidate => candidate.SeoInfo.MatchesToParameters(storeId, organizationId, storeDefaultLanguage, language));
         stageFiltered = AddExplain(SeoExplainStage.Filtered, stageFiltered);
 
         // Stage 3: Scored - compute object type priority and numeric score for each candidate
         var stageScored = stageFiltered
-            .CalculatePriorityAndScore(storeId, storeDefaultLanguage, language, explain);
+            .CalculatePriorityAndScore(storeId, organizationId, storeDefaultLanguage, language, explain);
         stageScored = AddExplain(SeoExplainStage.Scored, stageScored);
 
         // Stage 4: FilteredScore - remove entries with non-positive score
@@ -135,8 +178,9 @@ public static class SeoExtensions
     /// Determines whether the provided SeoInfo matches the store and language filtering rules.
     /// Treats null or empty values as wildcards (matches everything).
     /// </summary>
-    private static bool MatchesStoreAndLanguage(this SeoInfo seoInfo,
+    private static bool MatchesToParameters(this SeoInfo seoInfo,
         string storeId,
+        string organizationId,
         string storeDefaultLanguage,
         string language)
     {
@@ -146,6 +190,7 @@ public static class SeoExtensions
         }
 
         return seoInfo.StoreId.Matches(storeId) &&
+               seoInfo.OrganizationId.MatchesStrict(organizationId) &&
                seoInfo.LanguageCode.MatchesAny(storeDefaultLanguage, language);
     }
 
@@ -159,12 +204,20 @@ public static class SeoExtensions
         return a.IsNullOrEmpty() || b.IsNullOrEmpty() || a.EqualsIgnoreCase(b);
     }
 
+    private static bool MatchesStrict(this string a, string b)
+    {
+        return a.IsNullOrEmpty()
+               || (a.IsNullOrEmpty() && b.IsNullOrEmpty())
+               || a.EqualsIgnoreCase(b);
+    }
+
     /// <summary>
     /// For each input item calculates object type priority (index in <see cref="OrderedObjectTypes"/>) and score.
     /// If a <see cref="SeoExplainItem"/>'s SeoInfo is null it is preserved with a priority of -1 and score 0 to keep snapshots stable.
     /// </summary>
     private static IEnumerable<SeoExplainItem> CalculatePriorityAndScore(this IEnumerable<SeoExplainItem> items,
         string storeId,
+        string organizationId,
         string storeDefaultLanguage,
         string language,
         bool explain)
@@ -178,7 +231,7 @@ public static class SeoExtensions
             if (mutableItem.SeoInfo != null)
             {
                 mutableItem.ObjectTypePriority = Array.IndexOf(OrderedObjectTypes, mutableItem.SeoInfo.ObjectType);
-                mutableItem.Score = mutableItem.SeoInfo.CalculateScore(storeId, storeDefaultLanguage, language);
+                mutableItem.Score = mutableItem.SeoInfo.CalculateScore(storeId, organizationId, storeDefaultLanguage, language);
             }
 
             yield return mutableItem;
@@ -187,6 +240,7 @@ public static class SeoExtensions
 
     private static int CalculateScore(this SeoInfo seoInfo,
         string storeId,
+        string organizationId,
         string storeDefaultLanguage,
         string language)
     {
@@ -197,6 +251,7 @@ public static class SeoExtensions
             {
                 seoInfo.IsActive,
                 seoInfo.StoreId.EqualsIgnoreCase(storeId),
+                seoInfo.OrganizationId.EqualsIgnoreCase(organizationId),
                 seoInfo.LanguageCode.EqualsIgnoreCase(language),
                 seoInfo.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage),
                 seoInfo.LanguageCode.IsNullOrEmpty(),

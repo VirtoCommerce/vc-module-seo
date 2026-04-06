@@ -60,11 +60,13 @@
           "default-language": "Oletuskieli",
           "language-code": "Kielikoodi",
           "permalink": "Pysyvä linkki",
-          "result": "Tulos"
+          "result": "Tulos",
+          "organization": "Organisaatio"
         },
         "placeholders": {
           "select-language": "Valitse kieli",
-          "permalink": "/polku/sivulle"
+          "permalink": "/polku/sivulle",
+          "organization": "Valitse organisaatio"
         },
         "buttons": {
           "explain": "Debuggaa"
@@ -96,7 +98,8 @@
           "language": "Kieli",
           "store": "Kauppa",
           "score": "Pisteet",
-          "priority": "Prioriteetti"
+          "priority": "Prioriteetti",
+          "organization": "Organisaatio"
         }
       }
     },
