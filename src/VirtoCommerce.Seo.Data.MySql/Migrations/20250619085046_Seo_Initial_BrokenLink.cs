@@ -45,11 +45,11 @@ namespace VirtoCommerce.Seo.Data.MySql.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_BrokenLink_Permalink_StoreId_LanguageCode",
-                table: "BrokenLink",
-                columns: new[] { "Permalink", "StoreId", "LanguageCode" },
-                unique: true);
+            // MySQL InnoDB max index key length is 3072 bytes with utf8mb4 (4 bytes/char).
+            // Permalink(2048) + StoreId(128) + LanguageCode(128) = 2304 chars * 4 = 9216 bytes — exceeds limit.
+            // Use a 512-char prefix on Permalink: (512+128+128) * 4 = 3072 bytes — fits exactly.
+            migrationBuilder.Sql(@"CREATE UNIQUE INDEX `IX_BrokenLink_Permalink_StoreId_LanguageCode`
+                ON `BrokenLink` (`Permalink`(512), `StoreId`, `LanguageCode`);");
         }
 
         /// <inheritdoc />
