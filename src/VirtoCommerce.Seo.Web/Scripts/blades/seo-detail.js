@@ -44,7 +44,7 @@ angular.module('virtoCommerce.seo')
                 }
 
                 $scope.semanticUrlValidator = function (value) {
-                    const pattern = /[$+;=%{}[\]|@ ~#!^*&?:'<>,]/;
+                    const pattern = /[$+;=%{}[\]|\\/@ ~#!^*&?:'<>,]/;
                     return !pattern.test(value);
                 };
 
