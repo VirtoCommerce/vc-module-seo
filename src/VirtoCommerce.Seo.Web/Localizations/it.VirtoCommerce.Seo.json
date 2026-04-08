@@ -96,7 +96,8 @@
           "resolve-duplicates": "Risolvi conflitti",
           "language-code": "Lingua",
           "container": "Negozio",
-          "semanticUrl": "URL semantico"
+          "semanticUrl": "URL semantico",
+          "inactive": "Inattivo"
         }
       },
       "seo-detail": {

@@ -96,7 +96,8 @@
           "resolve-duplicates": "Разрешить конфликты",
           "language-code": "Язык",
           "container": "Магазин",
-          "semanticUrl": "Семантический URL"
+          "semanticUrl": "Семантический URL",
+          "inactive": "Неактивен"
         }
       },
       "seo-detail": {

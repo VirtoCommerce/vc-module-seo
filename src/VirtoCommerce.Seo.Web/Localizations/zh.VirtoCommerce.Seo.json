@@ -96,7 +96,8 @@
           "resolve-duplicates": "解决冲突",
           "language-code": "语言",
           "container": "商店",
-          "semanticUrl": "语义URL"
+          "semanticUrl": "语义URL",
+          "inactive": "未启用"
         }
       },
       "seo-detail": {

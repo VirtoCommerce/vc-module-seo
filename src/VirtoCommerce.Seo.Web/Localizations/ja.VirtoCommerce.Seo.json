@@ -96,7 +96,8 @@
           "resolve-duplicates": "競合を解決",
           "language-code": "言語",
           "container": "ストア",
-          "semanticUrl": "セマンティックURL"
+          "semanticUrl": "セマンティックURL",
+          "inactive": "無効"
         }
       },
       "seo-detail": {

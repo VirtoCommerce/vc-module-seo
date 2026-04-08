@@ -96,7 +96,8 @@
           "resolve-duplicates": "Resolver conflictos",
           "language-code": "Idioma",
           "container": "Tienda",
-          "semanticUrl": "URL semántica"
+          "semanticUrl": "URL semántica",
+          "inactive": "Inactivo"
         }
       },
       "seo-detail": {
