@@ -89,6 +89,51 @@
           "Final": "Fase 6: Final - Selecionar o primeiro como o Seo resolvido."
         }
       },
+      "seo-list": {
+        "subtitle": "Gerenciar SEO",
+        "labels": {
+          "duplicates-found": "Atenção: Existem {{count}} URLs semânticas conflitantes!",
+          "resolve-duplicates": "Resolver conflitos",
+          "language-code": "Idioma",
+          "container": "Loja",
+          "semanticUrl": "URL semântica"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Novo SEO",
+        "subtitle": "Detalhes do SEO",
+        "labels": {
+          "is-active": "Ativo",
+          "store": "Loja",
+          "language": "Idioma",
+          "url-keyword": "Slug da URL",
+          "page-title": "Título da página",
+          "meta-description": "Meta descrição",
+          "meta-keywords": "Meta palavras-chave",
+          "alternative-text": "Texto alternativo da imagem"
+        },
+        "placeholders": {
+          "store": "Selecionar loja...",
+          "language": "Selecionar idioma...",
+          "url-keyword": "Fornecer slug da URL...",
+          "page-title": "Fornecer título...",
+          "meta-description": "Fornecer descrição...",
+          "meta-keywords": "Fornecer palavras-chave...",
+          "alternative-text": "Fornecer texto alternativo..."
+        },
+        "validations": {
+          "url-keyword-required": "Este campo é obrigatório",
+          "url-keyword-invalid": "A URL contém caracteres inválidos",
+          "url-keyword-duplicate": "URL duplicada detectada"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "Conflitos de SEO",
+        "labels": {
+          "semanticUrl": "URL semântica",
+          "container": "Loja"
+        }
+      },
       "seo-explain-items": {
         "title": "Itens de depuração de links de SEO",
         "labels": {
@@ -121,6 +166,10 @@
       "redirect-rule-save": {
         "title": "Guardar alterações",
         "message": "Esta entidade foi modificada. Deseja guardar as alterações?"
+      },
+      "seo-save": {
+        "title": "Salvar alterações",
+        "message": "As informações de SEO foram modificadas. Deseja salvar as alterações?"
       }
     },
     "widgets": {
@@ -132,6 +181,9 @@
       },
       "seo-explain-widget": {
         "title": "Depurar links de SEO"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

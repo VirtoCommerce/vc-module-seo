@@ -89,6 +89,51 @@
           "Final": "阶段 6: 最终 - 选择第一个作为已解析的Seo。"
         }
       },
+      "seo-list": {
+        "subtitle": "管理SEO",
+        "labels": {
+          "duplicates-found": "注意：存在 {{count}} 个冲突的语义URL！",
+          "resolve-duplicates": "解决冲突",
+          "language-code": "语言",
+          "container": "商店",
+          "semanticUrl": "语义URL"
+        }
+      },
+      "seo-detail": {
+        "title-new": "新建SEO",
+        "subtitle": "SEO详情",
+        "labels": {
+          "is-active": "活跃",
+          "store": "商店",
+          "language": "语言",
+          "url-keyword": "URL别名",
+          "page-title": "页面标题",
+          "meta-description": "元描述",
+          "meta-keywords": "元关键词",
+          "alternative-text": "图片替代文本"
+        },
+        "placeholders": {
+          "store": "选择商店...",
+          "language": "选择语言...",
+          "url-keyword": "提供URL别名...",
+          "page-title": "提供标题...",
+          "meta-description": "提供描述...",
+          "meta-keywords": "提供关键词...",
+          "alternative-text": "提供替代文本..."
+        },
+        "validations": {
+          "url-keyword-required": "此字段为必填项",
+          "url-keyword-invalid": "URL包含无效字符",
+          "url-keyword-duplicate": "检测到重复的URL"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "SEO冲突",
+        "labels": {
+          "semanticUrl": "语义URL",
+          "container": "商店"
+        }
+      },
       "seo-explain-items": {
         "title": "调试SEO链接项目",
         "labels": {
@@ -121,6 +166,10 @@
       "redirect-rule-save": {
         "title": "保存更改",
         "message": "此实体已被修改。您想保存更改吗？"
+      },
+      "seo-save": {
+        "title": "保存更改",
+        "message": "SEO信息已被修改。您想保存更改吗？"
       }
     },
     "widgets": {
@@ -132,6 +181,9 @@
       },
       "seo-explain-widget": {
         "title": "调试SEO链接"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

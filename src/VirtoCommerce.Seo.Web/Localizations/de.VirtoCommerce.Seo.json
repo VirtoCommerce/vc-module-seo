@@ -89,6 +89,51 @@
           "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
         }
       },
+      "seo-list": {
+        "subtitle": "SEO verwalten",
+        "labels": {
+          "duplicates-found": "Warnung: Es gibt {{count}} widersprüchliche semantische URLs!",
+          "resolve-duplicates": "Konflikte lösen",
+          "language-code": "Sprache",
+          "container": "Shop",
+          "semanticUrl": "Semantische URL"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Neues SEO",
+        "subtitle": "SEO-Details",
+        "labels": {
+          "is-active": "Aktiv",
+          "store": "Shop",
+          "language": "Sprache",
+          "url-keyword": "URL-Slug",
+          "page-title": "Seitentitel",
+          "meta-description": "Meta-Beschreibung",
+          "meta-keywords": "Meta-Schlüsselwörter",
+          "alternative-text": "Alternativer Bildtext"
+        },
+        "placeholders": {
+          "store": "Shop auswählen...",
+          "language": "Sprache auswählen...",
+          "url-keyword": "URL-Slug angeben...",
+          "page-title": "Titel angeben...",
+          "meta-description": "Beschreibung angeben...",
+          "meta-keywords": "Schlüsselwörter angeben...",
+          "alternative-text": "Alternativen Text angeben..."
+        },
+        "validations": {
+          "url-keyword-required": "Dieses Feld ist erforderlich",
+          "url-keyword-invalid": "Die URL enthält ungültige Zeichen",
+          "url-keyword-duplicate": "Doppelte URL erkannt"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "SEO-Konflikte",
+        "labels": {
+          "semanticUrl": "Semantische URL",
+          "container": "Shop"
+        }
+      },
       "seo-explain-items": {
         "title": "Elemente des SEO-Link-Debuggings",
         "labels": {
@@ -121,6 +166,10 @@
       "redirect-rule-save": {
         "title": "Änderungen speichern",
         "message": "Dieses Objekt wurde geändert. Möchten Sie die Änderungen speichern?"
+      },
+      "seo-save": {
+        "title": "Änderungen speichern",
+        "message": "Die SEO-Informationen wurden geändert. Möchten Sie die Änderungen speichern?"
       }
     },
     "widgets": {
@@ -132,6 +181,9 @@
       },
       "seo-explain-widget": {
         "title": "SEO-Links debuggen"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },
