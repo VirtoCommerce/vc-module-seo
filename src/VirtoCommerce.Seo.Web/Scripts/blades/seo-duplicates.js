@@ -62,7 +62,7 @@ angular.module('virtoCommerce.seo')
                                 }
                                 $rootScope.$broadcast("refresh-entity-by-id", blade.seoContainerObject.id);
                             }
-                        });
+                        }, function (error) { bladeNavigationService.setError('Error: ' + error.status, blade); });
                     }, function (error) { bladeNavigationService.setError('Error: ' + error.status, blade); });
                 };
 
