@@ -1,7 +1,7 @@
 angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoDuplicatesController',
-        ['$rootScope', '$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.seo.seoApi',
-            function ($rootScope, $scope, bladeNavigationService, seoApi) {
+        ['$rootScope', '$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.seo.seoApi', 'virtoCommerce.seo.seoUtils',
+            function ($rootScope, $scope, bladeNavigationService, seoApi, seoUtils) {
                 const blade = $scope.blade;
                 let anyValidSeoFound;
 
@@ -22,10 +22,7 @@ angular.module('virtoCommerce.seo')
                     return retVal;
                 }
 
-                $scope.semanticUrlValidator = function (value) {
-                    const pattern = /[$+;=%{}[\]|\\/@ ~#!^*&?:'<>,]/;
-                    return !pattern.test(value);
-                };
+                $scope.semanticUrlValidator = seoUtils.isValidSemanticUrl;
 
                 $scope.duplicateValidator = function (value, seoInfo) {
                     return _.all(blade.currentEntities, function (x) {

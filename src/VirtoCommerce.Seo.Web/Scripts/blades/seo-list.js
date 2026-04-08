@@ -20,6 +20,7 @@ angular.module('virtoCommerce.seo')
                         seoContainerObject: blade.seoContainerObject,
                         defaultContainerId: blade.defaultContainerId,
                         languages: blade.languages,
+                        updatePermission: blade.updatePermission,
                         controller: 'virtoCommerce.seo.seoDuplicatesController',
                         template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-duplicates.html'
                     };
