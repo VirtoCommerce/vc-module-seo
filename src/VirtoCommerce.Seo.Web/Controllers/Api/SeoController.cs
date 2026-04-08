@@ -54,6 +54,7 @@ public class SeoController(
     /// Find all SEO records for object by slug
     /// </summary>
     /// <param name="slug">slug</param>
+    [Obsolete("Use POST /api/seoinfos/search instead.", DiagnosticId = "VC0014", UrlFormat = "https://docs.virtocommerce.org/products/products-virto3-versions")]
     [HttpGet]
     [Route("{slug}")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
