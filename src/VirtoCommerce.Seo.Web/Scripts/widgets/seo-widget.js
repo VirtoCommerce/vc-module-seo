@@ -7,7 +7,7 @@ angular.module('virtoCommerce.seo')
 
                 $scope.openSeoBlade = function () {
                     if (promise) {
-                        promise.then(openBlade);
+                        promise.then(openBlade, function () { openBlade(); });
                     } else {
                         openBlade();
                     }

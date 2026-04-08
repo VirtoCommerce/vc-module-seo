@@ -102,6 +102,10 @@ angular.module('virtoCommerce.seo')
                     }
                 ];
 
+                $scope.setForm = function (form) {
+                    blade.formScope = form;
+                };
+
                 blade.title = blade.parentBlade.title;
                 blade.subtitle = 'seo.blades.seo-duplicates.subtitle';
 
