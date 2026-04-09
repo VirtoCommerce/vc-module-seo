@@ -1,8 +1,9 @@
 angular.module('virtoCommerce.seo')
     .controller('virtoCommerce.seo.seoListController',
-        ['$scope', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService',
-            function ($scope, uiGridHelper, bladeNavigationService, dialogService) {
+        ['$scope', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService', 'uiGridConstants',
+            function ($scope, uiGridHelper, bladeNavigationService, dialogService, uiGridConstants) {
                 const blade = $scope.blade;
+                $scope.uiGridConstants = uiGridConstants;
                 $scope.selectedNodeId = null; // need to initialize to null
 
                 blade.refresh = function (seoContainerObject) {
