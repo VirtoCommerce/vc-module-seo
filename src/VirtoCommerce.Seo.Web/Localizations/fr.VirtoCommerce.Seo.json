@@ -89,6 +89,52 @@
           "Final": "Étape 6: Final - Sélectionner le premier comme Seo résolu."
         }
       },
+      "seo-list": {
+        "subtitle": "Gérer le SEO",
+        "labels": {
+          "duplicates-found": "Attention : Il y a {{count}} URL sémantiques en conflit !",
+          "resolve-duplicates": "Résoudre les conflits",
+          "language-code": "Langue",
+          "container": "Magasin",
+          "semanticUrl": "URL sémantique",
+          "inactive": "Inactif"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Nouveau SEO",
+        "subtitle": "Détails SEO",
+        "labels": {
+          "is-active": "Actif",
+          "store": "Magasin",
+          "language": "Langue",
+          "url-keyword": "Slug URL",
+          "page-title": "Titre de la page",
+          "meta-description": "Meta description",
+          "meta-keywords": "Meta mots-clés",
+          "alternative-text": "Texte alternatif de l'image"
+        },
+        "placeholders": {
+          "store": "Sélectionner le magasin...",
+          "language": "Sélectionner la langue...",
+          "url-keyword": "Fournir le slug URL...",
+          "page-title": "Fournir le titre...",
+          "meta-description": "Fournir la description...",
+          "meta-keywords": "Fournir les mots-clés...",
+          "alternative-text": "Fournir le texte alternatif..."
+        },
+        "validations": {
+          "url-keyword-required": "Ce champ est obligatoire",
+          "url-keyword-invalid": "L'URL contient des caractères invalides",
+          "url-keyword-duplicate": "URL en double détectée"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "Conflits SEO",
+        "labels": {
+          "semanticUrl": "URL sémantique",
+          "container": "Magasin"
+        }
+      },
       "seo-explain-items": {
         "title": "Éléments de débogage des liens SEO",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "Enregistrer les modifications",
         "message": "Cette entité a été modifiée. Voulez-vous enregistrer les modifications ?"
+      },
+      "seo-save": {
+        "title": "Enregistrer les modifications",
+        "message": "Les informations SEO ont été modifiées. Voulez-vous enregistrer les modifications ?"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "Déboguer les liens SEO"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

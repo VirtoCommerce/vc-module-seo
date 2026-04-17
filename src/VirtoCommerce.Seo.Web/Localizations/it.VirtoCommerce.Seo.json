@@ -89,6 +89,52 @@
           "Final": "Fase 6: Finale - Selezionare il primo come Seo risolto."
         }
       },
+      "seo-list": {
+        "subtitle": "Gestisci SEO",
+        "labels": {
+          "duplicates-found": "Attenzione: Ci sono {{count}} URL semantici in conflitto!",
+          "resolve-duplicates": "Risolvi conflitti",
+          "language-code": "Lingua",
+          "container": "Negozio",
+          "semanticUrl": "URL semantico",
+          "inactive": "Inattivo"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Nuovo SEO",
+        "subtitle": "Dettagli SEO",
+        "labels": {
+          "is-active": "Attivo",
+          "store": "Negozio",
+          "language": "Lingua",
+          "url-keyword": "Slug URL",
+          "page-title": "Titolo della pagina",
+          "meta-description": "Meta descrizione",
+          "meta-keywords": "Meta parole chiave",
+          "alternative-text": "Testo alternativo dell'immagine"
+        },
+        "placeholders": {
+          "store": "Seleziona negozio...",
+          "language": "Seleziona lingua...",
+          "url-keyword": "Fornisci slug URL...",
+          "page-title": "Fornisci titolo...",
+          "meta-description": "Fornisci descrizione...",
+          "meta-keywords": "Fornisci parole chiave...",
+          "alternative-text": "Fornisci testo alternativo..."
+        },
+        "validations": {
+          "url-keyword-required": "Questo campo è obbligatorio",
+          "url-keyword-invalid": "L'URL contiene caratteri non validi",
+          "url-keyword-duplicate": "URL duplicato rilevato"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "Conflitti SEO",
+        "labels": {
+          "semanticUrl": "URL semantico",
+          "container": "Negozio"
+        }
+      },
       "seo-explain-items": {
         "title": "Elementi di debug dei link SEO",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "Salva modifiche",
         "message": "Questa entità è stata modificata. Vuoi salvare le modifiche?"
+      },
+      "seo-save": {
+        "title": "Salva modifiche",
+        "message": "Le informazioni SEO sono state modificate. Vuoi salvare le modifiche?"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "Debug dei link SEO"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

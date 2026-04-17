@@ -89,6 +89,52 @@
           "Final": "Trinn 6: Endelig - velg første som den løste Seo."
         }
       },
+      "seo-list": {
+        "subtitle": "Administrer SEO",
+        "labels": {
+          "duplicates-found": "Advarsel: Det er {{count}} motstridende semantiske URL-er!",
+          "resolve-duplicates": "Løs konflikter",
+          "language-code": "Språk",
+          "container": "Butikk",
+          "semanticUrl": "Semantisk URL",
+          "inactive": "Inaktiv"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Ny SEO",
+        "subtitle": "SEO-detaljer",
+        "labels": {
+          "is-active": "Aktiv",
+          "store": "Butikk",
+          "language": "Språk",
+          "url-keyword": "URL-slug",
+          "page-title": "Sidetittel",
+          "meta-description": "Metabeskrivelse",
+          "meta-keywords": "Meta-nøkkelord",
+          "alternative-text": "Bildets alternativ tekst"
+        },
+        "placeholders": {
+          "store": "Velg butikk...",
+          "language": "Velg språk...",
+          "url-keyword": "Oppgi URL-slug...",
+          "page-title": "Oppgi tittel...",
+          "meta-description": "Oppgi beskrivelse...",
+          "meta-keywords": "Oppgi nøkkelord...",
+          "alternative-text": "Oppgi alternativ tekst..."
+        },
+        "validations": {
+          "url-keyword-required": "Dette feltet er påkrevd",
+          "url-keyword-invalid": "URL-en inneholder ugyldige tegn",
+          "url-keyword-duplicate": "Duplikat-URL oppdaget"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "SEO-konflikter",
+        "labels": {
+          "semanticUrl": "Semantisk URL",
+          "container": "Butikk"
+        }
+      },
       "seo-explain-items": {
         "title": "Feilsøkingselementer for SEO-lenker",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "Lagre endringer",
         "message": "Denne enheten har blitt endret. Vil du lagre endringene?"
+      },
+      "seo-save": {
+        "title": "Lagre endringer",
+        "message": "SEO-informasjonen er endret. Vil du lagre endringene?"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "Feilsøk SEO-lenker"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

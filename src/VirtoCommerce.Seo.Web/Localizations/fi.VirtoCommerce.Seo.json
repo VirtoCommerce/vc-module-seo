@@ -89,6 +89,52 @@
           "Final": "Vaihe 6: Lopullinen - valitaan ensimmäinen ratkaistuksi Seoksi."
         }
       },
+      "seo-list": {
+        "subtitle": "SEO:n hallinta",
+        "labels": {
+          "duplicates-found": "Varoitus: löytyi {{count}} ristiriitaista semanttista URL-osoitetta!",
+          "resolve-duplicates": "Ratkaise ristiriidat",
+          "language-code": "Kieli",
+          "container": "Kauppa",
+          "semanticUrl": "Semanttinen URL",
+          "inactive": "Ei aktiivinen"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Uusi SEO",
+        "subtitle": "SEO-tiedot",
+        "labels": {
+          "is-active": "Aktiivinen",
+          "store": "Kauppa",
+          "language": "Kieli",
+          "url-keyword": "URL-tunniste",
+          "page-title": "Sivun otsikko",
+          "meta-description": "Metakuvaus",
+          "meta-keywords": "Meta-avainsanat",
+          "alternative-text": "Kuvan vaihtoehtoinen teksti"
+        },
+        "placeholders": {
+          "store": "Valitse kauppa...",
+          "language": "Valitse kieli...",
+          "url-keyword": "Syötä URL-tunniste...",
+          "page-title": "Syötä otsikko...",
+          "meta-description": "Syötä kuvaus...",
+          "meta-keywords": "Syötä avainsanat...",
+          "alternative-text": "Syötä vaihtoehtoinen teksti..."
+        },
+        "validations": {
+          "url-keyword-required": "Tämä kenttä on pakollinen",
+          "url-keyword-invalid": "URL sisältää virheellisiä merkkejä",
+          "url-keyword-duplicate": "Sama URL havaittu"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "SEO-ristiriidat",
+        "labels": {
+          "semanticUrl": "Semanttinen URL",
+          "container": "Kauppa"
+        }
+      },
       "seo-explain-items": {
         "title": "SEO-linkkien virheenkorjauskohteet",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "Tallenna muutokset",
         "message": "Tätä kohdetta on muokattu. Haluatko tallentaa muutokset?"
+      },
+      "seo-save": {
+        "title": "Tallenna muutokset",
+        "message": "SEO-tietoja on muokattu. Haluatko tallentaa muutokset?"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "SEO-linkkien virheenkorjaus"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

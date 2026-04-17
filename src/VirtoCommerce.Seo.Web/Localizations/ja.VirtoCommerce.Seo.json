@@ -89,6 +89,52 @@
           "Final": "ステージ6：最終 - 解決済みのSeoとして最初のものを選択。"
         }
       },
+      "seo-list": {
+        "subtitle": "SEOの管理",
+        "labels": {
+          "duplicates-found": "注意：{{count}}件の競合するセマンティックURLがあります！",
+          "resolve-duplicates": "競合を解決",
+          "language-code": "言語",
+          "container": "ストア",
+          "semanticUrl": "セマンティックURL",
+          "inactive": "無効"
+        }
+      },
+      "seo-detail": {
+        "title-new": "新しいSEO",
+        "subtitle": "SEOの詳細",
+        "labels": {
+          "is-active": "アクティブ",
+          "store": "ストア",
+          "language": "言語",
+          "url-keyword": "URLスラッグ",
+          "page-title": "ページタイトル",
+          "meta-description": "メタ説明",
+          "meta-keywords": "メタキーワード",
+          "alternative-text": "画像の代替テキスト"
+        },
+        "placeholders": {
+          "store": "ストアを選択...",
+          "language": "言語を選択...",
+          "url-keyword": "URLスラッグを提供...",
+          "page-title": "タイトルを提供...",
+          "meta-description": "説明を提供...",
+          "meta-keywords": "キーワードを提供...",
+          "alternative-text": "代替テキストを提供..."
+        },
+        "validations": {
+          "url-keyword-required": "このフィールドは必須です",
+          "url-keyword-invalid": "URLに無効な文字が含まれています",
+          "url-keyword-duplicate": "重複するURLが検出されました"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "SEOの競合",
+        "labels": {
+          "semanticUrl": "セマンティックURL",
+          "container": "ストア"
+        }
+      },
       "seo-explain-items": {
         "title": "SEOリンクのデバッグ項目",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "変更の保存",
         "message": "このエンティティが変更されました。変更を保存しますか？"
+      },
+      "seo-save": {
+        "title": "変更を保存",
+        "message": "SEO情報が変更されました。変更を保存しますか？"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "SEOリンクのデバッグ"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

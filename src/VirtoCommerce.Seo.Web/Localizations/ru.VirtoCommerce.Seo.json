@@ -89,6 +89,52 @@
           "Final": "Этап 6: Финальный - выбор первого в качестве разрешенного Seo."
         }
       },
+      "seo-list": {
+        "subtitle": "Управление SEO",
+        "labels": {
+          "duplicates-found": "Внимание! Найдено {{count}} конфликтующих семантических URL!",
+          "resolve-duplicates": "Разрешить конфликты",
+          "language-code": "Язык",
+          "container": "Магазин",
+          "semanticUrl": "Семантический URL",
+          "inactive": "Неактивен"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Новое SEO",
+        "subtitle": "Информация о SEO",
+        "labels": {
+          "is-active": "Активно",
+          "store": "Магазин",
+          "language": "Язык",
+          "url-keyword": "URL-слаг",
+          "page-title": "Заголовок страницы",
+          "meta-description": "Мета-описание",
+          "meta-keywords": "Мета-ключевые слова",
+          "alternative-text": "Альтернативный текст изображения"
+        },
+        "placeholders": {
+          "store": "Выберите магазин...",
+          "language": "Выберите язык...",
+          "url-keyword": "Укажите URL-слаг...",
+          "page-title": "Укажите заголовок...",
+          "meta-description": "Укажите описание...",
+          "meta-keywords": "Укажите ключевые слова...",
+          "alternative-text": "Укажите альтернативный текст..."
+        },
+        "validations": {
+          "url-keyword-required": "Это поле обязательно",
+          "url-keyword-invalid": "URL содержит недопустимые символы",
+          "url-keyword-duplicate": "Обнаружен дубликат URL"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "Конфликты SEO",
+        "labels": {
+          "semanticUrl": "Семантический URL",
+          "container": "Магазин"
+        }
+      },
       "seo-explain-items": {
         "title": "Элементы отладки SEO-ссылок",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "Сохранить изменения",
         "message": "Этот объект был изменен. Хотите сохранить изменения?"
+      },
+      "seo-save": {
+        "title": "Сохранить изменения",
+        "message": "Информация SEO была изменена. Хотите сохранить изменения?"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "Отладка SEO-ссылок"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

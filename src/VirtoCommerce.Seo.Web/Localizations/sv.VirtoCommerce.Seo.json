@@ -89,6 +89,52 @@
           "Final": "Steg 6: Slutlig - välj första som den lösta Seo."
         }
       },
+      "seo-list": {
+        "subtitle": "Hantera SEO",
+        "labels": {
+          "duplicates-found": "Varning: Det finns {{count}} motstridiga semantiska URL:er!",
+          "resolve-duplicates": "Lös konflikter",
+          "language-code": "Språk",
+          "container": "Butik",
+          "semanticUrl": "Semantisk URL",
+          "inactive": "Inaktiv"
+        }
+      },
+      "seo-detail": {
+        "title-new": "Ny SEO",
+        "subtitle": "SEO-detaljer",
+        "labels": {
+          "is-active": "Aktiv",
+          "store": "Butik",
+          "language": "Språk",
+          "url-keyword": "URL-slug",
+          "page-title": "Sidtitel",
+          "meta-description": "Metabeskrivning",
+          "meta-keywords": "Meta-nyckelord",
+          "alternative-text": "Bildens alternativa text"
+        },
+        "placeholders": {
+          "store": "Välj butik...",
+          "language": "Välj språk...",
+          "url-keyword": "Ange URL-slug...",
+          "page-title": "Ange titel...",
+          "meta-description": "Ange beskrivning...",
+          "meta-keywords": "Ange nyckelord...",
+          "alternative-text": "Ange alternativ text..."
+        },
+        "validations": {
+          "url-keyword-required": "Detta fält är obligatoriskt",
+          "url-keyword-invalid": "URL:en innehåller ogiltiga tecken",
+          "url-keyword-duplicate": "Dubblett-URL upptäckt"
+        }
+      },
+      "seo-duplicates": {
+        "subtitle": "SEO-konflikter",
+        "labels": {
+          "semanticUrl": "Semantisk URL",
+          "container": "Butik"
+        }
+      },
       "seo-explain-items": {
         "title": "Felsökningsobjekt för SEO-länkar",
         "labels": {
@@ -121,6 +167,10 @@
       "redirect-rule-save": {
         "title": "Spara ändringar",
         "message": "Denna entitet har ändrats. Vill du spara ändringarna?"
+      },
+      "seo-save": {
+        "title": "Spara ändringar",
+        "message": "SEO-informationen har ändrats. Vill du spara ändringarna?"
       }
     },
     "widgets": {
@@ -132,6 +182,9 @@
       },
       "seo-explain-widget": {
         "title": "Felsök SEO-länkar"
+      },
+      "seo": {
+        "title": "SEO"
       }
     }
   },

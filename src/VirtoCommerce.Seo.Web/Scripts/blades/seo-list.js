@@ -1,0 +1,114 @@
+angular.module('virtoCommerce.seo')
+    .controller('virtoCommerce.seo.seoListController',
+        ['$scope', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService', 'uiGridConstants',
+            function ($scope, uiGridHelper, bladeNavigationService, dialogService, uiGridConstants) {
+                const blade = $scope.blade;
+                $scope.uiGridConstants = uiGridConstants;
+                $scope.selectedNodeId = null; // need to initialize to null
+
+                blade.refresh = function (seoContainerObject) {
+                    if (seoContainerObject) {
+                        blade.seoContainerObject = seoContainerObject;
+                        blade.currentEntities = blade.seoContainerObject.seoInfos;
+                    }
+                };
+
+                $scope.resolveDuplicates = function () {
+                    const newBlade = {
+                        id: 'seoDuplicates',
+                        duplicates: blade.duplicates,
+                        objectType: blade.objectType,
+                        seoContainerObject: blade.seoContainerObject,
+                        defaultContainerId: blade.defaultContainerId,
+                        languages: blade.languages,
+                        updatePermission: blade.updatePermission,
+                        controller: 'virtoCommerce.seo.seoDuplicatesController',
+                        template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-duplicates.html'
+                    };
+
+                    if (blade.fixedStoreId) {
+                        newBlade.stores = [blade.seoContainerObject];
+                    }
+
+                    bladeNavigationService.showBlade(newBlade, blade);
+                };
+
+                blade.selectNode = openDetailsBlade;
+
+                function openDetailsBlade(node, isNew) {
+                    $scope.selectedNodeId = node.id;
+
+                    const newBlade = {
+                        id: 'seoDetails',
+                        data: node,
+                        isNew: isNew,
+                        seoContainerObject: blade.seoContainerObject,
+                        languages: blade.languages,
+                        storeDataSource: blade.storeDataSource,
+                        updatePermission: blade.updatePermission,
+                        controller: 'virtoCommerce.seo.seoDetailController',
+                        template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-detail.html'
+                    };
+
+                    newBlade.fixedStoreId = blade.fixedStoreId;
+                    bladeNavigationService.showBlade(newBlade, blade);
+                }
+
+                $scope.delete = function (data) {
+                    deleteList([data]);
+                };
+
+                function removeItems(selection) {
+                    _.each(selection, function (x) {
+                        blade.seoContainerObject.seoInfos.splice(blade.seoContainerObject.seoInfos.indexOf(x), 1);
+                    });
+                }
+
+                function deleteList(selection) {
+                    const dialog = {
+                        id: "confirmDelete",
+                        title: "platform.dialogs.delete.title",
+                        message: "platform.dialogs.delete.message",
+                        callback: function (remove) {
+                            if (remove) {
+                                bladeNavigationService.closeChildrenBlades(blade, function () {
+                                    removeItems(selection);
+                                });
+                            }
+                        }
+                    };
+                    dialogService.showConfirmationDialog(dialog);
+                }
+
+                blade.toolbarCommands = [
+                    {
+                        name: "platform.commands.add", icon: 'fas fa-plus',
+                        executeMethod: function () {
+                            bladeNavigationService.closeChildrenBlades(blade, function () {
+                                openDetailsBlade({ isActive: true }, true);
+                            });
+                        },
+                        canExecuteMethod: function () { return true; },
+                        permission: blade.updatePermission
+                    },
+                    {
+                        name: "platform.commands.delete", icon: 'fas fa-trash-alt',
+                        executeMethod: function () { deleteList($scope.gridApi.selection.getSelectedRows()); },
+                        canExecuteMethod: function () {
+                            return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows()) && _.any(blade.seoContainerObject.seoInfos);
+                        },
+                        permission: blade.updatePermission
+                    }
+                ];
+
+                // ui-grid
+                $scope.setGridOptions = function (gridOptions) {
+                    uiGridHelper.initialize($scope, gridOptions);
+                };
+
+                blade.headIcon = 'fa fa-globe';
+                blade.subtitle = 'seo.blades.seo-list.subtitle';
+
+                blade.refresh(blade.seoContainerObject);
+                blade.isLoading = false;
+            }]);
