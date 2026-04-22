@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <IsPackable>false</IsPackable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1591;NU1608</NoWarn>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Project is not a test project -->
