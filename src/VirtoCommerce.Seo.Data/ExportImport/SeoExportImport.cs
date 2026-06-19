@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VirtoCommerce.Platform.Core.Common;
@@ -21,7 +22,7 @@ public sealed class SeoExportImport(
 {
 
     public async Task ExportAsync(Stream outStream, ExportImportOptions options,
-        Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+        Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -36,7 +37,7 @@ public sealed class SeoExportImport(
         await writer.WriteEndObjectAsync();
     }
 
-    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -132,7 +133,7 @@ public sealed class SeoExportImport(
         }
     }
 
-    private async Task ExportRedirectRules(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    private async Task ExportRedirectRules(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         var progressInfo = new ExportImportProgressInfo { Description = "loading data..." };
         progressCallback(progressInfo);
@@ -170,7 +171,7 @@ public sealed class SeoExportImport(
 
     }
 
-    private async Task ExportBrokenLinks(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    private async Task ExportBrokenLinks(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         var progressInfo = new ExportImportProgressInfo { Description = "loading data..." };
         progressCallback(progressInfo);
