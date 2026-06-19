@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -120,13 +121,13 @@ public class Module : IModule, IHasConfiguration, IExportSupport, IImportSupport
     }
 
     public async Task ExportAsync(Stream outStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback,
-        ICancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         await _appBuilder.ApplicationServices.GetRequiredService<SeoExportImport>().ExportAsync(outStream, options, progressCallback, cancellationToken);
     }
 
     public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback,
-        ICancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         await _appBuilder.ApplicationServices.GetRequiredService<SeoExportImport>().ImportAsync(inputStream, options, progressCallback, cancellationToken);
     }
