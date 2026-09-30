@@ -86,7 +86,8 @@
           "Scored": "Steg 3: Poängsatt - beräkna numeriska poäng och objekttyp-prioriteringar.",
           "FilteredScore": "Steg 4: Filtrerad poäng - behåll SEO-objekt med positiv poäng.",
           "Ordered": "Steg 5: Sorterad - sortera SEO efter poäng och objekttyp-prioritet.",
-          "Final": "Steg 6: Slutlig - välj första som den lösta Seo."
+          "Final": "Steg 6: Slutlig - välj första som den lösta Seo.",
+          "Candidates": "Steg 0: Kandidater - SEO-poster med denna slug som resolvrarna har bedömt, inklusive de avvisade."
         }
       },
       "seo-list": {
@@ -145,7 +146,16 @@
           "store": "Butik",
           "score": "Poäng",
           "priority": "Prioritet",
-          "organization": "Organisation"
+          "organization": "Organisation",
+          "object-id": "Objekt-ID",
+          "resolved": "Löst",
+          "reasons": "Orsaker till avvisning"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Kandidater för felsökning av SEO-länkar",
+        "messages": {
+          "partial-list": "Avvisade poster visas bara för moduler som kan förklara sin upplösning."
         }
       }
     },
@@ -186,6 +196,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "SEO-posten är inaktiv",
+      "StoreMismatch": "SEO-posten är kopplad till en annan butik",
+      "LanguageMismatch": "SEO-postens språk matchar varken det begärda språket eller butikens standardspråk",
+      "NotBestMatch": "En annan SEO-post valdes för denna slug",
+      "NotReturnedByResolver": "Resolvern returnerade inte den här posten (anpassad resolverlogik)"
     }
   },
   "permissions": {

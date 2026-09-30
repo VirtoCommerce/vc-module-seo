@@ -1,0 +1,28 @@
+<div class="blade-content __xlarge-wide">
+  <div class="blade-inner">
+    <div class="inner-block" ng-init="gridOptions.columnDefs = [
+        { name: 'seoInfo.semanticUrl', displayName: 'seo.blades.seo-explain-items.labels.semantic-url', headerTooltip: true },
+        { name: 'isResolved', displayName: 'seo.blades.seo-explain-items.labels.resolved', headerTooltip: true, cellTemplate: 'seo-explain-candidates-flag.cell.html', width: 90 },
+        { name: 'reasonsText', displayName: 'seo.blades.seo-explain-items.labels.reasons', headerTooltip: true, cellTooltip: true, width: '***' },
+        { name: 'seoInfo.objectType', displayName: 'seo.blades.seo-explain-items.labels.object-type', headerTooltip: true },
+        { name: 'seoInfo.objectId', displayName: 'seo.blades.seo-explain-items.labels.object-id', headerTooltip: true },
+        { name: 'seoInfo.languageCode', displayName: 'seo.blades.seo-explain-items.labels.language', headerTooltip: true, width: 90 },
+        { name: 'seoInfo.storeId', displayName: 'seo.blades.seo-explain-items.labels.store', headerTooltip: true },
+        { name: 'seoInfo.isActive', displayName: 'seo.blades.seo-detail.labels.is-active', headerTooltip: true, cellTemplate: 'seo-explain-candidates-flag.cell.html', width: 80 }
+    ]">
+
+      <div class="table-wrapper" ui-grid="gridOptions" ui-grid-auto-resize></div>
+
+      <div class="mt-2">
+        <em>{{ 'seo.blades.seo-explain-candidates.messages.partial-list' | translate }}</em>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="seo-explain-candidates-flag.cell.html">
+  <div class="ui-grid-cell-contents">
+    <i class="table-ico fa fa-check" ng-if="COL_FIELD"></i>
+  </div>
+</script>

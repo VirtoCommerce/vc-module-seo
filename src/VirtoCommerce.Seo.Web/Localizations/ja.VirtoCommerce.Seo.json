@@ -86,7 +86,8 @@
           "Scored": "ステージ3：スコア付け - 数値スコアとオブジェクトタイプの優先度を計算。",
           "FilteredScore": "ステージ4：フィルタ済みスコア - 正のスコアを持つSEO項目を保持。",
           "Ordered": "ステージ5：順序付け - スコアとオブジェクトタイプの優先度でSEOを並べ替え。",
-          "Final": "ステージ6：最終 - 解決済みのSeoとして最初のものを選択。"
+          "Final": "ステージ6：最終 - 解決済みのSeoとして最初のものを選択。",
+          "Candidates": "ステージ0：候補 - このスラッグを持ち、リゾルバーが検討したSEOレコード（除外されたものを含む）。"
         }
       },
       "seo-list": {
@@ -145,7 +146,16 @@
           "store": "店舗",
           "score": "スコア",
           "priority": "優先度",
-          "organization": "会社"
+          "organization": "会社",
+          "object-id": "オブジェクトID",
+          "resolved": "解決済み",
+          "reasons": "除外理由"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "SEOリンクのデバッグ候補",
+        "messages": {
+          "partial-list": "除外されたレコードは、解決の理由を説明できるモジュールについてのみ表示されます。"
         }
       }
     },
@@ -186,6 +196,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "SEOレコードが無効です",
+      "StoreMismatch": "SEOレコードは別の店舗に割り当てられています",
+      "LanguageMismatch": "SEOレコードの言語が、要求された言語とも店舗の既定言語とも一致しません",
+      "NotBestMatch": "このスラッグには別のSEOレコードが選択されました",
+      "NotReturnedByResolver": "リゾルバーはこのレコードを返しませんでした（カスタムのリゾルバーロジック）"
     }
   },
   "permissions": {

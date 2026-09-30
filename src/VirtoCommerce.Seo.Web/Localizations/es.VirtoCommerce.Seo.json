@@ -86,7 +86,8 @@
           "Scored": "Etapa 3: Puntuado - cálculo de puntuaciones numéricas y prioridades de tipo de objeto.",
           "FilteredScore": "Etapa 4: Puntuación filtrada - mantener elementos SEO con puntuación positiva.",
           "Ordered": "Etapa 5: Ordenado - ordenar SEO por puntuación y prioridad de tipo de objeto.",
-          "Final": "Etapa 6: Final - seleccionar el primero como el Seo resuelto."
+          "Final": "Etapa 6: Final - seleccionar el primero como el Seo resuelto.",
+          "Candidates": "Etapa 0: Candidatos - registros SEO con este slug que los resolvers consideraron, incluidos los rechazados."
         }
       },
       "seo-list": {
@@ -145,7 +146,16 @@
           "store": "Tienda",
           "score": "Puntuación",
           "priority": "Prioridad",
-          "organization": "Organización"
+          "organization": "Organización",
+          "object-id": "ID del objeto",
+          "resolved": "Resuelto",
+          "reasons": "Motivos del rechazo"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Candidatos de depuración de enlaces SEO",
+        "messages": {
+          "partial-list": "Los registros rechazados solo se muestran para los módulos que pueden explicar su resolución."
         }
       }
     },
@@ -186,6 +196,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "El registro SEO está inactivo",
+      "StoreMismatch": "El registro SEO está asignado a otra tienda",
+      "LanguageMismatch": "El idioma del registro SEO no coincide ni con el idioma solicitado ni con el idioma predeterminado de la tienda",
+      "NotBestMatch": "Se seleccionó otro registro SEO para este slug",
+      "NotReturnedByResolver": "El resolver no devolvió este registro (lógica de resolver personalizada)"
     },
     "permissions": {
       "seo:access": "Abrir el menú de SEO",
