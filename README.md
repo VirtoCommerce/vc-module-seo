@@ -63,7 +63,8 @@ The VirtoCommerce SEO module provides centralized infrastructure for managing SE
 
 `GET api/seoinfos/explain` returns a **Stage 0 (Candidates)** snapshot before the six stages above:
 
-1. `CompositeSeoResolver.GetCandidatesAsync` calls `ISeoResolver.GetCandidatesAsync` on every resolver. The interface default returns the records `FindSeoAsync` resolved; a resolver that overrides it (as the Catalog module does) also returns every other SEO record with that slug, each rejected one with reason codes (for example `StoreMismatch`, `NotInStoreCatalog`).
+1. `CompositeSeoResolver.GetCandidatesAsync` calls `ISeoResolver.GetCandidatesAsync` on every resolver. The interface default returns the records `FindSeoAsync` resolved; a resolver that overrides it (as the Catalog module does) also returns the other SEO records with that slug, each rejected one with reason codes (for example `StoreMismatch`, `NotInStoreCatalog`). Explain sets `Take` to 100: the Catalog module lists up to 100 rejected records, the ones the store could use first (its own or store-less records, then the requested language), then by `Id`.
+   The resolved records come first, in the order the storefront resolves them, and every later stage keeps that order; only the Ordered stage re-sorts, by score.
 2. An override marks as resolved exactly the records its `FindSeoAsync` returns, so the explanation can't disagree with the real result.
 3. The resolved candidates go through the six-stage pipeline. When every candidate was rejected, the six stages are returned empty; when no resolver knows the slug, the response is empty.
 4. Explain doesn't publish `SeoInfoNotFoundEvent`, so debugging a permalink never records a broken link.

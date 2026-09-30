@@ -16,6 +16,8 @@ namespace VirtoCommerce.Seo.Data.Services;
 /// </summary>
 public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISeoExplainService
 {
+    private const int MaxCandidates = 100;
+
     public Task<IList<SeoExplainResult>> ExplainAsync(
         string storeId,
         string organizationId,
@@ -37,6 +39,7 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         criteria.Permalink = permalink.StartsWith("/")
             ? permalink.Substring(1)
             : permalink;
+        criteria.Take = MaxCandidates;
 
         var candidates = await compositeSeoResolver.GetCandidatesAsync(criteria);
 
@@ -48,12 +51,11 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
         var seoInfos = candidates
             .Where(x => x.IsResolved)
             .Select(x => x.SeoInfo)
-            .Distinct()
             .ToList();
 
         // Request explain snapshots explicitly so the response contains pipeline stages
         var (_, explainResults) = seoInfos.GetBestMatchingSeoInfo(storeId, organizationId, storeDefaultLanguage, languageCode, explain: true);
 
-        return [new SeoExplainResult(SeoExplainStage.Candidates, [.. candidates]), .. explainResults];
+        return [new SeoExplainResult(SeoExplainStage.Candidates, candidates), .. explainResults];
     }
 }

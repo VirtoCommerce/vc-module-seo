@@ -30,7 +30,7 @@ public class SeoExplainServiceTests
 
         Assert.Equal(7, result.Count);
         Assert.Equal(SeoExplainStage.Candidates, result[0].Stage);
-        var candidate = Assert.IsType<SeoCandidate>(Assert.Single(result[0].Items));
+        var candidate = Assert.Single(result[0].Items);
         Assert.False(candidate.IsResolved);
         Assert.Equal("NotInStoreCatalog", Assert.Single(candidate.Reasons).Code);
         Assert.Equal(SeoExplainStage.Original, result[1].Stage);
@@ -59,7 +59,7 @@ public class SeoExplainServiceTests
         var result = await service.ExplainAsync(StoreId, null, Language, Language, Permalink);
 
         Assert.Equal(7, result.Count);
-        var candidate = Assert.IsType<SeoCandidate>(Assert.Single(result[0].Items));
+        var candidate = Assert.Single(result[0].Items);
         Assert.True(candidate.IsResolved);
         Assert.All(result.Skip(1), x => Assert.Equal("seo-1", Assert.Single(x.Items).SeoInfo.Id));
     }
@@ -74,7 +74,7 @@ public class SeoExplainServiceTests
 
         var result = await service.ExplainAsync(StoreId, null, Language, Language, Permalink);
 
-        var candidate = Assert.IsType<SeoCandidate>(Assert.Single(result[0].Items));
+        var candidate = Assert.Single(result[0].Items);
         Assert.True(candidate.IsResolved);
         Assert.Equal("seo-1", Assert.Single(result[1].Items).SeoInfo.Id);
     }
@@ -88,8 +88,52 @@ public class SeoExplainServiceTests
 
         var result = await service.ExplainAsync(StoreId, null, Language, Language, Permalink);
 
-        Assert.True(Assert.IsType<SeoCandidate>(Assert.Single(result[0].Items)).IsResolved);
+        Assert.True(Assert.Single(result[0].Items).IsResolved);
         Assert.Equal("seo-1", Assert.Single(result.Last().Items).SeoInfo.Id);
+    }
+
+    [Fact]
+    public async Task ExplainAsync_RecordFromTwoResolvers_IsListedOnceAsResolved()
+    {
+        // Two resolvers may return the same record. CompositeSeoResolver.FindSeoAsync lists it once, so the Candidates
+        // stage does too, and it stays resolved even though the other resolver rejected it.
+        var rejecting = new ExplainingResolver(resolved: [], candidates: [CreateCandidate("seo-1", "NotInStoreCatalog")]);
+        var resolving = new Resolver(resolved: [CreateSeoInfo("seo-1")]);
+        var service = new SeoExplainService(new CompositeSeoResolver([rejecting, resolving], new EventPublisher()));
+
+        var result = await service.ExplainAsync(StoreId, null, Language, Language, Permalink);
+
+        Assert.True(Assert.Single(result[0].Items).IsResolved);
+        Assert.Equal("seo-1", Assert.Single(result[1].Items).SeoInfo.Id);
+    }
+
+    [Fact]
+    public async Task ExplainAsync_AsksResolversForUpToHundredCandidates()
+    {
+        // Resolvers cap the rejected records they list with criteria.Take; explain asks for 100 instead of
+        // the search default of 20, so a slug shared by many stores still shows the records that matter.
+        var resolver = new CriteriaRecordingResolver();
+        var service = CreateService(resolver);
+
+        await service.ExplainAsync(StoreId, null, Language, Language, Permalink);
+
+        Assert.Equal(100, resolver.Criteria.Take);
+    }
+
+    [Fact]
+    public async Task ExplainAsync_StagesKeepTheCandidatesOrder()
+    {
+        // An admin follows a record from stage to stage, so each stage lists the records in the Candidates order.
+        // Ordered re-sorts by score, which is its purpose; with equal scores it keeps the order too.
+        var resolver = new ExplainingResolver(
+            resolved: [CreateSeoInfo("seo-1"), CreateSeoInfo("seo-3")],
+            candidates: [CreateCandidate("seo-1"), CreateCandidate("seo-2", "NotInStoreCatalog"), CreateCandidate("seo-3")]);
+        var service = CreateService(resolver);
+
+        var result = await service.ExplainAsync(StoreId, null, Language, Language, Permalink);
+
+        Assert.Equal(["seo-1", "seo-2", "seo-3"], result[0].Items.Select(x => x.SeoInfo.Id));
+        Assert.All(result.Skip(1).SkipLast(1), x => Assert.Equal(["seo-1", "seo-3"], x.Items.Select(item => item.SeoInfo.Id)));
     }
 
     [Fact]
@@ -125,9 +169,9 @@ public class SeoExplainServiceTests
         };
     }
 
-    private static SeoCandidate CreateCandidate(string id, params string[] reasonCodes)
+    private static SeoExplainItem CreateCandidate(string id, params string[] reasonCodes)
     {
-        var candidate = new SeoCandidate(CreateSeoInfo(id));
+        var candidate = new SeoExplainItem(CreateSeoInfo(id));
 
         foreach (var reasonCode in reasonCodes)
         {
@@ -148,11 +192,25 @@ public class SeoExplainServiceTests
     /// <summary>
     /// A resolver that explains itself, as CatalogSeoResolver does.
     /// </summary>
-    private sealed class ExplainingResolver(IList<SeoInfo> resolved, IList<SeoCandidate> candidates) : ISeoResolver
+    private sealed class ExplainingResolver(IList<SeoInfo> resolved, IList<SeoExplainItem> candidates) : ISeoResolver
     {
         public Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria) => Task.FromResult(resolved);
 
-        public Task<IList<SeoCandidate>> GetCandidatesAsync(SeoSearchCriteria criteria) => Task.FromResult(candidates);
+        public Task<IList<SeoExplainItem>> GetCandidatesAsync(SeoSearchCriteria criteria) => Task.FromResult(candidates);
+    }
+
+    /// <summary>
+    /// A resolver that records the criteria explain passes to it.
+    /// </summary>
+    private sealed class CriteriaRecordingResolver : ISeoResolver
+    {
+        public SeoSearchCriteria Criteria { get; private set; }
+
+        public Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
+        {
+            Criteria = criteria;
+            return Task.FromResult<IList<SeoInfo>>([]);
+        }
     }
 
     /// <summary>

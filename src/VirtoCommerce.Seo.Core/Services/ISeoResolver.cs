@@ -11,9 +11,9 @@ public interface ISeoResolver
     Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria);
 
     // The resolved candidates must be exactly what FindSeoAsync returns; the default adds no rejected records
-    async Task<IList<SeoCandidate>> GetCandidatesAsync(SeoSearchCriteria criteria)
+    async Task<IList<SeoExplainItem>> GetCandidatesAsync(SeoSearchCriteria criteria)
     {
         var seoInfos = await FindSeoAsync(criteria) ?? [];
-        return seoInfos.Select(x => new SeoCandidate(x)).ToList();
+        return seoInfos.Select(x => new SeoExplainItem(x)).ToList();
     }
 }

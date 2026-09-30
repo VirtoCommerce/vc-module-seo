@@ -37,15 +37,18 @@ public class CompositeSeoResolver(
         return result;
     }
 
-    public virtual async Task<IList<SeoCandidate>> GetCandidatesAsync(SeoSearchCriteria criteria)
+    public virtual async Task<IList<SeoExplainItem>> GetCandidatesAsync(SeoSearchCriteria criteria)
     {
         var candidateTasks = resolvers
             .Select(x => x.GetCandidatesAsync(criteria))
             .ToArray();
 
+        // Same de-duplication as FindSeoAsync; a record another resolver resolved stays resolved
         return (await Task.WhenAll(candidateTasks))
             .SelectMany(x => x)
             .Where(x => HasObject(x.SeoInfo))
+            .GroupBy(x => x.SeoInfo)
+            .Select(x => x.FirstOrDefault(candidate => candidate.IsResolved) ?? x.First())
             .ToList();
     }
 
