@@ -86,7 +86,8 @@
           "Scored": "Stufe 3: Bewertet - Berechnung der numerischen Bewertungen und Objekttyp-Prioritäten.",
           "FilteredScore": "Stufe 4: Gefilterte Bewertung - Beibehaltung von SEO-Elementen mit positiver Bewertung.",
           "Ordered": "Stufe 5: Geordnet - Sortierung der SEO nach Bewertung und Objekttyp-Priorität.",
-          "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
+          "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo.",
+          "Candidates": "Stufe 0: Kandidaten - SEO-Einträge mit diesem Slug, die die Resolver geprüft haben, einschließlich der abgelehnten."
         }
       },
       "seo-list": {
@@ -145,7 +146,16 @@
           "store": "Geschäft",
           "score": "Punktzahl",
           "priority": "Priorität",
-          "organization": "Organisation"
+          "organization": "Organisation",
+          "object-id": "Objekt-ID",
+          "resolved": "Aufgelöst",
+          "reasons": "Ablehnungsgründe"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Kandidaten des SEO-Link-Debuggings",
+        "messages": {
+          "partial-list": "Abgelehnte Einträge werden nur für Module aufgeführt, die ihre Auflösung erklären können."
         }
       }
     },
@@ -186,6 +196,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "Der SEO-Eintrag ist inaktiv",
+      "StoreMismatch": "Der SEO-Eintrag ist einem anderen Shop zugeordnet",
+      "LanguageMismatch": "Die Sprache des SEO-Eintrags entspricht weder der angeforderten Sprache noch der Standardsprache des Shops",
+      "NotBestMatch": "Ein anderer SEO-Eintrag für diesen Slug wurde ausgewählt",
+      "NotReturnedByResolver": "Der Resolver hat diesen Eintrag nicht zurückgegeben (benutzerdefinierte Resolver-Logik)"
     }
   },
   "permissions": {

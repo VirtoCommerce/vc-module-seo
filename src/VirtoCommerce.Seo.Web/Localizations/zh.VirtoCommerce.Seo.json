@@ -86,7 +86,8 @@
           "Scored": "阶段 3: 已评分 - 计算数字分数和对象类型优先级。",
           "FilteredScore": "阶段 4: 已过滤分数 - 保留分数为正的SEO项目。",
           "Ordered": "阶段 5: 已排序 - 按分数和对象类型优先级对SEO进行排序。",
-          "Final": "阶段 6: 最终 - 选择第一个作为已解析的Seo。"
+          "Final": "阶段 6: 最终 - 选择第一个作为已解析的Seo。",
+          "Candidates": "阶段 0: 候选 - 解析器考虑过的具有此 slug 的 SEO 记录，包括被拒绝的记录。"
         }
       },
       "seo-list": {
@@ -145,7 +146,16 @@
           "store": "店铺",
           "score": "分数",
           "priority": "优先级",
-          "organization": "組織"
+          "organization": "組織",
+          "object-id": "对象 ID",
+          "resolved": "已解析",
+          "reasons": "拒绝原因"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "调试SEO链接候选",
+        "messages": {
+          "partial-list": "只有能够解释其解析过程的模块才会列出被拒绝的记录。"
         }
       }
     },
@@ -186,6 +196,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "SEO 记录未启用",
+      "StoreMismatch": "SEO 记录分配给了其他商店",
+      "LanguageMismatch": "SEO 记录的语言既不匹配请求的语言，也不匹配商店的默认语言",
+      "NotBestMatch": "已为此 slug 选择了另一条 SEO 记录",
+      "NotReturnedByResolver": "解析器未返回此记录（自定义解析器逻辑）"
     }
   },
   "permissions": {

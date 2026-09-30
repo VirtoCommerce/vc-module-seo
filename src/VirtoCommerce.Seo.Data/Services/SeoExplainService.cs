@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Extensions;
@@ -37,16 +38,22 @@ public class SeoExplainService(ICompositeSeoResolver compositeSeoResolver) : ISe
             ? permalink.Substring(1)
             : permalink;
 
-        var seoInfos = await compositeSeoResolver.FindSeoAsync(criteria);
+        var candidates = await compositeSeoResolver.GetCandidatesAsync(criteria);
 
-        if (seoInfos.IsNullOrEmpty())
+        if (candidates.Count == 0)
         {
             return [];
         }
 
+        var seoInfos = candidates
+            .Where(x => x.IsResolved)
+            .Select(x => x.SeoInfo)
+            .Distinct()
+            .ToList();
+
         // Request explain snapshots explicitly so the response contains pipeline stages
         var (_, explainResults) = seoInfos.GetBestMatchingSeoInfo(storeId, organizationId, storeDefaultLanguage, languageCode, explain: true);
 
-        return explainResults ?? [];
+        return [new SeoExplainResult(SeoExplainStage.Candidates, [.. candidates]), .. explainResults];
     }
 }
