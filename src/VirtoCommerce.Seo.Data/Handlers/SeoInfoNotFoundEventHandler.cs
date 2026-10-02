@@ -1,20 +1,20 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Hangfire;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.Jobs;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Seo.Core;
 using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
+using VirtoCommerce.Seo.Data.BackgroundJobs;
 
 namespace VirtoCommerce.Seo.Data.Handlers;
 
 public class SeoInfoNotFoundEventHandler(
     IBrokenLinkSearchService brokenLinkSearchService,
-    IBrokenLinkService brokenLinkService,
     ISettingsManager settingsManager)
     : IEventHandler<SeoInfoNotFoundEvent>
 {
@@ -48,25 +48,6 @@ public class SeoInfoNotFoundEventHandler(
             return;
         }
 
-        BackgroundJob.Enqueue(() => SaveBrokenLink(model, criteria));
-    }
-
-    public Task SaveBrokenLink(BrokenLink model, SeoSearchCriteria criteria)
-    {
-        if (model == null)
-        {
-            model = AbstractTypeFactory<BrokenLink>.TryCreateInstance();
-
-            model.Permalink = criteria.Permalink;
-            model.StoreId = criteria.StoreId;
-            model.Language = criteria.LanguageCode;
-            model.Status = ModuleConstants.LinkStatus.Active;
-            model.CreatedDate = DateTime.UtcNow;
-        }
-
-        model.HitCount++;
-        model.LastHitDate = DateTime.UtcNow;
-
-        return brokenLinkService.SaveChangesAsync([model]);
+        await BackgroundJob.Enqueue<SaveBrokenLinkJob>(new SaveBrokenLinkPayload { Model = model, Criteria = criteria });
     }
 }
