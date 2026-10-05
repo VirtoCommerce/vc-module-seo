@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Core.ExportImport;
+using VirtoCommerce.Platform.Core.Jobs;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -22,6 +23,7 @@ using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.Seo.Core.Services;
+using VirtoCommerce.Seo.Data.BackgroundJobs;
 using VirtoCommerce.Seo.Data.ExportImport;
 using VirtoCommerce.Seo.Data.Handlers;
 using VirtoCommerce.Seo.Data.MySql;
@@ -91,6 +93,8 @@ public class Module : IModule, IHasConfiguration, IExportSupport, IImportSupport
         serviceCollection.AddTransient<SeoExportImport>();
 
         serviceCollection.AddTransient<SeoInfoNotFoundEventHandler>();
+
+        serviceCollection.AddBackgroundJob<SaveBrokenLinkJob>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
