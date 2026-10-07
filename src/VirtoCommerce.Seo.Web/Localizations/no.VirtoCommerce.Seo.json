@@ -149,6 +149,7 @@
           "organization": "Organisasjon",
           "object-id": "Objekt-ID",
           "resolved": "Løst",
+          "not-resolved": "Ikke løst",
           "reasons": "Årsaker til avvisning"
         }
       },

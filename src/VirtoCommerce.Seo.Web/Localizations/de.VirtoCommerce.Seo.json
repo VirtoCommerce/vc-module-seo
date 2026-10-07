@@ -56,7 +56,7 @@
       "seo-explain-main": {
         "title": "SEO-Links debuggen",
         "labels": {
-          "store": "Geschäft",
+          "store": "Shop",
           "default-language": "Standardsprache",
           "language-code": "Sprachcode",
           "permalink": "Permalink",
@@ -143,12 +143,13 @@
           "semantic-url": "Semantische URL",
           "object-type": "Objekttyp",
           "language": "Sprache",
-          "store": "Geschäft",
+          "store": "Shop",
           "score": "Punktzahl",
           "priority": "Priorität",
           "organization": "Organisation",
           "object-id": "Objekt-ID",
           "resolved": "Aufgelöst",
+          "not-resolved": "Nicht aufgelöst",
           "reasons": "Ablehnungsgründe"
         }
       },

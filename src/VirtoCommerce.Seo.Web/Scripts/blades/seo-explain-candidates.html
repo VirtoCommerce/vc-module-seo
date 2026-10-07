@@ -2,13 +2,13 @@
   <div class="blade-inner">
     <div class="inner-block" ng-init="gridOptions.columnDefs = [
         { name: 'seoInfo.semanticUrl', displayName: 'seo.blades.seo-explain-items.labels.semantic-url', headerTooltip: true },
-        { name: 'isResolved', displayName: 'seo.blades.seo-explain-items.labels.resolved', headerTooltip: true, cellTemplate: 'seo-explain-candidates-flag.cell.html', width: 90 },
+        { name: 'isResolved', displayName: 'seo.blades.seo-explain-items.labels.resolved', headerTooltip: true, cellTemplate: 'seo-explain-candidates-resolved.cell.html', width: 120 },
         { name: 'reasonsText', displayName: 'seo.blades.seo-explain-items.labels.reasons', headerTooltip: true, cellTooltip: true, width: '***' },
         { name: 'seoInfo.objectType', displayName: 'seo.blades.seo-explain-items.labels.object-type', headerTooltip: true },
         { name: 'seoInfo.objectId', displayName: 'seo.blades.seo-explain-items.labels.object-id', headerTooltip: true },
         { name: 'seoInfo.languageCode', displayName: 'seo.blades.seo-explain-items.labels.language', headerTooltip: true, width: 90 },
         { name: 'seoInfo.storeId', displayName: 'seo.blades.seo-explain-items.labels.store', headerTooltip: true },
-        { name: 'seoInfo.isActive', displayName: 'seo.blades.seo-detail.labels.is-active', headerTooltip: true, cellTemplate: 'seo-explain-candidates-flag.cell.html', width: 80 }
+        { name: 'seoInfo.isActive', displayName: 'seo.blades.seo-detail.labels.is-active', headerTooltip: true, cellTemplate: 'seo-explain-candidates-active.cell.html', width: 100 }
     ]">
 
       <div class="table-wrapper" ui-grid="gridOptions" ui-grid-auto-resize></div>
@@ -21,8 +21,20 @@
   </div>
 </div>
 
-<script type="text/ng-template" id="seo-explain-candidates-flag.cell.html">
+<script type="text/ng-template" id="seo-explain-candidates-resolved.cell.html">
   <div class="ui-grid-cell-contents">
-    <i class="table-ico fa fa-check" ng-if="COL_FIELD"></i>
+    <i class="table-ico fa fa-check" role="img" ng-if="COL_FIELD" ng-attr-title="{{ 'seo.blades.seo-explain-items.labels.resolved' | translate }}"></i>
+    <div class="inner-contents" ng-if="!COL_FIELD">
+      <span class="table-status">{{ 'seo.blades.seo-explain-items.labels.not-resolved' | translate }}</span>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="seo-explain-candidates-active.cell.html">
+  <div class="ui-grid-cell-contents">
+    <i class="table-ico fa fa-check" role="img" ng-if="COL_FIELD" ng-attr-title="{{ 'seo.blades.seo-detail.labels.is-active' | translate }}"></i>
+    <div class="inner-contents" ng-if="!COL_FIELD">
+      <span class="table-status">{{ 'seo.blades.seo-list.labels.inactive' | translate }}</span>
+    </div>
   </div>
 </script>

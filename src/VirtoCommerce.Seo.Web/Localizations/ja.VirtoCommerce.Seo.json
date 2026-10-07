@@ -149,6 +149,7 @@
           "organization": "会社",
           "object-id": "オブジェクトID",
           "resolved": "解決済み",
+          "not-resolved": "未解決",
           "reasons": "除外理由"
         }
       },

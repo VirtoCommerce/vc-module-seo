@@ -149,6 +149,7 @@
           "organization": "Organization",
           "object-id": "Object ID",
           "resolved": "Resolved",
+          "not-resolved": "Not resolved",
           "reasons": "Rejection reasons"
         }
       },

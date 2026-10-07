@@ -149,6 +149,7 @@
           "organization": "Organisaatio",
           "object-id": "Kohteen tunnus",
           "resolved": "Ratkaistu",
+          "not-resolved": "Ei ratkaistu",
           "reasons": "Hylkäyksen syyt"
         }
       },

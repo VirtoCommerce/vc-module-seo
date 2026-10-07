@@ -149,6 +149,7 @@
           "organization": "Organizacja",
           "object-id": "ID obiektu",
           "resolved": "Rozwiązane",
+          "not-resolved": "Nierozwiązane",
           "reasons": "Powody odrzucenia"
         }
       },

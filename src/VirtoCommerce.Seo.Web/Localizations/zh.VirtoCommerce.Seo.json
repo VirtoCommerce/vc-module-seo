@@ -149,6 +149,7 @@
           "organization": "組織",
           "object-id": "对象 ID",
           "resolved": "已解析",
+          "not-resolved": "未解析",
           "reasons": "拒绝原因"
         }
       },

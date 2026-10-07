@@ -149,6 +149,7 @@
           "organization": "Organizzazione",
           "object-id": "ID oggetto",
           "resolved": "Risolto",
+          "not-resolved": "Non risolto",
           "reasons": "Motivi dello scarto"
         }
       },

@@ -149,6 +149,7 @@
           "organization": "Организация",
           "object-id": "ID объекта",
           "resolved": "Разрешено",
+          "not-resolved": "Не разрешено",
           "reasons": "Причины отклонения"
         }
       },
