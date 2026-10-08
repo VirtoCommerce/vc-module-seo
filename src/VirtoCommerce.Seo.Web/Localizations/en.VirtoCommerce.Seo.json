@@ -86,7 +86,8 @@
           "Scored": "Stage 3: Scored - calculate numeric scores and object type priorities.",
           "FilteredScore": "Stage 4: FilteredScore - keep SEO items with positive score.",
           "Ordered": "Stage 5: Ordered - order SEO by score and object type priority.",
-          "Final": "Stage 6: Final - select first as the resolved Seo."
+          "Final": "Stage 6: Final - select first as the resolved Seo.",
+          "Candidates": "Stage 0: Candidates - SEO records with this slug that the resolvers considered, including the rejected ones."
         }
       },
       "seo-list": {
@@ -145,7 +146,17 @@
           "store": "Store",
           "score": "Score",
           "priority": "Priority",
-          "organization": "Organization"
+          "organization": "Organization",
+          "object-id": "Object ID",
+          "resolved": "Resolved",
+          "not-resolved": "Not resolved",
+          "reasons": "Rejection reasons"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Debug SEO links Candidates",
+        "messages": {
+          "partial-list": "Rejected records are listed only for modules that can explain their resolution."
         }
       }
     },
@@ -186,6 +197,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "The SEO record is inactive",
+      "StoreMismatch": "The SEO record is assigned to another store",
+      "LanguageMismatch": "The SEO record's language matches neither the requested language nor the store's default language",
+      "NotBestMatch": "Another SEO record for this slug was selected",
+      "NotReturnedByResolver": "The resolver didn't return this record (custom resolver logic)"
     }
   },
   "permissions": {

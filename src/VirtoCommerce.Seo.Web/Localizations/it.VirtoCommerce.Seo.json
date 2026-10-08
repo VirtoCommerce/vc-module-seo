@@ -86,7 +86,8 @@
           "Scored": "Fase 3: Punteggiato - Calcolo dei punteggi numerici e delle priorità del tipo di oggetto.",
           "FilteredScore": "Fase 4: Punteggio filtrato - Mantenere gli elementi SEO con punteggio positivo.",
           "Ordered": "Fase 5: Ordinato - Ordinare il SEO per punteggio e priorità del tipo di oggetto.",
-          "Final": "Fase 6: Finale - Selezionare il primo come Seo risolto."
+          "Final": "Fase 6: Finale - Selezionare il primo come Seo risolto.",
+          "Candidates": "Fase 0: Candidati - Record SEO con questo slug esaminati dai resolver, compresi quelli scartati."
         }
       },
       "seo-list": {
@@ -145,7 +146,17 @@
           "store": "Negozio",
           "score": "Punteggio",
           "priority": "Priorità",
-          "organization": "Organizzazione"
+          "organization": "Organizzazione",
+          "object-id": "ID oggetto",
+          "resolved": "Risolto",
+          "not-resolved": "Non risolto",
+          "reasons": "Motivi dello scarto"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Candidati del debug dei link SEO",
+        "messages": {
+          "partial-list": "I record scartati sono elencati solo per i moduli in grado di spiegare la propria risoluzione."
         }
       }
     },
@@ -186,6 +197,13 @@
       "seo": {
         "title": "SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "Il record SEO è inattivo",
+      "StoreMismatch": "Il record SEO è assegnato a un altro negozio",
+      "LanguageMismatch": "La lingua del record SEO non corrisponde né alla lingua richiesta né alla lingua predefinita del negozio",
+      "NotBestMatch": "È stato selezionato un altro record SEO per questo slug",
+      "NotReturnedByResolver": "Il resolver non ha restituito questo record (logica del resolver personalizzata)"
     }
   },
   "permissions": {
