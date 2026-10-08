@@ -118,7 +118,7 @@ public static class SeoExtensions
         }
 
         var seoInfoList = seoInfos as IList<SeoInfo> ?? seoInfos.ToList();
-        if (seoInfoList.Count == 0)
+        if (seoInfoList.Count == 0 && !explain)
         {
             return (null, explainResults);
         }
