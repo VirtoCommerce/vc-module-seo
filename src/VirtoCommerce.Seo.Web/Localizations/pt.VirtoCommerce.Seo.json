@@ -86,7 +86,8 @@
           "Scored": "Fase 3: Pontuado - Calcular pontuações numéricas e prioridades de tipo de objeto.",
           "FilteredScore": "Fase 4: Pontuação filtrada - Manter itens de SEO com pontuação positiva.",
           "Ordered": "Fase 5: Ordenado - Ordenar SEO por pontuação e prioridade de tipo de objeto.",
-          "Final": "Fase 6: Final - Selecionar o primeiro como o Seo resolvido."
+          "Final": "Fase 6: Final - Selecionar o primeiro como o Seo resolvido.",
+          "Candidates": "Fase 0: Candidatos - Registros de SEO com este slug que os resolvedores consideraram, incluindo os rejeitados."
         }
       },
       "seo-explain-items": {
@@ -99,7 +100,17 @@
           "store": "Loja",
           "score": "Pontuação",
           "priority": "Prioridade",
-          "organization": "Organização"
+          "organization": "Organização",
+          "object-id": "ID do Objeto",
+          "resolved": "Resolvido",
+          "not-resolved": "Não resolvido",
+          "reasons": "Motivos da rejeição"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Candidatos de depuração de links de SEO",
+        "messages": {
+          "partial-list": "Os registros rejeitados são listados apenas para os módulos que conseguem explicar sua resolução."
         }
       }
     },
@@ -133,6 +144,13 @@
       "seo-explain-widget": {
         "title": "Depurar links de SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "O registro de SEO está inativo",
+      "StoreMismatch": "O registro de SEO está atribuído a outra loja",
+      "LanguageMismatch": "O idioma do registro de SEO não corresponde nem ao idioma solicitado nem ao idioma padrão da loja",
+      "NotBestMatch": "Outro registro de SEO foi selecionado para este slug",
+      "NotReturnedByResolver": "O resolvedor não retornou este registro (lógica de resolvedor personalizada)"
     }
   },
   "permissions": {

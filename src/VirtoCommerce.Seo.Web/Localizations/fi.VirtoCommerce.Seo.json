@@ -86,7 +86,8 @@
           "Scored": "Vaihe 3: Pisteitetty - numeeristen pisteiden ja objektityyppien prioriteettien laskenta.",
           "FilteredScore": "Vaihe 4: Suodatettu pistemäärä - pidetään SEO-kohteet, joilla on positiivinen pistemäärä.",
           "Ordered": "Vaihe 5: Järjestetty - järjestys SEO:n mukaan pistemäärän ja objektityypin prioriteetin mukaan.",
-          "Final": "Vaihe 6: Lopullinen - valitaan ensimmäinen ratkaistuksi Seoksi."
+          "Final": "Vaihe 6: Lopullinen - valitaan ensimmäinen ratkaistuksi Seoksi.",
+          "Candidates": "Vaihe 0: Ehdokkaat - SEO-tietueet tällä slugilla, jotka resolverit tarkistivat, mukaan lukien hylätyt."
         }
       },
       "seo-explain-items": {
@@ -99,7 +100,17 @@
           "store": "Kauppa",
           "score": "Pisteet",
           "priority": "Prioriteetti",
-          "organization": "Organisaatio"
+          "organization": "Organisaatio",
+          "object-id": "Kohteen tunnus",
+          "resolved": "Ratkaistu",
+          "not-resolved": "Ei ratkaistu",
+          "reasons": "Hylkäyksen syyt"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "SEO-linkkien virheenkorjauksen ehdokkaat",
+        "messages": {
+          "partial-list": "Hylätyt tietueet näytetään vain moduuleille, jotka pystyvät selittämään ratkaisunsa."
         }
       }
     },
@@ -133,6 +144,13 @@
       "seo-explain-widget": {
         "title": "SEO-linkkien virheenkorjaus"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "SEO-tietue ei ole aktiivinen",
+      "StoreMismatch": "SEO-tietue on määritetty toiselle kaupalle",
+      "LanguageMismatch": "SEO-tietueen kieli ei vastaa pyydettyä kieltä eikä kaupan oletuskieltä",
+      "NotBestMatch": "Tälle slugille valittiin toinen SEO-tietue",
+      "NotReturnedByResolver": "Resolveri ei palauttanut tätä tietuetta (mukautettu resolverin logiikka)"
     }
   },
   "permissions": {

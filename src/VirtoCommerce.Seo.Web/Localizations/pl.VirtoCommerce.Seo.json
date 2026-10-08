@@ -86,7 +86,8 @@
           "Scored": "Etap 3: Oceniony - obliczanie ocen numerycznych i priorytetów typów obiektów.",
           "FilteredScore": "Etap 4: Filtrowana ocena - zachowanie elementów SEO z pozytywną oceną.",
           "Ordered": "Etap 5: Uporządkowany - sortowanie SEO według oceny i priorytetu typu obiektu.",
-          "Final": "Etap 6: Finał - wybór pierwszego jako rozwiązanego Seo."
+          "Final": "Etap 6: Finał - wybór pierwszego jako rozwiązanego Seo.",
+          "Candidates": "Etap 0: Kandydaci - rekordy SEO z tym slugiem, które sprawdziły resolvery, w tym odrzucone."
         }
       },
       "seo-explain-items": {
@@ -99,7 +100,17 @@
           "store": "Sklep",
           "score": "Wynik",
           "priority": "Priorytet",
-          "organization": "Organizacja"
+          "organization": "Organizacja",
+          "object-id": "ID obiektu",
+          "resolved": "Rozwiązane",
+          "not-resolved": "Nierozwiązane",
+          "reasons": "Powody odrzucenia"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Kandydaci debugowania linków SEO",
+        "messages": {
+          "partial-list": "Odrzucone rekordy są wyświetlane tylko dla modułów, które potrafią wyjaśnić swoje rozwiązanie."
         }
       }
     },
@@ -133,6 +144,13 @@
       "seo-explain-widget": {
         "title": "Debugowanie linków SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "Rekord SEO jest nieaktywny",
+      "StoreMismatch": "Rekord SEO jest przypisany do innego sklepu",
+      "LanguageMismatch": "Język rekordu SEO nie odpowiada ani żądanemu językowi, ani domyślnemu językowi sklepu",
+      "NotBestMatch": "Dla tego sluga wybrano inny rekord SEO",
+      "NotReturnedByResolver": "Resolver nie zwrócił tego rekordu (niestandardowa logika resolvera)"
     }
   },
   "permissions": {

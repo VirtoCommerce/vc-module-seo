@@ -86,7 +86,8 @@
           "Scored": "Trinn 3: Poengsatt - beregn numeriske poengsummer og objekttypeprioriteter.",
           "FilteredScore": "Trinn 4: Filtrert poengsum - behold SEO-elementer med positiv poengsum.",
           "Ordered": "Trinn 5: Sortert - sorter SEO etter poengsum og objekttypeprioritet.",
-          "Final": "Trinn 6: Endelig - velg første som den løste Seo."
+          "Final": "Trinn 6: Endelig - velg første som den løste Seo.",
+          "Candidates": "Trinn 0: Kandidater - SEO-oppføringer med denne sluggen som resolverne vurderte, inkludert de avviste."
         }
       },
       "seo-explain-items": {
@@ -99,7 +100,17 @@
           "store": "Butikk",
           "score": "Poengsum",
           "priority": "Prioritet",
-          "organization": "Organisasjon"
+          "organization": "Organisasjon",
+          "object-id": "Objekt-ID",
+          "resolved": "Løst",
+          "not-resolved": "Ikke løst",
+          "reasons": "Årsaker til avvisning"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Kandidater for feilsøking av SEO-lenker",
+        "messages": {
+          "partial-list": "Avviste oppføringer vises bare for moduler som kan forklare oppløsningen sin."
         }
       }
     },
@@ -133,6 +144,13 @@
       "seo-explain-widget": {
         "title": "Feilsøk SEO-lenker"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "SEO-oppføringen er inaktiv",
+      "StoreMismatch": "SEO-oppføringen er tilordnet en annen butikk",
+      "LanguageMismatch": "Språket i SEO-oppføringen samsvarer verken med det forespurte språket eller butikkens standardspråk",
+      "NotBestMatch": "En annen SEO-oppføring for denne sluggen ble valgt",
+      "NotReturnedByResolver": "Resolveren returnerte ikke denne oppføringen (tilpasset resolverlogikk)"
     }
   },
   "permissions": {

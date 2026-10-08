@@ -56,7 +56,7 @@
       "seo-explain-main": {
         "title": "SEO-Links debuggen",
         "labels": {
-          "store": "Geschäft",
+          "store": "Shop",
           "default-language": "Standardsprache",
           "language-code": "Sprachcode",
           "permalink": "Permalink",
@@ -86,7 +86,8 @@
           "Scored": "Stufe 3: Bewertet - Berechnung der numerischen Bewertungen und Objekttyp-Prioritäten.",
           "FilteredScore": "Stufe 4: Gefilterte Bewertung - Beibehaltung von SEO-Elementen mit positiver Bewertung.",
           "Ordered": "Stufe 5: Geordnet - Sortierung der SEO nach Bewertung und Objekttyp-Priorität.",
-          "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
+          "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo.",
+          "Candidates": "Stufe 0: Kandidaten - SEO-Einträge mit diesem Slug, die die Resolver geprüft haben, einschließlich der abgelehnten."
         }
       },
       "seo-explain-items": {
@@ -96,10 +97,20 @@
           "semantic-url": "Semantische URL",
           "object-type": "Objekttyp",
           "language": "Sprache",
-          "store": "Geschäft",
+          "store": "Shop",
           "score": "Punktzahl",
           "priority": "Priorität",
-          "organization": "Organisation"
+          "organization": "Organisation",
+          "object-id": "Objekt-ID",
+          "resolved": "Aufgelöst",
+          "not-resolved": "Nicht aufgelöst",
+          "reasons": "Ablehnungsgründe"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Kandidaten des SEO-Link-Debuggings",
+        "messages": {
+          "partial-list": "Abgelehnte Einträge werden nur für Module aufgeführt, die ihre Auflösung erklären können."
         }
       }
     },
@@ -133,6 +144,13 @@
       "seo-explain-widget": {
         "title": "SEO-Links debuggen"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "Der SEO-Eintrag ist inaktiv",
+      "StoreMismatch": "Der SEO-Eintrag ist einem anderen Shop zugeordnet",
+      "LanguageMismatch": "Die Sprache des SEO-Eintrags entspricht weder der angeforderten Sprache noch der Standardsprache des Shops",
+      "NotBestMatch": "Ein anderer SEO-Eintrag für diesen Slug wurde ausgewählt",
+      "NotReturnedByResolver": "Der Resolver hat diesen Eintrag nicht zurückgegeben (benutzerdefinierte Resolver-Logik)"
     }
   },
   "permissions": {

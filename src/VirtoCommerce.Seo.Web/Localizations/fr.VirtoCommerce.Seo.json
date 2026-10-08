@@ -86,7 +86,8 @@
           "Scored": "Étape 3: Noté - Calcul des scores numériques et des priorités de type d'objet.",
           "FilteredScore": "Étape 4: Score filtré - Conserver les éléments SEO avec un score positif.",
           "Ordered": "Étape 5: Ordonné - Trier le SEO par score et priorité de type d'objet.",
-          "Final": "Étape 6: Final - Sélectionner le premier comme Seo résolu."
+          "Final": "Étape 6: Final - Sélectionner le premier comme Seo résolu.",
+          "Candidates": "Étape 0: Candidats - Enregistrements SEO avec ce slug examinés par les résolveurs, y compris ceux qui ont été rejetés."
         }
       },
       "seo-explain-items": {
@@ -99,7 +100,17 @@
           "store": "Boutique",
           "score": "Score",
           "priority": "Priorité",
-          "organization": "Organisation"
+          "organization": "Organisation",
+          "object-id": "ID de l'objet",
+          "resolved": "Résolu",
+          "not-resolved": "Non résolu",
+          "reasons": "Motifs du rejet"
+        }
+      },
+      "seo-explain-candidates": {
+        "title": "Candidats du débogage des liens SEO",
+        "messages": {
+          "partial-list": "Les enregistrements rejetés ne sont listés que pour les modules capables d'expliquer leur résolution."
         }
       }
     },
@@ -133,6 +144,13 @@
       "seo-explain-widget": {
         "title": "Déboguer les liens SEO"
       }
+    },
+    "candidate-reasons": {
+      "Inactive": "L'enregistrement SEO est inactif",
+      "StoreMismatch": "L'enregistrement SEO est attribué à une autre boutique",
+      "LanguageMismatch": "La langue de l'enregistrement SEO ne correspond ni à la langue demandée ni à la langue par défaut de la boutique",
+      "NotBestMatch": "Un autre enregistrement SEO a été sélectionné pour ce slug",
+      "NotReturnedByResolver": "Le résolveur n'a pas renvoyé cet enregistrement (logique de résolveur personnalisée)"
     }
   },
   "permissions": {

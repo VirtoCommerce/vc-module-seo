@@ -13,7 +13,7 @@ The VirtoCommerce SEO module provides centralized infrastructure for managing SE
 * **Redirect Rules** — Static or regex-based URL rewrite rules with priority ordering and capture group substitution (`$1`, `$2`, etc.), validated via FluentValidation.
 * **Broken Link Detection** — Event-driven tracking of unresolved permalinks. When no SEO info is found, a `SeoInfoNotFoundEvent` triggers a Hangfire background job that records or updates the broken link with hit count and timestamp.
 * **SEO Duplicates Detection** — Extensible `ISeoDuplicatesDetector` interface for identifying conflicting SEO entries within an object's relationships (default implementation is a no-op).
-* **Explain / Debug Tool** — REST API endpoint and Admin UI widget that traces the full permalink resolution pipeline stage by stage for diagnostics.
+* **Explain / Debug Tool** — REST API endpoint and Admin UI widget that traces the full permalink resolution pipeline stage by stage for diagnostics, including the SEO records a resolver rejected and why.
 * **Export / Import** — Streaming JSON-based export and import of redirect rules and broken links with batch processing (100 items per batch) and progress reporting.
 * **Multi-Database Support** — EF Core providers for SQL Server, MySQL, and PostgreSQL with version-controlled migrations.
 
@@ -59,6 +59,18 @@ The VirtoCommerce SEO module provides centralized infrastructure for managing SE
    - **Stage 6 (Final):** Select the single best-match candidate.
 6. For redirect resolution, `RedirectResolver` searches active redirect rules by store, sorted by priority descending, and evaluates each rule (static exact match or regex match with group substitution).
 
+### Explain Flow
+
+`GET api/seoinfos/explain` returns a **Stage 0 (Candidates)** snapshot before the six stages above:
+
+1. `CompositeSeoResolver.GetCandidatesAsync` calls `ISeoResolver.GetCandidatesAsync` on every resolver. The interface default returns the records `FindSeoAsync` resolved; a resolver that overrides it (as the Catalog module does) also returns the other SEO records with that slug, each rejected one with reason codes (for example `StoreMismatch`, `NotInStoreCatalog`). Explain sets `Take` to 100: the Catalog module lists up to 100 rejected records, the ones the store could use first (its own or store-less records, then the requested language), then by `Id`.
+   The resolved records come first, in the order the storefront resolves them, and every later stage keeps that order; only the Ordered stage re-sorts, by score.
+2. An override marks as resolved exactly the records its `FindSeoAsync` returns, so the explanation can't disagree with the real result.
+3. The resolved candidates go through the six-stage pipeline. When every candidate was rejected, the six stages are returned empty; when no resolver knows the slug, the response is empty.
+4. Explain doesn't publish `SeoInfoNotFoundEvent`, so debugging a permalink never records a broken link.
+
+The Admin UI translates reason codes from `seo.candidate-reasons.<code>`; a module that adds codes ships their translations under that key in its own localization files.
+
 ## Components
 
 ### Projects
@@ -77,7 +89,7 @@ The VirtoCommerce SEO module provides centralized infrastructure for managing SE
 
 | Service | Interface | Responsibility |
 |---|---|---|
-| `CompositeSeoResolver` | `ICompositeSeoResolver` | Aggregates multiple `ISeoResolver` implementations, merges results, and publishes `SeoInfoNotFoundEvent` when no records are found |
+| `CompositeSeoResolver` | `ICompositeSeoResolver` | Aggregates multiple `ISeoResolver` implementations, merges results, and publishes `SeoInfoNotFoundEvent` when no records are found; collects the candidates for explain |
 | `RedirectResolver` | `IRedirectResolver` | Resolves URL redirects by evaluating active redirect rules (static or regex) sorted by priority |
 | `SeoExplainService` | `ISeoExplainService` | Produces stage-by-stage explain snapshots of the SEO resolution pipeline for diagnostics |
 | `BrokenLinkService` | `IBrokenLinkService` | CRUD operations for broken link records with platform memory caching and domain events |
