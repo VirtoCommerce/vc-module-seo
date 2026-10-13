@@ -103,7 +103,12 @@ angular.module('virtoCommerce.seo')
 
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {
-                    uiGridHelper.initialize($scope, gridOptions);
+                    // The grid is rendered lazily (ng-if), e.g. after the first record is added from the
+                    // details blade, when this blade is no longer bladeNavigationService.currentBlade.
+                    // Bind gridApi explicitly so it always lands on this blade's scope.
+                    uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
+                        $scope.gridApi = gridApi;
+                    });
                 };
 
                 blade.headIcon = 'fa fa-globe';
