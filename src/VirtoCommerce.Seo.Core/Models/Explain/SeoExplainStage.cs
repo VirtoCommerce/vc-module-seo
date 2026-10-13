@@ -39,4 +39,10 @@ public enum SeoExplainStage
     /// Final: a single best candidate (or none) selected from the ordered list.
     /// </summary>
     Final,
+
+    /// <summary>
+    /// Candidates: every SEO record the resolvers considered, including the rejected ones.
+    /// Returned before Original, but declared last so the existing values keep their numbers.
+    /// </summary>
+    Candidates,
 }

@@ -18,6 +18,15 @@ public static class ModuleConstants
         public const string Accepted = "Accepted";
     }
 
+    public static class CandidateReasons
+    {
+        public const string Inactive = "Inactive";
+        public const string StoreMismatch = "StoreMismatch";
+        public const string LanguageMismatch = "LanguageMismatch";
+        public const string NotBestMatch = "NotBestMatch";
+        public const string NotReturnedByResolver = "NotReturnedByResolver";
+    }
+
     public static class Security
     {
         public static class Permissions

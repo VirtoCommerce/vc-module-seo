@@ -11,10 +11,15 @@ angular.module('virtoCommerce.seo')
             blade.isLoading = true;
 
             $scope.openStageDetails = function (stage) {
+                var isCandidates = stage.stage === 'Candidates';
                 var newBlade = {
                     id: 'seoExplainItems',
-                    controller: 'virtoCommerce.seo.seoExplainItemsController',
-                    template: 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-items.html',
+                    controller: isCandidates
+                        ? 'virtoCommerce.seo.seoExplainCandidatesController'
+                        : 'virtoCommerce.seo.seoExplainItemsController',
+                    template: isCandidates
+                        ? 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-candidates.html'
+                        : 'Modules/$(VirtoCommerce.Seo)/Scripts/blades/seo-explain-items.html',
                     items: stage.items
                 };
                 bladeNavigationService.showBlade(newBlade, blade);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VirtoCommerce.Platform.Core.Common;
@@ -21,22 +22,22 @@ public sealed class SeoExportImport(
 {
 
     public async Task ExportAsync(Stream outStream, ExportImportOptions options,
-        Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+        Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
         await using var sw = new StreamWriter(outStream, Encoding.UTF8);
         await using var writer = new JsonTextWriter(sw);
 
-        await writer.WriteStartObjectAsync();
+        await writer.WriteStartObjectAsync(cancellationToken);
 
         await ExportRedirectRules(writer, progressCallback, cancellationToken);
         await ExportBrokenLinks(writer, progressCallback, cancellationToken);
 
-        await writer.WriteEndObjectAsync();
+        await writer.WriteEndObjectAsync(cancellationToken);
     }
 
-    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -48,7 +49,7 @@ public sealed class SeoExportImport(
         var linksTotalCount = 0;
 
         const int batchSize = 100;
-        while (await reader.ReadAsync())
+        while (await reader.ReadAsync(cancellationToken))
         {
             if (reader.TokenType == JsonToken.PropertyName)
             {
@@ -56,15 +57,15 @@ public sealed class SeoExportImport(
 
                 if (readerValueString.EqualsIgnoreCase("RedirectRulesTotalCount"))
                 {
-                    rulesTotalCount = await reader.ReadAsInt32Async() ?? 0;
+                    rulesTotalCount = await reader.ReadAsInt32Async(cancellationToken) ?? 0;
                 }
                 else if (readerValueString.EqualsIgnoreCase("RedirectRules"))
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    await reader.ReadAsync();
+                    await reader.ReadAsync(cancellationToken);
                     if (reader.TokenType == JsonToken.StartArray)
                     {
-                        await reader.ReadAsync();
+                        await reader.ReadAsync(cancellationToken);
 
                         var redirectRules = new List<RedirectRule>();
                         var rulesCount = 0;
@@ -74,7 +75,7 @@ public sealed class SeoExportImport(
                             redirectRules.Add(redirectRule);
                             rulesCount++;
 
-                            await reader.ReadAsync();
+                            await reader.ReadAsync(cancellationToken);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested();
@@ -93,15 +94,15 @@ public sealed class SeoExportImport(
                 }
                 else if (readerValueString.EqualsIgnoreCase("BrokenLinksTotalCount"))
                 {
-                    linksTotalCount = await reader.ReadAsInt32Async() ?? 0;
+                    linksTotalCount = await reader.ReadAsInt32Async(cancellationToken) ?? 0;
                 }
                 else if (readerValueString.EqualsIgnoreCase("BrokenLinks"))
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    await reader.ReadAsync();
+                    await reader.ReadAsync(cancellationToken);
                     if (reader.TokenType == JsonToken.StartArray)
                     {
-                        await reader.ReadAsync();
+                        await reader.ReadAsync(cancellationToken);
 
                         var brokenLinks = new List<BrokenLink>();
                         var linksCount = 0;
@@ -111,7 +112,7 @@ public sealed class SeoExportImport(
                             brokenLinks.Add(brokenLink);
                             linksCount++;
 
-                            await reader.ReadAsync();
+                            await reader.ReadAsync(cancellationToken);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested();
@@ -132,7 +133,7 @@ public sealed class SeoExportImport(
         }
     }
 
-    private async Task ExportRedirectRules(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    private async Task ExportRedirectRules(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         var progressInfo = new ExportImportProgressInfo { Description = "loading data..." };
         progressCallback(progressInfo);
@@ -142,13 +143,13 @@ public sealed class SeoExportImport(
 
         var rules = await redirectRuleSearchService.SearchAsync(new RedirectRuleSearchCriteria { Take = 0 });
         var rulesCount = rules.TotalCount;
-        await writer.WritePropertyNameAsync("RedirectRulesTotalCount");
-        await writer.WriteValueAsync(rulesCount);
+        await writer.WritePropertyNameAsync("RedirectRulesTotalCount", cancellationToken);
+        await writer.WriteValueAsync(rulesCount, cancellationToken);
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        await writer.WritePropertyNameAsync("RedirectRules");
-        await writer.WriteStartArrayAsync();
+        await writer.WritePropertyNameAsync("RedirectRules", cancellationToken);
+        await writer.WriteStartArrayAsync(cancellationToken);
 
         const int batchSize = 100;
 
@@ -159,18 +160,18 @@ public sealed class SeoExportImport(
             {
                 jsonSerializer.Serialize(writer, rule);
             }
-            await writer.FlushAsync();
+            await writer.FlushAsync(cancellationToken);
             progressInfo.Description = $"{Math.Min(rulesCount, i + batchSize)} of {rulesCount} redirect rules exported";
             progressCallback(progressInfo);
             cancellationToken.ThrowIfCancellationRequested();
         }
-        await writer.WriteEndArrayAsync();
+        await writer.WriteEndArrayAsync(cancellationToken);
 
-        await writer.FlushAsync();
+        await writer.FlushAsync(cancellationToken);
 
     }
 
-    private async Task ExportBrokenLinks(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    private async Task ExportBrokenLinks(JsonTextWriter writer, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         var progressInfo = new ExportImportProgressInfo { Description = "loading data..." };
         progressCallback(progressInfo);
@@ -180,13 +181,13 @@ public sealed class SeoExportImport(
 
         var links = await brokenLinkSearchService.SearchAsync(new BrokenLinkSearchCriteria { Take = 0 });
         var linksCount = links.TotalCount;
-        await writer.WritePropertyNameAsync("BrokenLinksTotalCount");
-        await writer.WriteValueAsync(linksCount);
+        await writer.WritePropertyNameAsync("BrokenLinksTotalCount", cancellationToken);
+        await writer.WriteValueAsync(linksCount, cancellationToken);
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        await writer.WritePropertyNameAsync("BrokenLinks");
-        await writer.WriteStartArrayAsync();
+        await writer.WritePropertyNameAsync("BrokenLinks", cancellationToken);
+        await writer.WriteStartArrayAsync(cancellationToken);
 
         const int batchSize = 100;
 
@@ -197,13 +198,13 @@ public sealed class SeoExportImport(
             {
                 jsonSerializer.Serialize(writer, member);
             }
-            await writer.FlushAsync();
+            await writer.FlushAsync(cancellationToken);
             progressInfo.Description = $"{Math.Min(linksCount, i + batchSize)} of {linksCount} broken links exported";
             progressCallback(progressInfo);
         }
-        await writer.WriteEndArrayAsync();
+        await writer.WriteEndArrayAsync(cancellationToken);
 
-        await writer.FlushAsync();
+        await writer.FlushAsync(cancellationToken);
     }
 
 }

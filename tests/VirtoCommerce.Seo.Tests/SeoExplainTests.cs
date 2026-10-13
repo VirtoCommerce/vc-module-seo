@@ -61,6 +61,22 @@ public class SeoExplainTests
     }
 
     [Fact]
+    public void GetBestMatchingSeoInfo_WithExplainTrueAndEmptyList_ReturnsAllStagesEmpty()
+    {
+        // Explain shows the stage chain even when every candidate was rejected before the pipeline,
+        // so an empty list must still produce all six stages.
+        var items = new List<SeoInfo>();
+
+        // Act
+        var (seoInfo, explainResults) = items.GetBestMatchingSeoInfo("store", "en-US", "en-US", explain: true);
+
+        // Assert
+        Assert.Null(seoInfo);
+        Assert.Equal(6, explainResults.Count);
+        Assert.All(explainResults, x => Assert.Empty(x.Items));
+    }
+
+    [Fact]
     public void GetBestMatchingSeoInfo_InactiveEntriesAreIgnored()
     {
         // Arrange

@@ -5,6 +5,7 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Seo.Core.Events;
 using VirtoCommerce.Seo.Core.Models;
+using VirtoCommerce.Seo.Core.Models.Explain;
 using VirtoCommerce.Seo.Core.Services;
 
 namespace VirtoCommerce.Seo.Data.Services;
@@ -22,7 +23,7 @@ public class CompositeSeoResolver(
 
         var result = (await Task.WhenAll(searchTasks))
             .SelectMany(x => x)
-            .Where(x => x.ObjectId != null && x.ObjectType != null)
+            .Where(HasObject)
             .Distinct()
             .ToList();
 
@@ -34,5 +35,25 @@ public class CompositeSeoResolver(
         }
 
         return result;
+    }
+
+    public virtual async Task<IList<SeoExplainItem>> GetCandidatesAsync(SeoSearchCriteria criteria)
+    {
+        var candidateTasks = resolvers
+            .Select(x => x.GetCandidatesAsync(criteria))
+            .ToArray();
+
+        // Same de-duplication as FindSeoAsync; a record another resolver resolved stays resolved
+        return (await Task.WhenAll(candidateTasks))
+            .SelectMany(x => x)
+            .Where(x => HasObject(x.SeoInfo))
+            .GroupBy(x => x.SeoInfo)
+            .Select(x => x.FirstOrDefault(candidate => candidate.IsResolved) ?? x.First())
+            .ToList();
+    }
+
+    private static bool HasObject(SeoInfo seoInfo)
+    {
+        return seoInfo.ObjectId != null && seoInfo.ObjectType != null;
     }
 }
