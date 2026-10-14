@@ -1,0 +1,4 @@
+{
+  // SEO tools of stores (explain, broken links, redirect rules) (Admin Shell Module Federation remote): widgets on other modules' blades, no menu item
+  "remote": { "name": "seo_admin", "exposed": "./Module" }
+}
