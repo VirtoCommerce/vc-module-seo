@@ -1,0 +1,3 @@
+{
+  "remote": { "name": "seo_admin", "exposed": "./Module" }
+}

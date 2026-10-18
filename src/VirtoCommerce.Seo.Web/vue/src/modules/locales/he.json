@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "פעיל",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "יש שינויים שלא נשמרו. האם לסגור בכל זאת?",
+      "DELETE_SELECTED": "מחיקת הפריטים שנבחרו ({count})? לא ניתן לבטל פעולה זו."
+    },
+    "BROKEN_LINKS_DISABLED": "זיהוי קישורים שבורים כבוי (הגדרה Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "ניתן להשתמש רק ב-$1..${count} (קבוצות הלכידה של הנתיב הנכנס)",
+      "REGEX": "ביטוי רגולרי לא תקין"
+    },
+    "EXPLAIN": "הסבר",
+    "EXPLAIN_EMPTY": "יש להזין קישור קבוע ולהפעיל את 'הסבר' כדי לראות לאן הוא מפוענח",
+    "FIELDS": {
+      "CREATED": "נוצר",
+      "DESCRIPTION": "תיאור",
+      "HITS": "כניסות",
+      "INBOUND": "נכנס",
+      "IS_ACTIVE": "פעיל",
+      "ITEMS": "פריטים",
+      "LANGUAGE": "שפה",
+      "LAST_HIT": "כניסה אחרונה",
+      "OBJECT_ID": "מזהה אובייקט",
+      "ORGANIZATION": "ארגון",
+      "OUTBOUND": "יוצא",
+      "PERMALINK": "קישור קבוע",
+      "PRIORITY": "עדיפות",
+      "REASONS": "סיבות",
+      "REDIRECT_URL": "URL להפניה",
+      "RESOLVED": "טופל",
+      "RULE_TYPE": "סוג",
+      "SCORE": "ציון",
+      "SEMANTIC_URL": "URL סמנטי",
+      "STAGE": "שלב",
+      "STATUS": "סטטוס",
+      "TYPE": "סוג"
+    },
+    "INACTIVE": "לא פעיל",
+    "NEW_RULE": "כלל הפניה חדש",
+    "NO_BROKEN_LINKS": "אין קישורים שבורים",
+    "NO_RULES": "אין כללי הפניה",
+    "STAGES": {
+      "Original": "שלב 1: Original - פריטי SEO שנמצאו על ידי המפענח.",
+      "Filtered": "שלב 2: Filtered - פריטי SEO התואמים לכללי החנות והשפה.",
+      "Scored": "שלב 3: Scored - חישוב ציונים מספריים ועדיפויות של סוגי אובייקטים.",
+      "FilteredScore": "שלב 4: FilteredScore - שמירת פריטי SEO בעלי ציון חיובי.",
+      "Ordered": "שלב 5: Ordered - מיון פריטי SEO לפי ציון ועדיפות סוג האובייקט.",
+      "Final": "שלב 6: Final - בחירת הפריט הראשון כפריט ה-SEO שנמצא."
+    },
+    "TOOLBAR": {
+      "ADD": "הוספה",
+      "CREATE": "יצירה",
+      "DELETE": "מחיקה",
+      "REFRESH": "רענון",
+      "RESET": "איפוס",
+      "SAVE": "שמירה"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "קישורים שבורים",
+      "REDIRECT_RULES": "כללי הפניה",
+      "SEO_EXPLAIN": "הסבר SEO"
+    }
+  }
+}

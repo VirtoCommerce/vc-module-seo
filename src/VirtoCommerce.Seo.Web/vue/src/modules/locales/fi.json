@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "Aktiivinen",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Sinulla on tallentamattomia muutoksia. Suljetaanko silti?",
+      "DELETE_SELECTED": "Poistetaanko {count} valittua kohdetta? Toimintoa ei voi kumota."
+    },
+    "BROKEN_LINKS_DISABLED": "Rikkinäisten linkkien tunnistus on poistettu käytöstä (asetus Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "Vain $1..${count} voidaan käyttää (saapuvan säännön kaappausryhmät)",
+      "REGEX": "Ei kelvollinen säännöllinen lauseke"
+    },
+    "EXPLAIN": "Selitä",
+    "EXPLAIN_EMPTY": "Anna pysyvä linkki ja suorita Selitä nähdäksesi, miten se ratkaistaan",
+    "FIELDS": {
+      "CREATED": "Luotu",
+      "DESCRIPTION": "Kuvaus",
+      "HITS": "Osumat",
+      "INBOUND": "Saapuva",
+      "IS_ACTIVE": "Aktiivinen",
+      "ITEMS": "Kohteet",
+      "LANGUAGE": "Kieli",
+      "LAST_HIT": "Viimeisin osuma",
+      "OBJECT_ID": "Kohteen tunnus",
+      "ORGANIZATION": "Organisaatio",
+      "OUTBOUND": "Lähtevä",
+      "PERMALINK": "Pysyvä linkki",
+      "PRIORITY": "Prioriteetti",
+      "REASONS": "Syyt",
+      "REDIRECT_URL": "Uudelleenohjaus-URL",
+      "RESOLVED": "Ratkaistu",
+      "RULE_TYPE": "Tyyppi",
+      "SCORE": "Pisteet",
+      "SEMANTIC_URL": "Semanttinen URL",
+      "STAGE": "Vaihe",
+      "STATUS": "Tila",
+      "TYPE": "Tyyppi"
+    },
+    "INACTIVE": "Ei aktiivinen",
+    "NEW_RULE": "Uusi uudelleenohjaussääntö",
+    "NO_BROKEN_LINKS": "Ei rikkinäisiä linkkejä",
+    "NO_RULES": "Ei uudelleenohjaussääntöjä",
+    "STAGES": {
+      "Original": "Vaihe 1: Alkuperäinen - resolverin löytämät SEO-kohteet.",
+      "Filtered": "Vaihe 2: Suodatettu - kaupan ja kielen sääntöjä vastaavat SEO-kohteet.",
+      "Scored": "Vaihe 3: Pisteitetty - numeeristen pisteiden ja objektityyppien prioriteettien laskenta.",
+      "FilteredScore": "Vaihe 4: Suodatettu pistemäärä - pidetään SEO-kohteet, joilla on positiivinen pistemäärä.",
+      "Ordered": "Vaihe 5: Järjestetty - SEO järjestetään pistemäärän ja objektityypin prioriteetin mukaan.",
+      "Final": "Vaihe 6: Lopullinen - ensimmäinen valitaan ratkaistuksi Seo-kohteeksi."
+    },
+    "TOOLBAR": {
+      "ADD": "Lisää",
+      "CREATE": "Luo",
+      "DELETE": "Poista",
+      "REFRESH": "Päivitä",
+      "RESET": "Palauta",
+      "SAVE": "Tallenna"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "Rikkinäiset linkit",
+      "REDIRECT_RULES": "Uudelleenohjaussäännöt",
+      "SEO_EXPLAIN": "SEO-selitys"
+    }
+  }
+}

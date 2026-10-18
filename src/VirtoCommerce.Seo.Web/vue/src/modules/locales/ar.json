@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "نشط",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "لديك تغييرات غير محفوظة. هل تريد الإغلاق على أي حال؟",
+      "DELETE_SELECTED": "هل تريد حذف العناصر المحددة ({count})؟ لا يمكن التراجع عن هذا الإجراء."
+    },
+    "BROKEN_LINKS_DISABLED": "اكتشاف الروابط المعطّلة متوقف (الإعداد Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "يمكن استخدام $1..${count} فقط (مجموعات الالتقاط في المسار الوارد)",
+      "REGEX": "ليس تعبيرًا نمطيًا صالحًا"
+    },
+    "EXPLAIN": "شرح",
+    "EXPLAIN_EMPTY": "أدخل رابطًا دائمًا وشغّل «شرح» لمعرفة كيف يتم تحليله",
+    "FIELDS": {
+      "CREATED": "تاريخ الإنشاء",
+      "DESCRIPTION": "الوصف",
+      "HITS": "مرات الوصول",
+      "INBOUND": "المسار الوارد",
+      "IS_ACTIVE": "نشط",
+      "ITEMS": "العناصر",
+      "LANGUAGE": "اللغة",
+      "LAST_HIT": "آخر وصول",
+      "OBJECT_ID": "معرّف الكائن",
+      "ORGANIZATION": "المؤسسة",
+      "OUTBOUND": "المسار الصادر",
+      "PERMALINK": "الرابط الدائم",
+      "PRIORITY": "الأولوية",
+      "REASONS": "الأسباب",
+      "REDIRECT_URL": "عنوان URL لإعادة التوجيه",
+      "RESOLVED": "تم الحل",
+      "RULE_TYPE": "النوع",
+      "SCORE": "الدرجة",
+      "SEMANTIC_URL": "عنوان URL الدلالي",
+      "STAGE": "المرحلة",
+      "STATUS": "الحالة",
+      "TYPE": "النوع"
+    },
+    "INACTIVE": "غير نشط",
+    "NEW_RULE": "قاعدة إعادة توجيه جديدة",
+    "NO_BROKEN_LINKS": "لا توجد روابط معطّلة",
+    "NO_RULES": "لا توجد قواعد إعادة توجيه",
+    "STAGES": {
+      "Original": "المرحلة 1: Original - عناصر SEO التي عثر عليها المحلِّل.",
+      "Filtered": "المرحلة 2: Filtered - عناصر SEO المطابقة لقواعد المتجر واللغة.",
+      "Scored": "المرحلة 3: Scored - احتساب الدرجات الرقمية وأولويات أنواع الكائنات.",
+      "FilteredScore": "المرحلة 4: FilteredScore - الإبقاء على عناصر SEO ذات الدرجة الموجبة.",
+      "Ordered": "المرحلة 5: Ordered - ترتيب عناصر SEO حسب الدرجة وأولوية نوع الكائن.",
+      "Final": "المرحلة 6: Final - اختيار العنصر الأول بوصفه عنصر SEO الناتج."
+    },
+    "TOOLBAR": {
+      "ADD": "إضافة",
+      "CREATE": "إنشاء",
+      "DELETE": "حذف",
+      "REFRESH": "تحديث",
+      "RESET": "إعادة تعيين",
+      "SAVE": "حفظ"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "الروابط المعطّلة",
+      "REDIRECT_RULES": "قواعد إعادة التوجيه",
+      "SEO_EXPLAIN": "شرح SEO"
+    }
+  }
+}

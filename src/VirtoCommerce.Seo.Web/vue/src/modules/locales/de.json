@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "Aktiv",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Sie haben ungespeicherte Änderungen. Trotzdem schließen?",
+      "DELETE_SELECTED": "{count} ausgewählte(s) Element(e) löschen? Dies kann nicht rückgängig gemacht werden."
+    },
+    "BROKEN_LINKS_DISABLED": "Die Erkennung defekter Links ist deaktiviert (Einstellung Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "Nur $1..${count} können verwendet werden (Erfassungsgruppen der eingehenden Regel)",
+      "REGEX": "Kein gültiger regulärer Ausdruck"
+    },
+    "EXPLAIN": "Erklären",
+    "EXPLAIN_EMPTY": "Geben Sie einen Permalink ein und klicken Sie auf Erklären, um zu sehen, wie er aufgelöst wird",
+    "FIELDS": {
+      "CREATED": "Erstellt",
+      "DESCRIPTION": "Beschreibung",
+      "HITS": "Zugriffe",
+      "INBOUND": "Eingehend",
+      "IS_ACTIVE": "Aktiv",
+      "ITEMS": "Elemente",
+      "LANGUAGE": "Sprache",
+      "LAST_HIT": "Letzter Zugriff",
+      "OBJECT_ID": "Objekt-ID",
+      "ORGANIZATION": "Organisation",
+      "OUTBOUND": "Ausgehend",
+      "PERMALINK": "Permalink",
+      "PRIORITY": "Priorität",
+      "REASONS": "Gründe",
+      "REDIRECT_URL": "Weiterleitungs-URL",
+      "RESOLVED": "Aufgelöst",
+      "RULE_TYPE": "Typ",
+      "SCORE": "Punktzahl",
+      "SEMANTIC_URL": "Semantische URL",
+      "STAGE": "Stufe",
+      "STATUS": "Status",
+      "TYPE": "Typ"
+    },
+    "INACTIVE": "Inaktiv",
+    "NEW_RULE": "Neue Weiterleitungsregel",
+    "NO_BROKEN_LINKS": "Keine defekten Links",
+    "NO_RULES": "Keine Weiterleitungsregeln",
+    "STAGES": {
+      "Original": "Stufe 1: Original - Vom Resolver gefundene SEO-Elemente.",
+      "Filtered": "Stufe 2: Gefiltert - SEO-Elemente, die den Shop- und Sprachregeln entsprechen.",
+      "Scored": "Stufe 3: Bewertet - Berechnung der numerischen Bewertungen und Objekttyp-Prioritäten.",
+      "FilteredScore": "Stufe 4: Gefilterte Bewertung - Beibehaltung von SEO-Elementen mit positiver Bewertung.",
+      "Ordered": "Stufe 5: Geordnet - Sortierung der SEO nach Bewertung und Objekttyp-Priorität.",
+      "Final": "Stufe 6: Endgültig - Auswahl des ersten als aufgelöstes Seo."
+    },
+    "TOOLBAR": {
+      "ADD": "Hinzufügen",
+      "CREATE": "Erstellen",
+      "DELETE": "Löschen",
+      "REFRESH": "Aktualisieren",
+      "RESET": "Zurücksetzen",
+      "SAVE": "Speichern"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "Defekte Links",
+      "REDIRECT_RULES": "Weiterleitungsregeln",
+      "SEO_EXPLAIN": "SEO-Erklärung"
+    }
+  }
+}
