@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "seo:access": "فتح قائمة SEO",
+    "seo:create": "إنشاء البيانات المتعلقة بـ SEO",
+    "seo:read": "عرض البيانات المتعلقة بـ SEO",
+    "seo:update": "تحديث البيانات المتعلقة بـ SEO",
+    "seo:delete": "حذف البيانات المتعلقة بـ SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO",
+        "description": "تفعيل/تعطيل إعدادات SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "اكتشاف الروابط المعطّلة",
+          "description": "تفعيل/تعطيل تسجيل محاولات الوصول إلى الصفحات غير الموجودة لتحليلها"
+        }
+      }
+    }
+  }
+}
