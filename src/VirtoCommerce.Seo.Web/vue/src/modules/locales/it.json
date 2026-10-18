@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "Attivo",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Ci sono modifiche non salvate. Chiudere comunque?",
+      "DELETE_SELECTED": "Eliminare {count} elemento/i selezionato/i? L'operazione non può essere annullata."
+    },
+    "BROKEN_LINKS_DISABLED": "Il rilevamento dei link non funzionanti è disattivato (impostazione Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "È possibile usare solo $1..${count} (gruppi di acquisizione della regola in entrata)",
+      "REGEX": "Espressione regolare non valida"
+    },
+    "EXPLAIN": "Spiega",
+    "EXPLAIN_EMPTY": "Inserire un permalink ed eseguire Spiega per vedere come viene risolto",
+    "FIELDS": {
+      "CREATED": "Creato",
+      "DESCRIPTION": "Descrizione",
+      "HITS": "Accessi",
+      "INBOUND": "In entrata",
+      "IS_ACTIVE": "Attivo",
+      "ITEMS": "Elementi",
+      "LANGUAGE": "Lingua",
+      "LAST_HIT": "Ultimo accesso",
+      "OBJECT_ID": "ID oggetto",
+      "ORGANIZATION": "Organizzazione",
+      "OUTBOUND": "In uscita",
+      "PERMALINK": "Permalink",
+      "PRIORITY": "Priorità",
+      "REASONS": "Motivi",
+      "REDIRECT_URL": "URL di reindirizzamento",
+      "RESOLVED": "Risolto",
+      "RULE_TYPE": "Tipo",
+      "SCORE": "Punteggio",
+      "SEMANTIC_URL": "URL semantico",
+      "STAGE": "Fase",
+      "STATUS": "Stato",
+      "TYPE": "Tipo"
+    },
+    "INACTIVE": "Inattivo",
+    "NEW_RULE": "Nuova regola di reindirizzamento",
+    "NO_BROKEN_LINKS": "Nessun link non funzionante",
+    "NO_RULES": "Nessuna regola di reindirizzamento",
+    "STAGES": {
+      "Original": "Fase 1: Originale - Elementi SEO trovati dal resolver.",
+      "Filtered": "Fase 2: Filtrato - Elementi SEO che corrispondono alle regole del negozio e della lingua.",
+      "Scored": "Fase 3: Punteggiato - Calcolo dei punteggi numerici e delle priorità del tipo di oggetto.",
+      "FilteredScore": "Fase 4: Punteggio filtrato - Mantenere gli elementi SEO con punteggio positivo.",
+      "Ordered": "Fase 5: Ordinato - Ordinare il SEO per punteggio e priorità del tipo di oggetto.",
+      "Final": "Fase 6: Finale - Selezionare il primo come Seo risolto."
+    },
+    "TOOLBAR": {
+      "ADD": "Aggiungi",
+      "CREATE": "Crea",
+      "DELETE": "Elimina",
+      "REFRESH": "Aggiorna",
+      "RESET": "Reimposta",
+      "SAVE": "Salva"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "Link non funzionanti",
+      "REDIRECT_RULES": "Regole di reindirizzamento",
+      "SEO_EXPLAIN": "Spiegazione SEO"
+    }
+  }
+}

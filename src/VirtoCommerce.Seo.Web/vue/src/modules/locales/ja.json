@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "アクティブ",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "保存されていない変更があります。閉じてもよろしいですか？",
+      "DELETE_SELECTED": "選択した {count} 件の項目を削除しますか？この操作は元に戻せません。"
+    },
+    "BROKEN_LINKS_DISABLED": "リンク切れ検出は無効になっています (設定 Seo.BrokenLinkDetection.Enabled)。",
+    "ERRORS": {
+      "GROUPS": "使用できるのは $1..${count} のみです (入力ルールのキャプチャグループ)",
+      "REGEX": "有効な正規表現ではありません"
+    },
+    "EXPLAIN": "解説",
+    "EXPLAIN_EMPTY": "パーマリンクを入力して [解説] を実行すると、どのように解決されるかを確認できます",
+    "FIELDS": {
+      "CREATED": "作成日",
+      "DESCRIPTION": "説明",
+      "HITS": "ヒット数",
+      "INBOUND": "入力",
+      "IS_ACTIVE": "アクティブ",
+      "ITEMS": "項目",
+      "LANGUAGE": "言語",
+      "LAST_HIT": "最終ヒット",
+      "OBJECT_ID": "オブジェクトID",
+      "ORGANIZATION": "会社",
+      "OUTBOUND": "出力",
+      "PERMALINK": "パーマリンク",
+      "PRIORITY": "優先度",
+      "REASONS": "理由",
+      "REDIRECT_URL": "リダイレクトURL",
+      "RESOLVED": "解決済み",
+      "RULE_TYPE": "タイプ",
+      "SCORE": "スコア",
+      "SEMANTIC_URL": "セマンティックURL",
+      "STAGE": "ステージ",
+      "STATUS": "ステータス",
+      "TYPE": "タイプ"
+    },
+    "INACTIVE": "無効",
+    "NEW_RULE": "新しいリダイレクトルール",
+    "NO_BROKEN_LINKS": "リンク切れはありません",
+    "NO_RULES": "リダイレクトルールはありません",
+    "STAGES": {
+      "Original": "ステージ1：オリジナル - リゾルバーによって見つけられたSEO項目。",
+      "Filtered": "ステージ2：フィルタ済み - ストアと言語のルールに一致するSEO項目。",
+      "Scored": "ステージ3：スコア付け - 数値スコアとオブジェクトタイプの優先度を計算。",
+      "FilteredScore": "ステージ4：フィルタ済みスコア - 正のスコアを持つSEO項目を保持。",
+      "Ordered": "ステージ5：順序付け - スコアとオブジェクトタイプの優先度でSEOを並べ替え。",
+      "Final": "ステージ6：最終 - 解決済みのSeoとして最初のものを選択。"
+    },
+    "TOOLBAR": {
+      "ADD": "追加",
+      "CREATE": "作成",
+      "DELETE": "削除",
+      "REFRESH": "更新",
+      "RESET": "リセット",
+      "SAVE": "保存"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "リンク切れ",
+      "REDIRECT_RULES": "リダイレクトルール",
+      "SEO_EXPLAIN": "SEO 解説"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "Activo",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Tiene cambios sin guardar. ¿Cerrar de todos modos?",
+      "DELETE_SELECTED": "¿Eliminar {count} elemento(s) seleccionado(s)? Esta acción no se puede deshacer."
+    },
+    "BROKEN_LINKS_DISABLED": "La detección de enlaces rotos está desactivada (configuración Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "Solo se puede usar $1..${count} (grupos de captura de la regla entrante)",
+      "REGEX": "No es una expresión regular válida"
+    },
+    "EXPLAIN": "Explicar",
+    "EXPLAIN_EMPTY": "Introduzca un enlace permanente y ejecute Explicar para ver cómo se resuelve",
+    "FIELDS": {
+      "CREATED": "Creado",
+      "DESCRIPTION": "Descripción",
+      "HITS": "Visitas",
+      "INBOUND": "Entrante",
+      "IS_ACTIVE": "Activo",
+      "ITEMS": "Elementos",
+      "LANGUAGE": "Idioma",
+      "LAST_HIT": "Última visita",
+      "OBJECT_ID": "ID del objeto",
+      "ORGANIZATION": "Organización",
+      "OUTBOUND": "Saliente",
+      "PERMALINK": "Enlace permanente",
+      "PRIORITY": "Prioridad",
+      "REASONS": "Motivos",
+      "REDIRECT_URL": "URL de redirección",
+      "RESOLVED": "Resuelto",
+      "RULE_TYPE": "Tipo",
+      "SCORE": "Puntuación",
+      "SEMANTIC_URL": "URL semántica",
+      "STAGE": "Etapa",
+      "STATUS": "Estado",
+      "TYPE": "Tipo"
+    },
+    "INACTIVE": "Inactivo",
+    "NEW_RULE": "Nueva regla de redirección",
+    "NO_BROKEN_LINKS": "No hay enlaces rotos",
+    "NO_RULES": "No hay reglas de redirección",
+    "STAGES": {
+      "Original": "Etapa 1: Original - elementos SEO encontrados por el resolver.",
+      "Filtered": "Etapa 2: Filtrado - elementos SEO que coinciden con las reglas de la tienda y el idioma.",
+      "Scored": "Etapa 3: Puntuado - cálculo de puntuaciones numéricas y prioridades de tipo de objeto.",
+      "FilteredScore": "Etapa 4: Puntuación filtrada - mantener elementos SEO con puntuación positiva.",
+      "Ordered": "Etapa 5: Ordenado - ordenar SEO por puntuación y prioridad de tipo de objeto.",
+      "Final": "Etapa 6: Final - seleccionar el primero como el Seo resuelto."
+    },
+    "TOOLBAR": {
+      "ADD": "Agregar",
+      "CREATE": "Crear",
+      "DELETE": "Eliminar",
+      "REFRESH": "Actualizar",
+      "RESET": "Restablecer",
+      "SAVE": "Guardar"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "Enlaces rotos",
+      "REDIRECT_RULES": "Reglas de redirección",
+      "SEO_EXPLAIN": "Explicación de SEO"
+    }
+  }
+}
