@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "Aktywny",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Masz niezapisane zmiany. Zamknąć mimo to?",
+      "DELETE_SELECTED": "Usunąć zaznaczone elementy ({count})? Tej operacji nie można cofnąć."
+    },
+    "BROKEN_LINKS_DISABLED": "Wykrywanie uszkodzonych linków jest wyłączone (ustawienie Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "Można używać tylko $1..${count} (grupy przechwytujące reguły przychodzącej)",
+      "REGEX": "Nieprawidłowe wyrażenie regularne"
+    },
+    "EXPLAIN": "Wyjaśnij",
+    "EXPLAIN_EMPTY": "Wprowadź link stały i uruchom Wyjaśnij, aby zobaczyć, jak jest rozwiązywany",
+    "FIELDS": {
+      "CREATED": "Utworzono",
+      "DESCRIPTION": "Opis",
+      "HITS": "Odwiedziny",
+      "INBOUND": "Przychodzące",
+      "IS_ACTIVE": "Aktywny",
+      "ITEMS": "Elementy",
+      "LANGUAGE": "Język",
+      "LAST_HIT": "Ostatnie odwiedziny",
+      "OBJECT_ID": "ID obiektu",
+      "ORGANIZATION": "Organizacja",
+      "OUTBOUND": "Wychodzące",
+      "PERMALINK": "Link stały",
+      "PRIORITY": "Priorytet",
+      "REASONS": "Powody",
+      "REDIRECT_URL": "Adres URL przekierowania",
+      "RESOLVED": "Rozwiązany",
+      "RULE_TYPE": "Typ",
+      "SCORE": "Wynik",
+      "SEMANTIC_URL": "Semantyczny URL",
+      "STAGE": "Etap",
+      "STATUS": "Status",
+      "TYPE": "Typ"
+    },
+    "INACTIVE": "Nieaktywny",
+    "NEW_RULE": "Nowa reguła przekierowania",
+    "NO_BROKEN_LINKS": "Brak uszkodzonych linków",
+    "NO_RULES": "Brak reguł przekierowań",
+    "STAGES": {
+      "Original": "Etap 1: Oryginalny - elementy SEO znalezione przez resolver.",
+      "Filtered": "Etap 2: Filtrowany - elementy SEO pasujące do reguł sklepu i języka.",
+      "Scored": "Etap 3: Oceniony - obliczanie ocen numerycznych i priorytetów typów obiektów.",
+      "FilteredScore": "Etap 4: Filtrowana ocena - zachowanie elementów SEO z pozytywną oceną.",
+      "Ordered": "Etap 5: Uporządkowany - sortowanie SEO według oceny i priorytetu typu obiektu.",
+      "Final": "Etap 6: Finał - wybór pierwszego jako rozwiązanego Seo."
+    },
+    "TOOLBAR": {
+      "ADD": "Dodaj",
+      "CREATE": "Utwórz",
+      "DELETE": "Usuń",
+      "REFRESH": "Odśwież",
+      "RESET": "Resetuj",
+      "SAVE": "Zapisz"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "Uszkodzone linki",
+      "REDIRECT_RULES": "Reguły przekierowań",
+      "SEO_EXPLAIN": "Wyjaśnienie SEO"
+    }
+  }
+}

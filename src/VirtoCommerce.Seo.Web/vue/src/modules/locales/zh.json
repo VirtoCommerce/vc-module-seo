@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "已启用",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "您有未保存的更改。仍要关闭吗？",
+      "DELETE_SELECTED": "删除所选的 {count} 个项目？此操作无法撤销。"
+    },
+    "BROKEN_LINKS_DISABLED": "失效链接检测已关闭（设置 Seo.BrokenLinkDetection.Enabled）。",
+    "ERRORS": {
+      "GROUPS": "只能使用 $1..${count}（传入规则的捕获组）",
+      "REGEX": "不是有效的正则表达式"
+    },
+    "EXPLAIN": "解释",
+    "EXPLAIN_EMPTY": "输入永久链接并运行“解释”，查看其解析方式",
+    "FIELDS": {
+      "CREATED": "创建时间",
+      "DESCRIPTION": "描述",
+      "HITS": "访问次数",
+      "INBOUND": "传入",
+      "IS_ACTIVE": "已启用",
+      "ITEMS": "项目",
+      "LANGUAGE": "语言",
+      "LAST_HIT": "最近访问",
+      "OBJECT_ID": "对象 ID",
+      "ORGANIZATION": "组织",
+      "OUTBOUND": "传出",
+      "PERMALINK": "永久链接",
+      "PRIORITY": "优先级",
+      "REASONS": "原因",
+      "REDIRECT_URL": "重定向 URL",
+      "RESOLVED": "已解析",
+      "RULE_TYPE": "类型",
+      "SCORE": "分数",
+      "SEMANTIC_URL": "语义 URL",
+      "STAGE": "阶段",
+      "STATUS": "状态",
+      "TYPE": "类型"
+    },
+    "INACTIVE": "未启用",
+    "NEW_RULE": "新建重定向规则",
+    "NO_BROKEN_LINKS": "没有失效链接",
+    "NO_RULES": "没有重定向规则",
+    "STAGES": {
+      "Original": "阶段 1: 原始 - 由解析器找到的SEO项目。",
+      "Filtered": "阶段 2: 已过滤 - 匹配商店和语言规则的SEO项目。",
+      "Scored": "阶段 3: 已评分 - 计算数字分数和对象类型优先级。",
+      "FilteredScore": "阶段 4: 已过滤分数 - 保留分数为正的SEO项目。",
+      "Ordered": "阶段 5: 已排序 - 按分数和对象类型优先级对SEO进行排序。",
+      "Final": "阶段 6: 最终 - 选择第一个作为已解析的Seo。"
+    },
+    "TOOLBAR": {
+      "ADD": "添加",
+      "CREATE": "创建",
+      "DELETE": "删除",
+      "REFRESH": "刷新",
+      "RESET": "重置",
+      "SAVE": "保存"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "失效链接",
+      "REDIRECT_RULES": "重定向规则",
+      "SEO_EXPLAIN": "SEO 解释"
+    }
+  }
+}

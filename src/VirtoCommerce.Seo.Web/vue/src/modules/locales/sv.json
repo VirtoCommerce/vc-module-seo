@@ -1,0 +1,65 @@
+{
+  "SEO": {
+    "ACTIVE": "Aktiv",
+    "ALERTS": {
+      "CLOSE_CONFIRMATION": "Du har osparade ändringar. Stäng ändå?",
+      "DELETE_SELECTED": "Radera {count} markerade objekt? Det går inte att ångra."
+    },
+    "BROKEN_LINKS_DISABLED": "Detektion av trasiga länkar är avstängd (inställningen Seo.BrokenLinkDetection.Enabled).",
+    "ERRORS": {
+      "GROUPS": "Endast $1..${count} kan användas (fångstgrupper i den inkommande regeln)",
+      "REGEX": "Inte ett giltigt reguljärt uttryck"
+    },
+    "EXPLAIN": "Förklara",
+    "EXPLAIN_EMPTY": "Ange en permalänk och kör Förklara för att se hur den löses",
+    "FIELDS": {
+      "CREATED": "Skapad",
+      "DESCRIPTION": "Beskrivning",
+      "HITS": "Träffar",
+      "INBOUND": "Inkommande",
+      "IS_ACTIVE": "Aktiv",
+      "ITEMS": "Objekt",
+      "LANGUAGE": "Språk",
+      "LAST_HIT": "Senaste träff",
+      "OBJECT_ID": "Objekt-ID",
+      "ORGANIZATION": "Organisation",
+      "OUTBOUND": "Utgående",
+      "PERMALINK": "Permalänk",
+      "PRIORITY": "Prioritet",
+      "REASONS": "Orsaker",
+      "REDIRECT_URL": "Omdirigerings-URL",
+      "RESOLVED": "Löst",
+      "RULE_TYPE": "Typ",
+      "SCORE": "Poäng",
+      "SEMANTIC_URL": "Semantisk URL",
+      "STAGE": "Steg",
+      "STATUS": "Status",
+      "TYPE": "Typ"
+    },
+    "INACTIVE": "Inaktiv",
+    "NEW_RULE": "Ny omdirigeringsregel",
+    "NO_BROKEN_LINKS": "Inga trasiga länkar",
+    "NO_RULES": "Inga omdirigeringsregler",
+    "STAGES": {
+      "Original": "Steg 1: Original - SEO-objekt som hittats av resolvern.",
+      "Filtered": "Steg 2: Filtrerad - SEO-objekt som matchar butiks- och språkregler.",
+      "Scored": "Steg 3: Poängsatt - beräkna numeriska poäng och objekttyp-prioriteringar.",
+      "FilteredScore": "Steg 4: Filtrerad poäng - behåll SEO-objekt med positiv poäng.",
+      "Ordered": "Steg 5: Sorterad - sortera SEO efter poäng och objekttyp-prioritet.",
+      "Final": "Steg 6: Slutlig - välj första som den lösta Seo."
+    },
+    "TOOLBAR": {
+      "ADD": "Lägg till",
+      "CREATE": "Skapa",
+      "DELETE": "Radera",
+      "REFRESH": "Uppdatera",
+      "RESET": "Återställ",
+      "SAVE": "Spara"
+    },
+    "WIDGETS": {
+      "BROKEN_LINKS": "Trasiga länkar",
+      "REDIRECT_RULES": "Omdirigeringsregler",
+      "SEO_EXPLAIN": "SEO-förklaring"
+    }
+  }
+}

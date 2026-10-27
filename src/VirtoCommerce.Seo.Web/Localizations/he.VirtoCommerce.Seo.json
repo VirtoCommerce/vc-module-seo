@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "seo:access": "פתיחת תפריט SEO",
+    "seo:create": "יצירת נתונים הקשורים ל-SEO",
+    "seo:read": "צפייה בנתונים הקשורים ל-SEO",
+    "seo:update": "עדכון נתונים הקשורים ל-SEO",
+    "seo:delete": "מחיקת נתונים הקשורים ל-SEO"
+  },
+  "settings": {
+    "Seo": {
+      "Enabled": {
+        "title": "SEO",
+        "description": "הפעלה/השבתה של הגדרות SEO"
+      },
+      "BrokenLinkDetection": {
+        "Enabled": {
+          "title": "זיהוי קישורים שבורים",
+          "description": "הפעלה/השבתה של רישום בקשות לדפים שאינם קיימים לצורך ניתוח"
+        }
+      }
+    }
+  }
+}
