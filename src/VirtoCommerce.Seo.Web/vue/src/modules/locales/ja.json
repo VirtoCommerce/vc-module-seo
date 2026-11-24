@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "アクティブ",
+    "ACTIVE_ONLY": "有効のみ",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "保存されていない変更があります。閉じてもよろしいですか？",
       "DELETE_SELECTED": "選択した {count} 件の項目を削除しますか？この操作は元に戻せません。"

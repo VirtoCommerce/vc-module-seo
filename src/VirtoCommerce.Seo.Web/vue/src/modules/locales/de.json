@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Aktiv",
+    "ACTIVE_ONLY": "Nur aktive",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Sie haben ungespeicherte Änderungen. Trotzdem schließen?",
       "DELETE_SELECTED": "{count} ausgewählte(s) Element(e) löschen? Dies kann nicht rückgängig gemacht werden."

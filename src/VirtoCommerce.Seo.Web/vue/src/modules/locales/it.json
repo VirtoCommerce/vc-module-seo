@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Attivo",
+    "ACTIVE_ONLY": "Solo attive",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Ci sono modifiche non salvate. Chiudere comunque?",
       "DELETE_SELECTED": "Eliminare {count} elemento/i selezionato/i? L'operazione non può essere annullata."

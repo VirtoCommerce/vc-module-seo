@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Aktiv",
+    "ACTIVE_ONLY": "Endast aktiva",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Du har osparade ändringar. Stäng ändå?",
       "DELETE_SELECTED": "Radera {count} markerade objekt? Det går inte att ångra."

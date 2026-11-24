@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Activo",
+    "ACTIVE_ONLY": "Solo activas",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Tiene cambios sin guardar. ¿Cerrar de todos modos?",
       "DELETE_SELECTED": "¿Eliminar {count} elemento(s) seleccionado(s)? Esta acción no se puede deshacer."

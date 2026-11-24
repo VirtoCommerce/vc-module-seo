@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Active",
+    "ACTIVE_ONLY": "Active only",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?",
       "DELETE_SELECTED": "Delete {count} selected item(s)? This can't be undone."

@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Aktiivinen",
+    "ACTIVE_ONLY": "Vain aktiiviset",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Sinulla on tallentamattomia muutoksia. Suljetaanko silti?",
       "DELETE_SELECTED": "Poistetaanko {count} valittua kohdetta? Toimintoa ei voi kumota."

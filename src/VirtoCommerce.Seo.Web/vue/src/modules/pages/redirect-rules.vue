@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { useApiClient, useAsync, useBlade, useDataTablePagination, useFunctions, usePopup, type IBladeToolbar } from "@vc-shell/framework";
+import { useApiClient, useAsync, useBlade, useDataTablePagination, useFunctions, usePopup, type GlobalFilterConfig, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -103,17 +103,14 @@ const bladeToolbar = ref<IBladeToolbar[]>([
   },
 ]);
 
-// the API can only narrow to active rules (isActive: true), so Status offers that one value
-const globalFilters = computed(() => [
-  {
-    id: "isActive",
-    label: t("SEO.FIELDS.STATUS"),
-    filter: { options: [{ value: "true", label: t("SEO.ACTIVE") }] },
-  },
-]);
+// the API can only narrow to active rules (isActive: true), so the filter is an "Active only" toggle
+// VcDataTable types global-filters as GlobalFilterConfig[], which lacks the search bar's toggle field
+const globalFilters = computed(
+  () => [{ id: "activeOnly", label: t("SEO.ACTIVE_ONLY"), filter: { toggle: true } }] as unknown as GlobalFilterConfig[],
+);
 
 function onFilter(event: { filters: Record<string, unknown> }) {
-  activeOnly.value = event.filters.isActive === "true";
+  activeOnly.value = !!event.filters.activeOnly;
 }
 
 function openDetails(id?: string) {
