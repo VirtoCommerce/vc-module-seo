@@ -20,11 +20,14 @@
       :total-count="totalCount"
       :pagination="pagination"
       :searchable="true"
+      search-bar
       :state-key="'STORE_BROKEN_LINKS'"
+      :global-filters="globalFilters"
       :active-item-id="activeChildParam"
       :empty-state="{ icon: 'lucide-unlink', title: $t('SEO.NO_BROKEN_LINKS') }"
       @row-click="(e: { data: BrokenLink }) => openDetails(e.data.id!)"
       @pagination-click="pagination.goToPage"
+      @filter="onFilter"
     >
       <VcColumn
         id="permalink"
@@ -89,12 +92,13 @@ const enabled = ref(true);
 const items = ref<BrokenLink[]>([]);
 const totalCount = ref(0);
 const keyword = ref("");
+const status = ref<string>();
 const selection = ref<BrokenLink[]>([]);
 const pagination = useDataTablePagination({ pageSize: PAGE_SIZE, totalCount });
 
 const { loading, action: load } = useAsync(async () => {
   if (!enabled.value) return;
-  const result = await (await getApiClient()).search({ storeId: param.value, keyword: keyword.value || undefined, skip: pagination.skip, take: PAGE_SIZE });
+  const result = await (await getApiClient()).search({ storeId: param.value, keyword: keyword.value || undefined, status: status.value, skip: pagination.skip, take: PAGE_SIZE });
   items.value = result.results ?? [];
   totalCount.value = result.totalCount ?? 0;
 });
@@ -117,6 +121,19 @@ const bladeToolbar = ref<IBladeToolbar[]>([
   },
 ]);
 
+// statuses are shown untranslated, as in the Status column and the details blade
+const globalFilters = computed(() => [
+  {
+    id: "status",
+    label: t("SEO.FIELDS.STATUS"),
+    filter: { options: ["Active", "Resolved", "Accepted"].map((s) => ({ value: s, label: s })) },
+  },
+]);
+
+function onFilter(event: { filters: Record<string, unknown> }) {
+  status.value = (event.filters.status as string | undefined) || undefined;
+}
+
 function openDetails(id: string) {
   openBlade({ name: "SeoBrokenLinkDetails", param: id });
 }
@@ -128,6 +145,7 @@ async function reload() {
 
 // from page 2 setPage(1) triggers the skip watcher, which loads
 watch(keyword, debounce(() => (pagination.skip ? pagination.setPage(1) : load()), 400));
+watch(status, () => (pagination.skip ? pagination.setPage(1) : load()));
 watch(() => pagination.skip, () => load());
 
 onMounted(async () => {

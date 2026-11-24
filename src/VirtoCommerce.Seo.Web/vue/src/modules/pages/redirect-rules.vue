@@ -13,11 +13,14 @@
       :total-count="totalCount"
       :pagination="pagination"
       :searchable="true"
+      search-bar
       :state-key="'STORE_REDIRECT_RULES'"
+      :global-filters="globalFilters"
       :active-item-id="activeChildParam"
       :empty-state="{ icon: 'lucide-milestone', title: $t('SEO.NO_RULES') }"
       @row-click="(e: { data: RedirectRule }) => openDetails(e.data.id)"
       @pagination-click="pagination.goToPage"
+      @filter="onFilter"
     >
       <VcColumn
         id="inbound"
@@ -71,11 +74,12 @@ const PAGE_SIZE = 20;
 const items = ref<RedirectRule[]>([]);
 const totalCount = ref(0);
 const keyword = ref("");
+const activeOnly = ref(false);
 const selection = ref<RedirectRule[]>([]);
 const pagination = useDataTablePagination({ pageSize: PAGE_SIZE, totalCount });
 
 const { loading, action: load } = useAsync(async () => {
-  const result = await (await getApiClient()).search({ storeId: param.value, keyword: keyword.value || undefined, skip: pagination.skip, take: PAGE_SIZE });
+  const result = await (await getApiClient()).search({ storeId: param.value, keyword: keyword.value || undefined, isActive: activeOnly.value, skip: pagination.skip, take: PAGE_SIZE });
   items.value = result.results ?? [];
   totalCount.value = result.totalCount ?? 0;
 });
@@ -99,6 +103,19 @@ const bladeToolbar = ref<IBladeToolbar[]>([
   },
 ]);
 
+// the API can only narrow to active rules (isActive: true), so Status offers that one value
+const globalFilters = computed(() => [
+  {
+    id: "isActive",
+    label: t("SEO.FIELDS.STATUS"),
+    filter: { options: [{ value: "true", label: t("SEO.ACTIVE") }] },
+  },
+]);
+
+function onFilter(event: { filters: Record<string, unknown> }) {
+  activeOnly.value = event.filters.isActive === "true";
+}
+
 function openDetails(id?: string) {
   openBlade({ name: "SeoRedirectRuleDetails", param: id, options: { storeId: param.value } });
 }
@@ -110,6 +127,7 @@ async function reload() {
 
 // from page 2 setPage(1) triggers the skip watcher, which loads
 watch(keyword, debounce(() => (pagination.skip ? pagination.setPage(1) : load()), 400));
+watch(activeOnly, () => (pagination.skip ? pagination.setPage(1) : load()));
 watch(() => pagination.skip, () => load());
 onMounted(load);
 exposeToChildren({ reload });
