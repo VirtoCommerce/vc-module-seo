@@ -53,10 +53,11 @@
 </template>
 
 <script setup lang="ts">
-import { useApiClient, useAsync, useBlade, useDataTablePagination, useFunctions, usePopup, type GlobalFilterConfig, type IBladeToolbar } from "@vc-shell/framework";
+import { useApiClient, useAsync, useBlade, useDataTablePagination, useFunctions, type GlobalFilterConfig, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useDeleteSelectedAction } from "../composables/useDeleteSelectedAction";
 import { RedirectRulesClient, type RedirectRule } from "../../api_client/virtocommerce.seo";
 
 defineBlade({
@@ -66,7 +67,6 @@ defineBlade({
 
 const { t } = useI18n({ useScope: "global" });
 const { param, openBlade, callParent, exposeToChildren, activeChildParam } = useBlade();
-const { showConfirmation } = usePopup();
 const { debounce } = useFunctions();
 const { getApiClient } = useApiClient(RedirectRulesClient);
 
@@ -87,20 +87,7 @@ const { loading, action: load } = useAsync(async () => {
 const bladeToolbar = ref<IBladeToolbar[]>([
   { id: "refresh", title: t("SEO.TOOLBAR.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => reload() },
   { id: "add", title: t("SEO.TOOLBAR.ADD"), icon: "lucide-plus", permissions: "seo:create", clickHandler: () => openDetails() },
-  {
-    id: "delete",
-    title: t("SEO.TOOLBAR.DELETE"),
-    icon: "lucide-trash-2",
-    permissions: "seo:delete",
-    disabled: computed(() => !selection.value.length),
-    async clickHandler() {
-      if (await showConfirmation(t("SEO.ALERTS.DELETE_SELECTED", { count: selection.value.length }))) {
-        await (await getApiClient()).delete(selection.value.map((x) => x.id!));
-        selection.value = [];
-        await reload();
-      }
-    },
-  },
+  useDeleteSelectedAction({ selection, remove: async (ids) => (await getApiClient()).delete(ids), reload }),
 ]);
 
 // the API can only narrow to active rules (isActive: true), so the filter is an "Active only" toggle
