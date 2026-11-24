@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "已启用",
+    "ACTIVE_ONLY": "仅已启用",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "您有未保存的更改。仍要关闭吗？",
       "DELETE_SELECTED": "删除所选的 {count} 个项目？此操作无法撤销。"

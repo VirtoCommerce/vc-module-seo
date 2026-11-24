@@ -13,11 +13,14 @@
       :total-count="totalCount"
       :pagination="pagination"
       :searchable="true"
+      search-bar
       :state-key="'STORE_REDIRECT_RULES'"
+      :global-filters="globalFilters"
       :active-item-id="activeChildParam"
       :empty-state="{ icon: 'lucide-milestone', title: $t('SEO.NO_RULES') }"
       @row-click="(e: { data: RedirectRule }) => openDetails(e.data.id)"
       @pagination-click="pagination.goToPage"
+      @filter="onFilter"
     >
       <VcColumn
         id="inbound"
@@ -50,10 +53,11 @@
 </template>
 
 <script setup lang="ts">
-import { useApiClient, useAsync, useBlade, useDataTablePagination, useFunctions, usePopup, type IBladeToolbar } from "@vc-shell/framework";
+import { useApiClient, useAsync, useBlade, useDataTablePagination, useFunctions, type GlobalFilterConfig, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { useDeleteSelectedAction } from "../composables/useDeleteSelectedAction";
 import { RedirectRulesClient, type RedirectRule } from "../../api_client/virtocommerce.seo";
 
 defineBlade({
@@ -63,7 +67,6 @@ defineBlade({
 
 const { t } = useI18n({ useScope: "global" });
 const { param, openBlade, callParent, exposeToChildren, activeChildParam } = useBlade();
-const { showConfirmation } = usePopup();
 const { debounce } = useFunctions();
 const { getApiClient } = useApiClient(RedirectRulesClient);
 
@@ -71,11 +74,12 @@ const PAGE_SIZE = 20;
 const items = ref<RedirectRule[]>([]);
 const totalCount = ref(0);
 const keyword = ref("");
+const activeOnly = ref(false);
 const selection = ref<RedirectRule[]>([]);
 const pagination = useDataTablePagination({ pageSize: PAGE_SIZE, totalCount });
 
 const { loading, action: load } = useAsync(async () => {
-  const result = await (await getApiClient()).search({ storeId: param.value, keyword: keyword.value || undefined, skip: pagination.skip, take: PAGE_SIZE });
+  const result = await (await getApiClient()).search({ storeId: param.value, keyword: keyword.value || undefined, isActive: activeOnly.value, skip: pagination.skip, take: PAGE_SIZE });
   items.value = result.results ?? [];
   totalCount.value = result.totalCount ?? 0;
 });
@@ -83,21 +87,18 @@ const { loading, action: load } = useAsync(async () => {
 const bladeToolbar = ref<IBladeToolbar[]>([
   { id: "refresh", title: t("SEO.TOOLBAR.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => reload() },
   { id: "add", title: t("SEO.TOOLBAR.ADD"), icon: "lucide-plus", permissions: "seo:create", clickHandler: () => openDetails() },
-  {
-    id: "delete",
-    title: t("SEO.TOOLBAR.DELETE"),
-    icon: "lucide-trash-2",
-    permissions: "seo:delete",
-    disabled: computed(() => !selection.value.length),
-    async clickHandler() {
-      if (await showConfirmation(t("SEO.ALERTS.DELETE_SELECTED", { count: selection.value.length }))) {
-        await (await getApiClient()).delete(selection.value.map((x) => x.id!));
-        selection.value = [];
-        await reload();
-      }
-    },
-  },
+  useDeleteSelectedAction({ selection, remove: async (ids) => (await getApiClient()).delete(ids), reload }),
 ]);
+
+// the API can only narrow to active rules (isActive: true), so the filter is an "Active only" toggle
+// VcDataTable types global-filters as GlobalFilterConfig[], which lacks the search bar's toggle field
+const globalFilters = computed(
+  () => [{ id: "activeOnly", label: t("SEO.ACTIVE_ONLY"), filter: { toggle: true } }] as unknown as GlobalFilterConfig[],
+);
+
+function onFilter(event: { filters: Record<string, unknown> }) {
+  activeOnly.value = !!event.filters.activeOnly;
+}
 
 function openDetails(id?: string) {
   openBlade({ name: "SeoRedirectRuleDetails", param: id, options: { storeId: param.value } });
@@ -110,6 +111,7 @@ async function reload() {
 
 // from page 2 setPage(1) triggers the skip watcher, which loads
 watch(keyword, debounce(() => (pagination.skip ? pagination.setPage(1) : load()), 400));
+watch(activeOnly, () => (pagination.skip ? pagination.setPage(1) : load()));
 watch(() => pagination.skip, () => load());
 onMounted(load);
 exposeToChildren({ reload });

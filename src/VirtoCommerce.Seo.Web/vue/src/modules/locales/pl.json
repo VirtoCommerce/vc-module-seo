@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Aktywny",
+    "ACTIVE_ONLY": "Tylko aktywne",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Masz niezapisane zmiany. Zamknąć mimo to?",
       "DELETE_SELECTED": "Usunąć zaznaczone elementy ({count})? Tej operacji nie można cofnąć."

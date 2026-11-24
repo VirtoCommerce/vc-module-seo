@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "פעיל",
+    "ACTIVE_ONLY": "פעילים בלבד",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "יש שינויים שלא נשמרו. האם לסגור בכל זאת?",
       "DELETE_SELECTED": "מחיקת הפריטים שנבחרו ({count})? לא ניתן לבטל פעולה זו."

@@ -1,6 +1,7 @@
 {
   "SEO": {
     "ACTIVE": "Aktiv",
+    "ACTIVE_ONLY": "Kun aktive",
     "ALERTS": {
       "CLOSE_CONFIRMATION": "Du har ulagrede endringer. Lukke likevel?",
       "DELETE_SELECTED": "Slette {count} valgt(e) element(er)? Dette kan ikke angres."
